@@ -1,7 +1,9 @@
 import React from 'react'
 
-export function NextVisual(): React.ReactElement {
+export function NextVisual({ image }: {
+	image: string
+}): React.ReactElement {
 	return (
-		<h1>Hey</h1>
+		<h1>Hey { image }</h1>
 	)
 }
