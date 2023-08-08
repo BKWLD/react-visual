@@ -9,8 +9,8 @@ export type NextVisualProps = {
 
   expand?: boolean
   aspect?: number // An explict aspect ratio
-  width?: number
-  height?: number
+  width?: number | string
+  height?: number | string
 
   priority?: boolean // Forwarded to next/image
 
@@ -20,6 +20,8 @@ export type NextVisualProps = {
   position?: string
 
   className?: string
+
+  dataCy?: string
 }
 
 export enum ObjectFit {
