@@ -18,13 +18,6 @@ export function NextVisual({
   // Return without error if no source
   if (!image && !video) return null
 
-  // If the image was not de-referenced and we're not expanding it, then
-  // next/image requires a width and height, so throw an error
-  // if (!expand && !aspect && (!width || !height)) {
-  //   throw `If not using the \`expand\` prop, you need to either set an explicit
-  //     \`width\` and \`height\` (next/image requires this) or \'aspect\'.`
-  // }
-
   // Render fixed size image because a width and height were supplied
   if (width && height) {
     if (image && !video) {
@@ -35,6 +28,25 @@ export function NextVisual({
       return <FixedSizeVideo {...{
         video, alt, width, height, priority, className
       }} />
+    } else {
+      return (
+        <div
+          style={{
+            position: 'relative',
+            display: 'inline-block',
+            lineHeight: 0,
+          }}
+          className={ className }>
+          <ExpandingImage {...{
+            image, alt, priority, sizes: `${width}px`
+          }} />
+          <FixedSizeVideo {...{
+            video, alt, width, height, priority, noPoster: true, style: {
+              position: 'relative'
+            }
+          }} />
+        </div>
+      )
     }
   }
 
@@ -69,7 +81,6 @@ export function NextVisual({
           }} />
         </AspectRespectingWrapper>
       )
-
     }
   }
 
@@ -77,7 +88,7 @@ export function NextVisual({
   return null
 }
 
-// Make an image at a specific size, using the Sanity CDN to generate sizes
+// Make an image at a specific size
 function FixedSizeImage({
   image, alt, width, height, priority, placeholderData, className = ''
 }: any): ReactElement {
@@ -94,9 +105,13 @@ function FixedSizeImage({
   )
 }
 
-// Make an image at a specific size, using the Sanity CDN to generate sizes
+// Transparent gif to use own image as poster
+// https://stackoverflow.com/a/13139830/59160
+const transparentGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+
+// Make an video at a specific size
 function FixedSizeVideo({
-  video, alt, width, height, priority, className = ''
+  video, alt, width, height, priority, noPoster, style, className = ''
 }: any): ReactElement {
   return (
     <video
@@ -105,6 +120,8 @@ function FixedSizeVideo({
       height={ height }
       preload={ priority }
       aria-label={ alt }
+      poster={ noPoster ? transparentGif : undefined }
+      style={ style }
       className={ className }>
       <source src={ video } />
     </video>
