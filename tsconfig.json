@@ -1,25 +1,25 @@
 {
-	"compilerOptions": {
-		"target": "es5",
-		"module": "commonjs",
-		"declaration": true,
-		"outDir": "./dist",
-		"strict": true,
-		"jsx": "preserve",
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./dist",
+    "strict": true,
+    "jsx": "preserve",
 
-		// Required for importing packages, like React, that have `export =`
-		"esModuleInterop": true,
+    // Required for importing packages, like React, that have `export =`
+    "esModuleInterop": true,
 
-		// Fixes build failures when dependent types have errors, like:
-		// node_modules/next/dist/shared/lib/get-img-props.d.ts:70
-		"skipLibCheck": true
-	},
-	"include": [
-		"**/*.ts",
-		"**/*.tsx",
-	],
-	"exclude": [
-		"node_modules",
-		"dist",
-	]
+    // Fixes build failures when dependent types have errors, like:
+    // node_modules/next/dist/shared/lib/get-img-props.d.ts:70
+    "skipLibCheck": true
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+  ]
 }
