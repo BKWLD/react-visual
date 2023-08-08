@@ -31,6 +31,7 @@ export function NextVisual({
     } else {
       return (
         <div
+          data-cy='next-visual'
           style={{
             position: 'relative',
             display: 'inline-block',
