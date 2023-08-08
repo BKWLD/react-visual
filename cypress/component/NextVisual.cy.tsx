@@ -23,5 +23,20 @@ describe('<NextVisual />', () => {
       aspect={300/200}
       alt='' />)
   })
+
+  it('renders fixed size video', () => {
+    cy.mount(<NextVisual
+      video='https://placehold.co/300x200.mp4'
+      width={300}
+      height={200}
+      alt=''/>)
+  })
+
+  it('renders expanding video', () => {
+    cy.mount(<NextVisual
+      video='https://placehold.co/300x200.mp4'
+      expand
+      alt=''/>)
+  })
 })
 
