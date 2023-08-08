@@ -53,9 +53,24 @@ export function NextVisual({
 
   // Return an image that preserves the expact ratio
   if (aspect) {
-    return <AspectRespectingImage {...{
-      image, alt, aspect, priority, sizes, className
-    }} />
+    if (image && !video) {
+      return (
+        <AspectRespectingWrapper {...{ aspect, className }}>
+          <ExpandingImage {...{
+            image, alt, priority, sizes, fit, position
+          }} />
+        </AspectRespectingWrapper>
+      )
+    } else if (!image && video) {
+      return (
+        <AspectRespectingWrapper {...{ aspect, className }}>
+          <ExpandingVideo {...{
+            video, alt, priority, fit, position
+          }} />
+        </AspectRespectingWrapper>
+      )
+
+    }
   }
 
   // Should never be hit, but TypeScript wants this
@@ -153,8 +168,8 @@ function ExpandingVideo({
 
 // Render wrapper element who is used to set the aspect ratio, when
 // not expanding.
-function AspectRespectingImage({
-  image, alt, aspect, priority, sizes, placeholderData, className = ''
+function AspectRespectingWrapper({
+  aspect, children, className = ''
 }: any): ReactElement {
   return (
     <div
@@ -163,9 +178,7 @@ function AspectRespectingImage({
         position: 'relative',
         aspectRatio: aspect,
       }}>
-      <ExpandingImage {...{
-        image, alt, priority, sizes, placeholderData, className
-      }} />
+      { children }
     </div>
   )
 }
