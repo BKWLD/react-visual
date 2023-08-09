@@ -21,6 +21,7 @@ describe('fixed size', () => {
       height={200}
       alt=''/>)
     cy.get('video').hasDimensions(300, 200)
+    cy.get('video').isPlaying()
   })
 
   it('renders image & video', () => {
@@ -34,6 +35,7 @@ describe('fixed size', () => {
     cy.get('[data-cy=next-visual]').hasDimensions(300, 200)
     cy.get('img').hasDimensions(300, 200)
     cy.get('video').hasDimensions(300, 200)
+    cy.get('video').isPlaying()
   })
 })
 
@@ -53,6 +55,7 @@ describe('expanding', () => {
       expand
       alt='' />)
     cy.get('video').hasDimensions(VW, VH)
+    cy.get('video').isPlaying()
   })
 
   it('renders image & video', () => {
@@ -65,6 +68,7 @@ describe('expanding', () => {
     cy.get('[data-cy=next-visual]').hasDimensions(VW, VH)
     cy.get('img').hasDimensions(VW, VH)
     cy.get('video').hasDimensions(VW, VH)
+    cy.get('video').isPlaying()
   })
 })
 
@@ -84,6 +88,7 @@ describe('aspect ratio', () => {
       aspect={300/150}
       alt=''/>)
     cy.get('video').hasDimensions(VW, VW / 2)
+    cy.get('video').isPlaying()
   })
 
   it('renders image & video', () => {
@@ -96,6 +101,7 @@ describe('aspect ratio', () => {
     cy.get('[data-cy=next-visual]').hasDimensions(VW, VW / 2)
     cy.get('img').hasDimensions(VW, VW / 2)
     cy.get('video').hasDimensions(VW, VW / 2)
+    cy.get('video').isPlaying()
   })
 
 })
