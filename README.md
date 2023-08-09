@@ -68,7 +68,7 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | -- | -- | --
 | `alt` | `string` | Sets the  alt attribute or aria-label value, depending on asset type.
 
-### Themeing
+### Theming
 
 | Prop | Type | Description
 | -- | -- | --
