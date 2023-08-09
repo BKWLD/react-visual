@@ -139,7 +139,7 @@ describe('complex layouts', () => {
     cy.get('img').hasDimensions(150, 75)
   })
 
-  it('doesnt exceed the viewport width', () => {
+  it('doesn\'t exceed the viewport width', () => {
     cy.mount(<NextVisual
       image='https://placehold.co/300x150'
       aspect={300/150}
@@ -149,3 +149,4 @@ describe('complex layouts', () => {
   })
 
 })
+

@@ -5,24 +5,28 @@ import { NextVisualProps, ObjectFit } from './types/nextVisualTypes'
 import { makeImagePlaceholder } from './lib/placeholder'
 import type { CSSProperties, ReactElement } from 'react'
 import { fillStyles, transparentGif } from './lib/styles'
+import { collectDataAttributes } from './lib/attributes'
 
 // Render a Sanity image via Next/Image
-export function NextVisual({
-  image,
-  video,
-  placeholderData,
-  expand,
-  aspect,
-  width,
-  height,
-  fit = ObjectFit.Cover,
-  position,
-  priority,
-  sizes,
-  alt,
-  className = '',
-  style = {},
-}: NextVisualProps): ReactElement | null {
+export function NextVisual(props: NextVisualProps): ReactElement | null {
+
+  // Destructure props
+  const {
+    image,
+    video,
+    placeholderData,
+    expand,
+    aspect,
+    width,
+    height,
+    fit = ObjectFit.Cover,
+    position,
+    priority,
+    sizes,
+    alt,
+    className = '',
+    style = {},
+  } = props
 
   // If no asset, return nothing
   if (!image && !video) return null
@@ -35,6 +39,7 @@ export function NextVisual({
       aspect,
       className,
       style,
+      dataAttributes: collectDataAttributes(props),
     }}>
 
       {/* Render image */}
@@ -64,7 +69,7 @@ export function NextVisual({
 
 // Wraps media elements and applys layout and other functionality
 function VisualWrapper({
-  expand, width, height, aspect, children, className, style
+  expand, width, height, aspect, children, className, style, dataAttributes
 }: any): ReactElement {
 
   // Make the wrapper style.  If expanding, use normal fill rules. Otherwise,
@@ -80,9 +85,9 @@ function VisualWrapper({
   // Render wrapping component
   return (
     <div
-      data-cy='next-visual'
       className={ className }
-      style={{ ...layoutStyles, ...style } } >
+      style={{ ...layoutStyles, ...style }}
+      { ...dataAttributes } >
       { children }
     </div>
   )
