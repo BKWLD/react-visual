@@ -33,12 +33,21 @@ export default function Example() {
 
 ## Props
 
-### Asset
+### Sources
+
+| Prop | Type | Description
+| -- | -- | --
 | `image` | `string` | URL to an image asset.
 | `video` | `string` | URL to a video asset asset.
 
 ### Layout
-| `expand` | `boolean` | Make the visual fill it's container via CSS using absolute positioning.
+
+| Prop | Type | Description
+| -- | -- | --
+| `expand` | `boolean` | Make the visual fill it's container via CSS using absolute positioning. |
 
 ### Accessibility
-| `alt` | `string` | Sets the  alt attribute or aria-label value, depending on asset type.
+
+| Prop | Type | Description
+| -- | -- | --
+| `alt` | `string` | Sets the  alt attribute or aria-label value, depending on asset type. |
