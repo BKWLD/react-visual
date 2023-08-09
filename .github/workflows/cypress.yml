@@ -30,6 +30,9 @@ jobs:
           # https://github.com/marketplace/actions/cypress-io#component-testing
           component: true
 
+          # Use Chrome because by cache disabling code is Chrome specific
+          browser: chrome
+
           # Records to Cypress Cloud
           # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
           record: true

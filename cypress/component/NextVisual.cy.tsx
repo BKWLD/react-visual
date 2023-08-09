@@ -151,3 +151,46 @@ describe('complex layouts', () => {
 
 })
 
+describe('loading', () => {
+
+  it('images lazy load', () => {
+
+    cy.intercept('https://placehold.co/200x200', cy.spy().as('load'))
+
+    cy.mount(<NextVisual
+      image='https://placehold.co/200x200'
+      width={200}
+      height={200}
+      alt=''
+      data-cy='next-visual'
+      style={{marginTop: VH + 1}} />)
+
+    cy.wait(100)
+    cy.get('@load').should('not.have.been.called')
+
+    cy.get('[data-cy=next-visual').scrollIntoView()
+
+    cy.get('@load').should('have.been.called')
+  })
+
+  it('videos lazy load', () => {
+
+    cy.intercept('https://placehold.co/200x200.mp4', cy.spy().as('load'))
+
+    cy.mount(<NextVisual
+      video='https://placehold.co/200x200.mp4'
+      width={200}
+      height={200}
+      alt=''
+      data-cy='next-visual'
+      style={{marginTop: VH + 1}} />)
+
+      cy.wait(100)
+      cy.get('@load').should('not.have.been.called')
+
+      cy.get('[data-cy=next-visual').scrollIntoView()
+
+      cy.get('@load').should('have.been.called')
+  })
+
+})
