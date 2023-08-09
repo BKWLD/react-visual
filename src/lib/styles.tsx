@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactElement } from 'react'
+import type { CSSProperties } from 'react'
 
 // Mimic the styles that next/image sets when `fill` prop is applied
 export const fillStyles = {

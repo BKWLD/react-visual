@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
 
-import { NextVisualProps, ObjectFit } from '../types/nextVisualTypes'
+import { NextVisualProps, ObjectFit } from './types/nextVisualTypes'
 import { makeImagePlaceholder } from './lib/placeholder'
 import type { CSSProperties, ReactElement } from 'react'
 import { fillStyles, transparentGif } from './lib/styles'
@@ -52,7 +52,7 @@ export function NextVisual({
 
 // Wraps media elements and applys layout and other functionality
 function VisualWrapper({
-  expand, width, height, aspect, children, dataAttributes, className
+  expand, width, height, aspect, children, className
 }: any): ReactElement {
 
   // Make the wrapper style.  If expanding, use normal fill rules. Otherwise,
@@ -70,8 +70,7 @@ function VisualWrapper({
     <div
       data-cy='next-visual'
       className={ className }
-      style={ styles }
-      {...dataAttributes} >
+      style={ styles } >
       { children }
     </div>
   )

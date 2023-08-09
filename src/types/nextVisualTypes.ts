@@ -1,5 +1,3 @@
-// import type { ImageProps } from 'next/image'
-
 export type NextVisualProps = {
 
   image?: string
@@ -28,15 +26,3 @@ export enum ObjectFit {
   Cover = 'cover',
   Contain = 'contain',
 }
-
-export type NextImageProps = Omit<NextVisualProps, "video">
-
-
-// export type NextVisualProps = {
-// 	image?: string
-// 	video?: string
-// 	expand?: boolean
-//   aspect?: number // An explict aspect ratio
-// } & Omit<ImageProps, "src">
-
-// export type NextImageProps = Omit<NextVisualProps, "video">
