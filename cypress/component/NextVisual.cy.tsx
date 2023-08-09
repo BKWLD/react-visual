@@ -155,7 +155,12 @@ describe('loading', () => {
 
   it('images lazy load', () => {
 
-    cy.intercept('https://placehold.co/200x200', cy.spy().as('load'))
+    // Force responses to not be cached by browser
+    cy.intercept('https://placehold.co/200x200', req => {
+      req.on('before:response', (res) => {
+        res.headers['cache-control'] = 'no-store'
+      })
+    }).as('load')
 
     cy.mount(<NextVisual
       image='https://placehold.co/200x200'
@@ -166,16 +171,19 @@ describe('loading', () => {
       style={{marginTop: VH + 1}} />)
 
     cy.wait(100)
-    cy.get('@load').should('not.have.been.called')
+    cy.get('@load.all').should('have.length', 0)
 
     cy.get('[data-cy=next-visual').scrollIntoView()
-
-    cy.get('@load').should('have.been.called')
+    cy.get('@load.all').should('have.length', 1)
   })
 
   it('videos lazy load', () => {
 
-    cy.intercept('https://placehold.co/200x200.mp4', cy.spy().as('load'))
+    cy.intercept('https://placehold.co/200x200.mp4', req => {
+      req.on('before:response', (res) => {
+        res.headers['cache-control'] = 'no-store'
+      })
+    }).as('load')
 
     cy.mount(<NextVisual
       video='https://placehold.co/200x200.mp4'
@@ -186,11 +194,10 @@ describe('loading', () => {
       style={{marginTop: VH + 1}} />)
 
       cy.wait(100)
-      cy.get('@load').should('not.have.been.called')
+      cy.get('@load.all').should('have.length', 0)
 
       cy.get('[data-cy=next-visual').scrollIntoView()
-
-      cy.get('@load').should('have.been.called')
+      cy.get('@load.all').should('have.length', 1)
   })
 
 })
