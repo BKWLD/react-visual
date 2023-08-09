@@ -2,6 +2,7 @@ name: Cypress Tests
 
 on: [push]
 
+# This configuration is largely from the Cypress dashboard.
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
