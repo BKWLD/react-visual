@@ -10,7 +10,7 @@ import { fillStyles, transparentGif } from './lib/styles'
 export function NextVisual({
   image,
   video,
-  alt,
+  placeholderData,
   expand,
   aspect,
   width,
@@ -18,9 +18,10 @@ export function NextVisual({
   fit = ObjectFit.Cover,
   position,
   priority,
-  placeholderData,
   sizes,
+  alt,
   className = '',
+  style = {},
 }: NextVisualProps): ReactElement | null {
 
   // If no asset, return nothing
@@ -33,6 +34,7 @@ export function NextVisual({
       height,
       aspect,
       className,
+      style,
     }}>
 
       {/* Render image */}
@@ -62,12 +64,12 @@ export function NextVisual({
 
 // Wraps media elements and applys layout and other functionality
 function VisualWrapper({
-  expand, width, height, aspect, children, className
+  expand, width, height, aspect, children, className, style
 }: any): ReactElement {
 
   // Make the wrapper style.  If expanding, use normal fill rules. Otherwise,
   // apply width, height and aspect
-  const styles = expand ? fillStyles : {
+  const layoutStyles = expand ? fillStyles : {
     position: 'relative', // For expanded elements
     width: typeof width == 'number' ? `${width}px` : width,
     height: typeof height == 'number' ? `${height}px` : height,
@@ -80,7 +82,7 @@ function VisualWrapper({
     <div
       data-cy='next-visual'
       className={ className }
-      style={ styles } >
+      style={{ ...layoutStyles, ...style } } >
       { children }
     </div>
   )

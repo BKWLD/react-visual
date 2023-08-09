@@ -1,25 +1,25 @@
+import type { CSSProperties } from 'react'
+
 export type NextVisualProps = {
 
   image?: string
   video?: string
-
-  alt: string
+  placeholderData?: string
 
   expand?: boolean
   aspect?: number // An explict aspect ratio
   width?: number | string
   height?: number | string
-
-  priority?: boolean // Forwarded to next/image
-
-  placeholderData?: string
-  sizes?: string // Forwarded to next/image
   fit?: ObjectFit
   position?: string
 
-  className?: string
+  priority?: boolean
+  sizes?: string
 
-  dataCy?: string
+  alt: string
+
+  className?: string
+  style?: CSSProperties
 }
 
 export enum ObjectFit {
