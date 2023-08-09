@@ -23,6 +23,9 @@ export function NextVisual({
   className = '',
 }: NextVisualProps): ReactElement | null {
 
+  // If no asset, return nothing
+  if (!image && !video) return null
+
   return (
     <VisualWrapper {...{
       expand,

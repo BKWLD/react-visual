@@ -3,6 +3,19 @@ import { NextVisual } from '../../src/NextVisual'
 // Viewport sizes
 const VW = 500, VH = 500
 
+describe('no asset', () => {
+
+  it('renders nothing', () => {
+    cy.mount(<NextVisual
+      width={300}
+      height={200}
+      alt=''
+      data-cy='next-visual' />)
+    cy.get('[data-cy=next-visual]').should('not.exist')
+  })
+
+})
+
 describe('fixed size', () => {
 
   it('renders image', () => {
