@@ -54,12 +54,14 @@ function VisualWrapper({
   expand, width, height, aspect, children, dataAttributes, className
 }: any): ReactElement {
 
-  // Make the wrapper styles
+  // Make the wrapper style.  If expanding, use normal fill rules. Otherwise,
+  // apply width, height and aspect
   const styles = expand ? fillStyles : {
     position: 'relative', // For expanded elements
     width: typeof width == 'number' ? `${width}px` : width,
     height: typeof height == 'number' ? `${height}px` : height,
     aspectRatio: aspect,
+    maxWidth: '100%', // Don't exceed container width
   } as CSSProperties
 
   // Render wrapping component
