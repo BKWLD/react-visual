@@ -8,12 +8,18 @@ import { fillStyles, transparentGif } from './lib/styles'
 
 // Render a Sanity image via Next/Image
 export function NextVisual({
-  image, video,
+  image,
+  video,
   alt,
-  expand, aspect, width, height,
-  fit = ObjectFit.Cover, position,
+  expand,
+  aspect,
+  width,
+  height,
+  fit = ObjectFit.Cover,
+  position,
   priority,
-  placeholderData, sizes,
+  placeholderData,
+  sizes,
   className = '',
 }: NextVisualProps): ReactElement | null {
 
@@ -23,7 +29,8 @@ export function NextVisual({
       width,
       height,
       aspect,
-      className, }} >
+      className,
+    }}>
 
       {/* Render image */}
       { image && <VisualImage {...{
