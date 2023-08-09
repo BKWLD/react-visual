@@ -1,7 +1,8 @@
 import { NextVisual } from '../../src/NextVisual'
 
 // Viewport sizes
-const VW = 500, VH = 500
+const VW = Cypress.config('viewportWidth'),
+  VH = Cypress.config('viewportHeight')
 
 describe('no asset', () => {
 
