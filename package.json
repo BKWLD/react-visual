@@ -5,8 +5,16 @@
   "repository": "git@github.com:BKWLD/next-visual.git",
   "author": "Robert Reinhard <robert.reinhard@bukwild.com>",
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "cypress run --component",
+    "prepare": "yarn build",
+    "preversion": "yarn test",
+    "version": "git add -A",
+    "postversion": "git push --follow-tags"
+
   },
   "dependencies": {
     "next": "^13",
