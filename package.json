@@ -6,9 +6,11 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "next-visual",
-    "react-visual"
+    "packages/*"
   ],
+  "scripts": {
+    "test": "lerna run test"
+  },
   "dependencies": {},
   "devDependencies": {
     "lerna": "^7.1.5"

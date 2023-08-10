@@ -6,12 +6,14 @@ import {
   VisualWrapper,
   LazyVideo,
   collectDataAttributes,
-} from 'react-visual'
+} from '../../react/dist'
 
 import { NextVisualProps, ObjectFit } from './types/nextVisualTypes'
 
 // Render a Sanity image via Next/Image
-export function NextVisual(props: NextVisualProps): ReactElement | null {
+export default function NextVisual(
+  props: NextVisualProps
+): ReactElement | null {
 
   // Destructure props
   const {

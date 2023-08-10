@@ -1,7 +1,7 @@
 {
-  "name": "react-visual",
-  "version": "0.2.0",
-  "description": "Image and video renderer for React projects",
+  "name": "@react-visual/next",
+  "version": "0.2.1",
+  "description": "Image and video renderer for Next.js projects",
   "author": "Bukwild <info@bukwild.com>",
   "license": "MIT",
   "main": "dist/index.js",
@@ -11,18 +11,22 @@
   ],
   "scripts": {
     "build": "rm -rf dist/* && tsc -p tsconfig.pkg.json",
-    "prepare": "yarn build"
+    "test": "cypress run --component",
+    "prepare": "yarn build",
+    "preversion": "yarn test"
   },
   "dependencies": {
-    "react-intersection-observer": "^9"
+    "@react-visual/react": "^0.2.0"
   },
   "peerDependencies": {
+    "next": "^13",
     "react": "^18"
   },
   "devDependencies": {
     "@types/react": "^18.2.18",
     "@types/react-dom": "^18.2.7",
     "cypress": "^12.17.3",
+    "next": "^13",
     "react": "^18",
     "react-dom": "^18.2.0",
     "typescript": "^5.1.6"
