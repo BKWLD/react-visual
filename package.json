@@ -1,6 +1,6 @@
 {
   "name": "next-visual",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Image and video renderer for Next.js projects",
   "repository": "git@github.com:BKWLD/next-visual.git",
   "author": "Robert Reinhard <robert.reinhard@bukwild.com>",
@@ -14,7 +14,6 @@
     "preversion": "yarn test",
     "version": "git add -A",
     "postversion": "git push --follow-tags"
-
   },
   "dependencies": {
     "next": "^13",
