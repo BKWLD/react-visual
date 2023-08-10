@@ -1,0 +1,30 @@
+{
+  "name": "react-visual",
+  "version": "0.0.1",
+  "description": "Image and video renderer for React projects",
+  "author": "Bukwild <info@bukwild.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "rm -rf dist/* && tsc -p tsconfig.pkg.json",
+    "prepare": "yarn build"
+  },
+  "dependencies": {
+    "react-intersection-observer": "^9"
+  },
+  "peerDependencies": {
+    "react": "^18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.18",
+    "@types/react-dom": "^18.2.7",
+    "cypress": "^12.17.3",
+    "react": "^18",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.1.6"
+  }
+}
