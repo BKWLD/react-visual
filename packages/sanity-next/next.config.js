@@ -11,7 +11,7 @@ module.exports = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'placehold.co',
+        hostname: 'cdn.sanity.io',
       },
     ],
   },

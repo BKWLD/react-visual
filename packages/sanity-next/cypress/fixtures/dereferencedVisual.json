@@ -1,0 +1,106 @@
+{
+  "image": {
+    "_type": "image",
+    "asset": {
+      "_id": "image-5e598e68ba3ee4438ac113a8df445afe21b5a164-300x150-png",
+      "sha1hash": "5e598e68ba3ee4438ac113a8df445afe21b5a164",
+      "uploadId": "BQg2QlOwtC9viIp8Qc6mYaNsbfYeO4cc",
+      "size": 3427,
+      "originalFilename": "300x150.png",
+      "extension": "png",
+      "url": "https://cdn.sanity.io/images/3dmwp8fs/development/5e598e68ba3ee4438ac113a8df445afe21b5a164-300x150.png",
+      "assetId": "5e598e68ba3ee4438ac113a8df445afe21b5a164",
+      "_createdAt": "2023-08-10T21:35:18Z",
+      "_type": "sanity.imageAsset",
+      "_rev": "76ewoxhAm9hNbPwR5Egg7s",
+      "mimeType": "image/png",
+      "path": "images/3dmwp8fs/development/5e598e68ba3ee4438ac113a8df445afe21b5a164-300x150.png",
+      "_updatedAt": "2023-08-10T21:35:18Z",
+      "metadata": {
+        "_type": "sanity.imageMetadata",
+        "palette": {
+          "vibrant": {
+            "population": 0,
+            "background": "#7f7f7f",
+            "_type": "sanity.imagePaletteSwatch",
+            "foreground": "#fff",
+            "title": "#fff"
+          },
+          "dominant": {
+            "foreground": "#000",
+            "title": "#fff",
+            "population": 3.58,
+            "background": "#9b9b9b",
+            "_type": "sanity.imagePaletteSwatch"
+          },
+          "_type": "sanity.imagePalette",
+          "darkMuted": {
+            "background": "#4c4c4c",
+            "_type": "sanity.imagePaletteSwatch",
+            "foreground": "#fff",
+            "title": "#fff",
+            "population": 0
+          },
+          "muted": {
+            "_type": "sanity.imagePaletteSwatch",
+            "foreground": "#000",
+            "title": "#fff",
+            "population": 3.58,
+            "background": "#9b9b9b"
+          },
+          "lightVibrant": {
+            "background": "#bcbcbc",
+            "_type": "sanity.imagePaletteSwatch",
+            "foreground": "#000",
+            "title": "#fff",
+            "population": 0
+          },
+          "darkVibrant": {
+            "background": "#424242",
+            "_type": "sanity.imagePaletteSwatch",
+            "foreground": "#fff",
+            "title": "#fff",
+            "population": 0
+          },
+          "lightMuted": {
+            "background": "#bcbcbc",
+            "_type": "sanity.imagePaletteSwatch",
+            "foreground": "#000",
+            "title": "#fff",
+            "population": 0.47
+          }
+        },
+        "hasAlpha": true,
+        "lqip": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuklEQVQokbWSaw6DIBCEvf+5CEJ8xMhLQc6yzWxKQ9Rq06Y/JsDO8jkbaXLOtG0blfUb5YrR1MWiTwD73vzcM/AOcvehfJYQSinRsizkvX9pXVeuQzFG9kMI7GGfUjomLELDOI6klKK2bUlrTdM0kbWWnHNkjGG/6zr2hmFg+CUQTVJKEkIwFIB5nhmGte97hsEDOFwBMRJGwWUIyXABY5dxkRT1kjrG+OefUh/e6ey57P3TkX992AA+AD0OxVcQwnW2AAAAAElFTkSuQmCC",
+        "dimensions": {
+          "_type": "sanity.imageDimensions",
+          "width": 300,
+          "aspectRatio": 2,
+          "height": 150
+        },
+        "isOpaque": true,
+        "blurHash": "M5PGjX%M-;-;-;_3j[j[j[j[~qj[IUWBIU"
+      }
+    }
+  },
+  "description": "Placeholder test visual",
+  "video": {
+    "_type": "file",
+    "asset": {
+      "mimeType": "video/mp4",
+      "path": "files/3dmwp8fs/development/ae8c47099d7acf92988a4a9546dc007f60582aa1.mp4",
+      "_createdAt": "2023-08-10T21:48:35Z",
+      "uploadId": "bRZuPioEjClZIwhxjVyTDcK2rqWCs5pb",
+      "url": "https://cdn.sanity.io/files/3dmwp8fs/development/ae8c47099d7acf92988a4a9546dc007f60582aa1.mp4",
+      "assetId": "ae8c47099d7acf92988a4a9546dc007f60582aa1",
+      "extension": "mp4",
+      "_rev": "76ewoxhAm9hNbPwR5Elx5Y",
+      "sha1hash": "ae8c47099d7acf92988a4a9546dc007f60582aa1",
+      "size": 2781,
+      "_id": "file-ae8c47099d7acf92988a4a9546dc007f60582aa1-mp4",
+      "_type": "sanity.fileAsset",
+      "_updatedAt": "2023-08-10T21:48:35Z",
+      "originalFilename": "300x150.mp4"
+    }
+  }
+}
