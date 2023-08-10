@@ -1,28 +1,20 @@
-// import type { NextVisualProps } from '@react-visual/next'
+import type { NextVisualProps } from '@react-visual/next'
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
+import type { SanityFileSource } from '@sanity/asset-utils'
+
 
 export type SanityNextVisualProps = {
+  image?: Captionable & SanityImageSource
+  video?: Captionable & SanityFileSource
+  visual?: {
+    image?: SanityImageSource
+    video?: SanityFileSource
+    alt?: string
+  }
+} & Omit< NextVisualProps, 'image' | 'video'>
 
-  image?: string
-  video?: string
-  placeholderData?: string
-
-  expand?: boolean
-  aspect?: number // An explict aspect ratio
-  width?: number | string
-  height?: number | string
-  fit?: ObjectFit
-  position?: string
-
-  priority?: boolean
-  sizes?: string
-
-  alt: string
-
-  className?: string
-  // style?: CSSProperties
-}
-
-export enum ObjectFit {
-  Cover = 'cover',
-  Contain = 'contain',
+type Captionable = {
+  alt?: string
+  title?: string
+  caption?: string
 }

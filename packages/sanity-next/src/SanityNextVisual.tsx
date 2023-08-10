@@ -7,9 +7,10 @@ import {
   objectPositionFromSource,
   placeholderFromSource,
 } from './lib/sourceMapping'
+import { SanityNextVisualProps } from './types/sanityNextVisualTypes'
 
 export default function SanityNextVisual(
-  props: any
+  props: SanityNextVisualProps
 ): ReactElement | null {
 
   // Destructure some props
