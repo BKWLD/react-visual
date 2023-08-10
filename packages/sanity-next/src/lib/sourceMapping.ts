@@ -4,7 +4,7 @@ import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 export function altTextFromSource(
   source: SanityImageSource
 ): string {
-  if (typeof source != 'object') return ''
+  if (!source || typeof source != 'object') return ''
   else if ('alt' in source) return source.alt
   else if ('title' in source) return source.title
   else if ('caption' in source) return source.caption
@@ -15,6 +15,7 @@ export function altTextFromSource(
 export function aspectRatioFromSource(
   source: SanityImageSource
 ): number | null {
+  if (!source) return null
   if (typeof source != 'object' || !('asset' in source)) return null
   return source.asset.metadata?.dimensions?.aspectRatio
 }
@@ -23,6 +24,7 @@ export function aspectRatioFromSource(
 export function objectPositionFromSource(
   source: SanityImageSource
 ): string | null {
+  if (!source) return null
   if (typeof source != 'object' || !('hotspot' in source)) return null
   const left = source.hotspot.x - source.crop.left + source.crop.right,
     top =  source.hotspot.y - source.crop.top + source.crop.bottom
@@ -33,6 +35,7 @@ export function objectPositionFromSource(
 export function placeholderFromSource(
   source: SanityImageSource
 ): string| null {
+  if (!source) return null
   if (typeof source != 'object' || !('asset' in source)) return null
   return source.asset?.metadata?.lqip
 }

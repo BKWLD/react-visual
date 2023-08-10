@@ -6,7 +6,7 @@
     },
     "_type": "image"
   },
-  "description": "Placeholder test visual",
+  "alt": "Placeholder test visual",
   "video": {
     "_type": "file",
     "asset": {

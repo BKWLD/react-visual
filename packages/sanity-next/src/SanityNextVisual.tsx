@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import NextVisual from '@react-visual/next'
-import { urlForImage } from './lib/urlBuilding'
+import { makeImageUrl, makeAssetUrl } from './lib/urlBuilding'
 import {
   aspectRatioFromSource,
   altTextFromSource,
@@ -13,11 +13,12 @@ export default function SanityNextVisual(
 ): ReactElement | null {
 
   // Destructure some props
-  const {
+  let {
 
     // Sources
     image,
     video,
+    visual,
 
     // Props that may be calculated
     placeholderData,
@@ -26,6 +27,12 @@ export default function SanityNextVisual(
     alt,
   } = props
 
+  // If visual is provided, use it's sources
+  if (visual?.image) image = visual.image
+  if (visual?.video) video = visual.video
+  if (visual?.alt) alt = visual?.alt
+
+  // Render NextVisual instance
   return (
     <NextVisual
 
@@ -33,7 +40,8 @@ export default function SanityNextVisual(
       {...props}
 
       // Props that are calculated from Sanity data (mostly images)
-      image={ urlForImage(image).url() }
+      image={ makeImageUrl(image) }
+      video={ makeAssetUrl(video) }
       aspect={ aspect || aspectRatioFromSource(image) }
       position={ position || objectPositionFromSource(image) }
       alt={ alt || altTextFromSource(image) || altTextFromSource(video) }
