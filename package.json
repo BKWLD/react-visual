@@ -8,5 +8,9 @@
   "workspaces": [
     "next-visual",
     "react-visual"
-  ]
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "lerna": "^7.1.5"
+  }
 }
