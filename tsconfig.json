@@ -5,7 +5,7 @@
     "declaration": true,
     "outDir": "./dist",
     "strict": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
 
     // Required for importing packages, like React, that have `export =`
     "esModuleInterop": true,
