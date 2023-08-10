@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
-
-import { NextVisualProps, ObjectFit } from './types/nextVisualTypes'
-import { makeImagePlaceholder } from './lib/placeholder'
 import type { CSSProperties, ReactElement } from 'react'
+
+import { makeImagePlaceholder } from './lib/placeholder'
 import { fillStyles, transparentGif } from './lib/styles'
 import { collectDataAttributes } from './lib/attributes'
+
+import { NextVisualProps, ObjectFit } from './types/nextVisualTypes'
 
 // Render a Sanity image via Next/Image
 export function NextVisual(props: NextVisualProps): ReactElement | null {
