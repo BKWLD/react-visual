@@ -1,6 +1,6 @@
 {
   "name": "next-visual",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Image and video renderer for Next.js projects",
   "repository": "git@github.com:BKWLD/next-visual.git",
   "author": "Robert Reinhard <robert.reinhard@bukwild.com>",
