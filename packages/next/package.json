@@ -10,7 +10,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "rm -rf dist/* && tsc -p tsconfig.pkg.json",
+    "build": "rm -rf dist/* && tsc",
     "test": "cypress run --component",
     "prepare": "yarn build",
     "preversion": "yarn test"

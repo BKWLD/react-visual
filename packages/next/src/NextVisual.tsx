@@ -6,7 +6,7 @@ import {
   VisualWrapper,
   LazyVideo,
   collectDataAttributes,
-} from '../../react/dist'
+} from '@react-visual/react'
 
 import { NextVisualProps, ObjectFit } from './types/nextVisualTypes'
 

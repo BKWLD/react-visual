@@ -1,5 +1,5 @@
 {
-  "name": "react-visual-components",
+  "name": "react-visual",
   "version": "0.0.1",
   "description": "Image and video renderers for React projects",
   "author": "Bukwild <info@bukwild.com>",
@@ -9,7 +9,9 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "lerna run test"
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "prepare": "yarn build"
   },
   "dependencies": {},
   "devDependencies": {
