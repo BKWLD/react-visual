@@ -1,4 +1,4 @@
-import { NextVisual } from '../../src/NextVisual'
+import NextVisual from '../../src'
 
 // Viewport sizes
 const VW = Cypress.config('viewportWidth'),
