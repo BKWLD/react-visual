@@ -1,13 +1,15 @@
 {
   "name": "next-visual",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Image and video renderer for Next.js projects",
   "repository": "git@github.com:BKWLD/next-visual.git",
   "author": "Robert Reinhard <robert.reinhard@bukwild.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": [ "dist/**/*" ],
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "cypress run --component",
