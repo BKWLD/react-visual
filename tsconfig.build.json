@@ -12,7 +12,14 @@
 
     // Fixes build failures when dependent types have errors, like:
     // node_modules/next/dist/shared/lib/get-img-props.d.ts:70
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    // Link up workspaces
+    "paths": {
+      "@react-visual/*": [
+        "./packages/*/"
+      ]
+    }
   },
   "exclude": [
     "node_modules",
