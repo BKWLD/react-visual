@@ -133,5 +133,6 @@ dist
 .DS_Store
 
 # Cypress
-cypress/downloads
-cypress/videos
+downloads
+screenshots
+videos
