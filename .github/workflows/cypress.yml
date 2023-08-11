@@ -21,6 +21,7 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           working-directory: ${{ matrix.dir }}
+          build: yarn build
           component: true
           record: true
         env:
