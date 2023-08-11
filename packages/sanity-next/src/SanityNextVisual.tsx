@@ -19,7 +19,7 @@ export default function SanityNextVisual(
     // Sources
     image,
     video,
-    visual,
+    src,
 
     // Props that may be calculated
     placeholderData,
@@ -28,12 +28,13 @@ export default function SanityNextVisual(
     alt,
   } = props
 
-  // If visual is provided, use it's sources
-  if (visual?.image) image = visual.image
-  if (visual?.video) video = visual.video
-  if (visual?.alt) alt = visual?.alt
+  // If visual is provided, use it's child values
+  if (src?.image) image = src.image
+  if (src?.video) video = src.video
+  if (src?.alt) alt = src?.alt
 
   // Render NextVisual instance
+  console.log('visual', image, video)
   return (
     <NextVisual
 
