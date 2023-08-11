@@ -17,9 +17,6 @@ jobs:
       - name: Install
         uses: bkwld/cloak-actions/install@v1
 
-      - name: Build chunks
-        run: yarn build
-
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
