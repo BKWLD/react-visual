@@ -11,9 +11,7 @@
   ],
   "scripts": {
     "build": "rm -rf dist/* && tsc",
-    "test": "cypress run --component",
-    "prepare": "yarn build",
-    "preversion": "yarn test"
+    "test": "cypress run --component"
   },
   "dependencies": {
     "@react-visual/next": "^0.2.0",

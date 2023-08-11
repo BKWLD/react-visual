@@ -10,8 +10,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "rm -rf dist/* && tsc",
-    "prepare": "yarn build"
+    "build": "rm -rf dist/* && tsc"
   },
   "dependencies": {
     "react-intersection-observer": "^9"
