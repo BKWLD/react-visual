@@ -76,11 +76,11 @@ export default function NextVisual(
 
 // An image rendered within the Visual
 function NextImage({
-  src, sizes, alt, fit, position, priority, placeholderData
+  src, sizes, alt, fit, position, priority, loader, placeholderData
 }: any): ReactElement {
   return (
     <Image
-      { ...{ src, sizes, priority, alt } }
+      { ...{ src, sizes, priority, loader, alt } }
       fill
       style={{
         objectFit: fit,
