@@ -41,8 +41,9 @@ For more examples, read [the Cypress component tests](./cypress/component).
 
 | Prop | Type | Description
 | -- | -- | --
-| `image` | `string` | URL to an image asset.
-| `video` | `string` | URL to a video asset asset.
+| `image` | `SanityImageSource` | A Sanity `image` object.
+| `video` | `SanityFileSource` | A Sanity `file` object for a video.
+| `src` | `object` | An object containg properites of `image`, `video`, and `alt`.  This is intended to modeled in Sanity as an object.
 | `placeholderData` | `string` | A Data URL that is rendered before the image loads via [`next/image`'s `blurDataURL`](https://nextjs.org/docs/pages/api-reference/components/image#blurdataurl).
 
 ### Layout
