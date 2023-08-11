@@ -1,6 +1,11 @@
 # @react-visual/sanity-next [![react-visual](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/count/fn6c7w&style=flat&logo=cypress)](https://cloud.cypress.io/projects/fn6c7w/runs)
 
-Renders Sanity images and videos into a container using Next.js features.
+Renders Sanity images and videos into a container using Next.js.  Features:
+
+- Uses `next/image` to render images
+- Generates responsive images using Sanity CDN
+- Automatically sets aspect ratio, placeholder, and hotspot
+- Videos are lazyloaded (unless `priority` flag is set)
 
 ## Install
 
@@ -17,6 +22,8 @@ NEXT_PUBLIC_SANITY_DATASET=
 
 ## Usage
 
+You can use explicit `image` and `video` props.  These are expected to be Sanity [`image`](https://www.sanity.io/docs/image-type) and [`file`](https://www.sanity.io/docs/file-type) objects, respectively, and should have a child field called `alt` that contains a description of the asset.
+
 ```jsx
 import Visual from '@react-visual/sanity-next'
 
@@ -32,6 +39,30 @@ export default function Example({
   )
 }
 ```
+
+Alternatively, you can model a Sanity [`object`](https://www.sanity.io/docs/object-type) containing `image`, `video`, and `alt` fields and use the `src` shorthand prop:
+
+```jsx
+import Visual from '@react-visual/sanity-next'
+
+export default function Example({ sanityVisualObject }) {
+  return <Visual src={ sanityVisualObject } sizes='100vw' />
+}
+```
+
+If you dereference your `image` objects in groq with a query like:
+
+```groq
+  *[_type == 'article']{
+    image: { ..., asset-> }
+  }
+```
+
+Then the component will read the following properties from your Image automatically:
+
+- Aspect Ratio
+- Hotspot / Focal Point
+- Placeholder blur data
 
 For more examples, read [the Cypress component tests](./cypress/component).
 

@@ -6,12 +6,14 @@ export type SanityNextVisualProps = {
   image?: Captionable & SanityImageSource
   video?: Captionable & SanityFileSource
   alt?: string
-  src?: {
-    image?: SanityImageSource
-    video?: SanityFileSource
-    alt?: string
-  }
+  src?: SanityVisualObject
 } & Omit< NextVisualProps, 'image' | 'video' | 'alt'>
+
+type SanityVisualObject = {
+  image?: SanityImageSource
+  video?: SanityFileSource
+  alt?: string
+}
 
 type Captionable = {
   alt?: string
