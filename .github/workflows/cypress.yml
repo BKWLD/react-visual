@@ -14,10 +14,8 @@ jobs:
 
     steps:
 
-      - name: Install dependencies
-        uses: cypress-io/github-action@v5
-        with:
-          runTests: false
+      - name: Install
+        uses: bkwld/cloak-actions/install@v1
 
       - name: Build chunks
         run: yarn build
