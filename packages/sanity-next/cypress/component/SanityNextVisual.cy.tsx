@@ -47,7 +47,7 @@ describe('de-referenced source', () => {
 
   it('supports combined `visual` prop', () => {
     cy.mount(<SanityNextVisual
-      visual={ dereferencedVisual }
+      src={ dereferencedVisual }
       data-cy='next-visual' />)
     cy.get('[data-cy=next-visual]').should('exist')
     cy.get('img').hasDimensions(VW, VW / 2) // Aspect of image is 2/1
@@ -63,7 +63,6 @@ describe('referential source', () => {
       image={ referentialImage }
       width={ 300 }
       height={ 150 }
-      alt=''
       data-cy='next-visual' />)
     cy.get('[data-cy=next-visual]').should('exist')
     cy.get('img').hasDimensions(300, 150)
@@ -81,7 +80,7 @@ describe('referential source', () => {
 
   it('renders visual props', () => {
     cy.mount(<SanityNextVisual
-      visual={ referentialVisual }
+      src={ referentialVisual }
       aspect={ 300 / 150}
       data-cy='next-visual' />)
     cy.get('[data-cy=next-visual]').should('exist')
