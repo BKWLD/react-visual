@@ -5,12 +5,13 @@ import type { SanityFileSource } from '@sanity/asset-utils'
 export type SanityNextVisualProps = {
   image?: Captionable & SanityImageSource
   video?: Captionable & SanityFileSource
+  alt?: string
   src?: {
     image?: SanityImageSource
     video?: SanityFileSource
     alt?: string
   }
-} & Omit< NextVisualProps, 'image' | 'video'>
+} & Omit< NextVisualProps, 'image' | 'video' | 'alt'>
 
 type Captionable = {
   alt?: string
