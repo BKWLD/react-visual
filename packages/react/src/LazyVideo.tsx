@@ -1,3 +1,6 @@
+// Support Next.js 13 app router hydration where useInView will cause errors
+"use client";
+
 import { useInView } from 'react-intersection-observer'
 import type { ReactElement } from 'react'
 
