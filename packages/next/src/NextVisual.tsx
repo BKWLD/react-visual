@@ -28,6 +28,7 @@ export default function NextVisual(
     position,
     priority,
     sizes,
+    imageLoader,
     alt,
     className = '',
     style = {},
@@ -55,6 +56,7 @@ export default function NextVisual(
         fit,
         position,
         priority,
+        loader: imageLoader,
         placeholderData,
       }} /> }
 

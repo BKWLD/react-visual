@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import NextVisual from '@react-visual/next'
-import { makeImageUrl, makeAssetUrl } from './lib/urlBuilding'
+import { makeImageUrl, makeAssetUrl, imageLoader } from './lib/urlBuilding'
 import {
   aspectRatioFromSource,
   altTextFromSource,
@@ -42,6 +42,7 @@ export default function SanityNextVisual(
 
       // Props that are calculated from Sanity data (mostly images)
       image={ makeImageUrl(image) }
+      imageLoader={ imageLoader }
       video={ makeAssetUrl(video) }
       aspect={ aspect || aspectRatioFromSource(image) }
       position={ position || objectPositionFromSource(image) }

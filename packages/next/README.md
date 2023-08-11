@@ -1,4 +1,4 @@
-# next-visual [![next-visual](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/fn6c7w/main&style=flat&logo=cypress)](https://cloud.cypress.io/projects/fn6c7w/runs)
+# @react-visual/next
 
 Renders images and videos into a container.  Features:
 
@@ -9,7 +9,7 @@ Renders images and videos into a container.  Features:
 ## Install
 
 ```sh
-yarn add next-visual
+yarn add @react-visual/next
 ```
 
 Images will be rendered using `next/image` so expect to do configuration of [`remotePatterns`](https://nextjs.org/docs/app/api-reference/components/image#remotepatterns) for CMS hosted images.
@@ -17,11 +17,11 @@ Images will be rendered using `next/image` so expect to do configuration of [`re
 ## Usage
 
 ```jsx
-import { NextVisual } from 'next-visual'
+import Visual from '@react-visual/next'
 
 export default function Example() {
   return (
-    <NextVisual
+    <Visual
       image='https://placehold.co/300x150'
       video='https://placehold.co/300x150.mp4'
       aspect={300/150}
@@ -60,7 +60,7 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | -- | -- | --
 | `priority` | `boolean` | Sets [`next/image`'s `priority`](https://nextjs.org/docs/pages/api-reference/components/image#priority) and videos to not lazy load.
 | `sizes` | `string` | Sets [`next/image`'s `sizes`](https://nextjs.org/docs/pages/api-reference/components/image#sizes) prop.
-
+| `imageLoader` | `Function` | This is passed through [to `next/image`'s `loader` prop](https://nextjs.org/docs/app/api-reference/components/image#loader).
 
 ### Accessibility
 

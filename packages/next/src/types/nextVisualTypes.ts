@@ -15,6 +15,7 @@ export type NextVisualProps = {
 
   priority?: boolean
   sizes?: string
+  imageLoader?: Function
 
   alt: string
 
