@@ -7,6 +7,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         dir:
           - packages/next
@@ -25,6 +26,7 @@ jobs:
           component: true
           record: true
           group: Component Tests
+          parallel: true
           tag: ${{ matrix.dir }}
         env:
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
