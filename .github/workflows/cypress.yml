@@ -6,6 +6,11 @@ on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dir:
+          - packages/next
+          - packages/sanity-next
 
     steps:
 
@@ -15,7 +20,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          working-directory: packages/next
+          working-directory: ${{ matrix.dir }}
           component: true
           record: true
         env:
