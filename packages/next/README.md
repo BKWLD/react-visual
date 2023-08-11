@@ -1,4 +1,4 @@
-# @react-visual/next [![react-visual](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/count/fn6c7w&style=flat&logo=cypress)](https://cloud.cypress.io/projects/fn6c7w/runs)
+# @react-visual/next [![react-visual](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/fn6c7w&style=flat&logo=cypress)](https://cloud.cypress.io/projects/fn6c7w/runs)
 
 Renders images and videos into a container.  Features:
 
