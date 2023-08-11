@@ -1,6 +1,6 @@
 {
   "name": "@react-visual/next",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Image and video renderer for Next.js projects",
   "author": "Bukwild <info@bukwild.com>",
   "license": "MIT",
