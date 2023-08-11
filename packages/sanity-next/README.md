@@ -50,12 +50,12 @@ export default function Example({ sanityVisualObject }) {
 }
 ```
 
-If you dereference your `image` objects in groq with a query like:
+If you de-reference your `image` objects in groq with a query like:
 
 ```groq
-  *[_type == 'article']{
-    image: { ..., asset-> }
-  }
+*[_type == 'article']{
+  image: { ..., asset-> }
+}
 ```
 
 Then the component will read the following properties from your Image automatically:
@@ -75,18 +75,18 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | `image` | `SanityImageSource` | A Sanity `image` object.
 | `video` | `SanityFileSource` | A Sanity `file` object for a video.
 | `src` | `object` | An object containg properites of `image`, `video`, and `alt`.  This is intended to modeled in Sanity as an object.
-| `placeholderData` | `string` | A Data URL that is rendered before the image loads via [`next/image`'s `blurDataURL`](https://nextjs.org/docs/pages/api-reference/components/image#blurdataurl).
+| `placeholderData` | `string` | A Data URL that is rendered before the image loads via [`next/image`'s `blurDataURL`](https://nextjs.org/docs/pages/api-reference/components/image#blurdataurl). *If you de-reference your images, this will be set automatically*.
 
 ### Layout
 
 | Prop | Type | Description
 | -- | -- | --
 | `expand` | `boolean` | Make the Visual fill it's container via CSS using absolute positioning.
-| `aspect` | `number` | Force the Visual to a specific aspect ratio.
+| `aspect` | `number` | Force the Visual to a specific aspect ratio. *If you de-reference your images, this will be set automatically to the aspect ratio of the image.*.
 | `width` | `number`, `string` | A CSS dimension value or a px number.
 | `height` | `number`, `string` | A CSS dimension value or a px number.
 | `fit` | `string` | An [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) value that is applied to the assets.  Defaults to `cover`.
-| `position` | `string` | An [`object-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) value.
+| `position` | `string` | An [`object-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) value. *If you de-reference your images, this will be set automatically to the choices made in your image hotspot*.
 
 ### Loading
 
