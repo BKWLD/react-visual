@@ -1,4 +1,4 @@
-# @react-visual/sanity-next
+# @react-visual/sanity-next [![react-visual](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/count/fn6c7w&style=flat&logo=cypress)](https://cloud.cypress.io/projects/fn6c7w/runs)
 
 Renders Sanity images and videos into a container using Next.js features.
 
