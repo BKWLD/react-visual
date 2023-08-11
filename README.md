@@ -18,14 +18,16 @@ import Visual from '@react-visual/next'
 export default function Example() {
   return (
     <Visual
-      image='https://placehold.co/300x150'
-      video='https://placehold.co/300x150.mp4'
-      aspect={300/150}
+      image="https://placehold.co/1600x900.png"
+      video="https://placehold.co/1600x900.mp4"
+      aspect={16 / 9}
       sizes='100vw'
-      alt='Example using placeholder images' />
+      alt='Example using placeholder assets' />
   )
 }
 ```
+
+[View CodeSandbox demo](https://codesandbox.io/p/sandbox/react-visual-next-demo-8lwxl9)
 
 ### @react-visual/sanity-next
 

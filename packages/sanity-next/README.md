@@ -58,7 +58,7 @@ If you de-reference your `image` objects in groq with a query like:
 }
 ```
 
-Then the component will read the following properties from your Image automatically:
+...then the component will read the following properties from your Image automatically:
 
 - Aspect Ratio
 - Hotspot / Focal Point
