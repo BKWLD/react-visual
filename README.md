@@ -44,4 +44,4 @@ export default function Example({ background }) {
 This project uses Lerna to release versions, using [the default versioning strategy](https://lerna.js.org/docs/features/version-and-publish#versioning-strategies).
 
 - `yarn lerna version` - Tag a new version
-- `yarn lerna publish` - Publish versions to NPM
+- `yarn lerna publish from-package` - Publish versions to NPM
