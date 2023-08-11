@@ -59,7 +59,7 @@ export function imageLoader(
 }
 
 // Return the URL of an asset
-export function makeAssetUrl(
+export function makeFileUrl(
   source?: SanityFileSource
 ):string | undefined {
   if (!source) return undefined
