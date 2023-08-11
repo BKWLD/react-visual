@@ -34,7 +34,6 @@ export default function SanityNextVisual(
   if (src?.alt) alt = src?.alt
 
   // Render NextVisual instance
-  console.log('visual', image, video)
   return (
     <NextVisual
 
