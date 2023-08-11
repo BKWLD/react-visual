@@ -1,0 +1,17 @@
+{
+  "image": {
+    "asset": {
+      "_ref": "image-5e598e68ba3ee4438ac113a8df445afe21b5a164-300x150-png",
+      "_type": "reference"
+    },
+    "_type": "image"
+  },
+  "alt": "Placeholder test visual",
+  "video": {
+    "_type": "file",
+    "asset": {
+      "_ref": "file-ae8c47099d7acf92988a4a9546dc007f60582aa1-mp4",
+      "_type": "reference"
+    }
+  }
+}

@@ -1,24 +1,9 @@
 {
+  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "declaration": true,
-    "outDir": "./dist",
-    "strict": true,
-    "jsx": "react-jsx",
-
-    // Required for importing packages, like React, that have `export =`
-    "esModuleInterop": true,
-
-    // Fixes build failures when dependent types have errors, like:
-    // node_modules/next/dist/shared/lib/get-img-props.d.ts:70
-    "skipLibCheck": true
+    "baseUrl": "./"
   },
   "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
+    "./packages/*/**.ts"
   ]
 }

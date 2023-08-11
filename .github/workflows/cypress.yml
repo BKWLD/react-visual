@@ -6,32 +6,27 @@ on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dir:
+          - packages/next
+          - packages/sanity-next
 
     steps:
 
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Install
+        uses: bkwld/cloak-actions/install@v1
 
       - name: Cypress run
-
-        # Uses the official Cypress GitHub action https://github.com/cypress-io/github-action
         uses: cypress-io/github-action@v5
         with:
-
-          # Enable component testing
-          # https://github.com/marketplace/actions/cypress-io#component-testing
+          install: false
+          working-directory: ${{ matrix.dir }}
           component: true
-
-          # Records to Cypress Cloud
-          # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
           record: true
-
         env:
-
-          # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
-          # in GitHub repo → Settings → Secrets → Actions
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-
-          # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID:  ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}

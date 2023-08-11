@@ -1,0 +1,20 @@
+{
+  "alt": "Placeholder test video",
+  "asset": {
+    "path": "files/3dmwp8fs/development/ae8c47099d7acf92988a4a9546dc007f60582aa1.mp4",
+    "_rev": "76ewoxhAm9hNbPwR5Elx5Y",
+    "mimeType": "video/mp4",
+    "url": "https://cdn.sanity.io/files/3dmwp8fs/development/ae8c47099d7acf92988a4a9546dc007f60582aa1.mp4",
+    "_type": "sanity.fileAsset",
+    "sha1hash": "ae8c47099d7acf92988a4a9546dc007f60582aa1",
+    "size": 2781,
+    "assetId": "ae8c47099d7acf92988a4a9546dc007f60582aa1",
+    "_createdAt": "2023-08-10T21:48:35Z",
+    "_id": "file-ae8c47099d7acf92988a4a9546dc007f60582aa1-mp4",
+    "_updatedAt": "2023-08-10T21:48:35Z",
+    "extension": "mp4",
+    "originalFilename": "300x150.mp4",
+    "uploadId": "bRZuPioEjClZIwhxjVyTDcK2rqWCs5pb"
+  },
+  "_type": "file"
+}
