@@ -2,9 +2,42 @@
 
 A monorepo hosting components for rendering image and video in a single container for easy rendering of visual elements.
 
-- [`@react-visual/react`](./packages/react) - Currently just helper components used by framework & CMS specific components
-- [`@react-visual/next`](./packages/next) - Uses the `next/image` component for rendering images.
-- [`@react-visual/sanity-next`](./packages/sanity-next) - Takes Sanity asset and passes them to `@react-visual/next` for rendering.
+- [@react-visual/react](./packages/react) - Currently just helper components used by framework & CMS specific components
+- [@react-visual/next](./packages/next) - Uses the `next/image` component for rendering images.
+- [@react-visual/sanity-next](./packages/sanity-next) - Takes Sanity asset and passes them to `@react-visual/next` for rendering.
+
+## Examples
+
+### @react-visual/next
+
+Using framework adapter for Next.js:
+
+```jsx
+import Visual from '@react-visual/next'
+
+export default function Example() {
+  return (
+    <Visual
+      image='https://placehold.co/300x150'
+      video='https://placehold.co/300x150.mp4'
+      aspect={300/150}
+      sizes='100vw'
+      alt='Example using placeholder images' />
+  )
+}
+```
+
+### @react-visual/sanity-next
+
+Using Sanity + Next.js Adapter to automatically populate aspect ratio, alt, blurred placeholder, and support both image and video in one object:
+
+```jsx
+import Visual from '@react-visual/sanity-next'
+
+export default function Example({ background }) {
+  return <Visual src={ background } sizes='100vw' />
+}
+```
 
 ## Contributing
 
