@@ -1,11 +1,7 @@
 import createImageUrlBuilder from '@sanity/image-url'
-import {
-  getFileAsset,
-  getImage,
-  type SanityFileSource
-} from '@sanity/asset-utils'
+import { getFileAsset, type SanityFileSource } from '@sanity/asset-utils'
 import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
-import type { ImageLoaderProps } from 'next/image'
+import type { ImageLoader, ImageLoaderProps } from 'next/image'
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import { ObjectFit } from '@react-visual/next'
 
@@ -54,12 +50,15 @@ export function makeImageBuilder(source: SanityImageSource, {
 }
 
 // Make a next/image url loader
-export function imageLoader(
-  { src, width, quality }: ImageLoaderProps
-): string {
-  const builder = makeImageBuilder(getImage(src)).width(width)
-  if (quality) builder.quality(quality)
-  return builder.url()
+export function makeImageLoader(
+  source?: SanityImageSource
+): ImageLoader | undefined {
+  if (!source) return undefined
+  return ({ width, quality }: ImageLoaderProps): string => {
+    let builder = makeImageBuilder(source, { width })
+    if (quality) builder = builder.quality(quality)
+    return builder.url()
+  }
 }
 
 // Return the URL of an asset
