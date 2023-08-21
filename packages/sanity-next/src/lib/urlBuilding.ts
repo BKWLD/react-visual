@@ -38,16 +38,16 @@ export function makeImageBuilder(source: SanityImageSource, {
 }: imageUrlBuildingOptions = {}): ImageUrlBuilder {
 
   // Open up builder
-  const builder = imageBuilder?.image(source).auto('format')
+  let builder = imageBuilder?.image(source).auto('format')
 
   // Map the ObjectFit values to Sanity image CDN equivalents. The default
   // is 'max'.
   // https://www.sanity.io/docs/image-urls#fit-45b29dc6f09f
-  builder.fit(fit == ObjectFit.Cover ? 'min' : 'max')
+  builder = builder.fit(fit == ObjectFit.Cover ? 'min' : 'max')
 
   // Conditionally add dimensions
-  if (width) builder.width(width)
-  if (height) builder.height(height)
+  if (width) builder = builder.width(width)
+  if (height) builder =  builder.height(height)
 
   // Return builder
   return builder
