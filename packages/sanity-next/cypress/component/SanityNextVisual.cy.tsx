@@ -7,6 +7,7 @@ import dereferencedVisual from '../fixtures/dereferencedVisual.json'
 import referentialImage from '../fixtures/referentialImage.json'
 import referentialVideo from '../fixtures/referentialVideo.json'
 import referentialVisual from '../fixtures/referentialVisual.json'
+import resizedImage from '../fixtures/resizedImage.json'
 
 // Viewport sizes
 const VW = Cypress.config('viewportWidth'),
@@ -52,6 +53,16 @@ describe('de-referenced source', () => {
     cy.get('[data-cy=next-visual]').should('exist')
     cy.get('img').hasDimensions(VW, VW / 2) // Aspect of image is 2/1
     cy.get('video').should('have.attr', 'aria-label', 'Placeholder test visual')
+  })
+
+  it('passes through Sanity cropping instructions', () => {
+    cy.mount(<SanityNextVisual
+      image={ resizedImage }
+      data-cy='next-visual' />)
+    cy.get('[data-cy=next-visual]').should('exist')
+    cy.get('img')
+      .invoke('attr', 'src')
+      .should('contain', 'rect=150,0,150,150')
   })
 
 })
