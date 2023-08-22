@@ -25,7 +25,7 @@ export function makeImageUrl(
   options?: imageUrlBuildingOptions
 ): string | undefined {
   if (!source) return undefined
-  return makeImageBuilder(source, options).url()
+  return getBuilderUrl(makeImageBuilder(source, options))
 }
 
 // Add common conventions when building URLs to images
@@ -57,7 +57,19 @@ export function makeImageLoader(
   return ({ width, quality }: ImageLoaderProps): string => {
     let builder = makeImageBuilder(source, { width })
     if (quality) builder = builder.quality(quality)
-    return builder.url()
+    return getBuilderUrl(builder)
+  }
+}
+
+// Get the URL from an imageBuilder or gracefully fail.  This is to solve for
+// issues I experienced in Sanity preview preview mode when uploading images.
+// The `asset` property of the image source would be empty and this would
+// cause the `imageBuilder` to fatally error.
+function getBuilderUrl(builder: ImageUrlBuilder): string {
+  try { return builder.url() }
+  catch(e) {
+    console.error(e)
+    return ''
   }
 }
 
