@@ -24,7 +24,7 @@ export function makeImageUrl(
   source?: SanityImageSource,
   options?: imageUrlBuildingOptions
 ): string | undefined {
-  if (!source) return undefined
+  if (!source || !sourceHasAsset(source)) return undefined
   return makeImageBuilder(source, options).url()
 }
 
@@ -53,12 +53,21 @@ export function makeImageBuilder(source: SanityImageSource, {
 export function makeImageLoader(
   source?: SanityImageSource
 ): ImageLoader | undefined {
-  if (!source) return undefined
+  if (!source || !sourceHasAsset(source)) return undefined
   return ({ width, quality }: ImageLoaderProps): string => {
     let builder = makeImageBuilder(source, { width })
     if (quality) builder = builder.quality(quality)
     return builder.url()
   }
+}
+
+// Check if the source has a populated asset field.  This was necessary because
+// UlrBuilder fatally errors when the image source has an asset property
+// with a null value.  And this was the case when uploading images with the
+// preview tab open.
+export function sourceHasAsset(source: SanityImageSource): boolean {
+  if (!source) return false
+  return typeof source == 'object' && 'asset' in source && source.asset
 }
 
 // Return the URL of an asset

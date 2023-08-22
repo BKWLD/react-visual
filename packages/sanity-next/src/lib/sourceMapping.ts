@@ -17,7 +17,7 @@ export function aspectRatioFromSource(
 ): number | undefined {
   if (!source) return undefined
   if (typeof source != 'object' || !('asset' in source)) return undefined
-  return source.asset.metadata?.dimensions?.aspectRatio
+  return source.asset?.metadata?.dimensions?.aspectRatio
 }
 
 // Make object-position values from the hotspot data
