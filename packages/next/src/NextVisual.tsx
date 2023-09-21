@@ -29,6 +29,7 @@ export default function NextVisual(
     priority,
     sizes,
     imageLoader,
+    playing,
     alt,
     className = '',
     style = {},
@@ -67,7 +68,8 @@ export default function NextVisual(
         fit,
         position,
         priority,
-        noPoster: !!image // Use `image` as poster frame
+        noPoster: !!image, // Use `image` as poster frame
+        playing,
       }} /> }
 
     </VisualWrapper>

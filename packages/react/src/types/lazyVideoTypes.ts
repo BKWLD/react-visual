@@ -1,6 +1,8 @@
 import type { CSSProperties } from 'react'
 
 export type LazyVideoProps = {
+
+  // Source props
   src: HTMLVideoElement['src']
   alt: string
 
@@ -10,6 +12,10 @@ export type LazyVideoProps = {
   // Use a transparent gif poster image
   noPoster?: boolean
 
+  // Controls autoplaying and current playing state
+  playing?: boolean
+
+  // Display props
   fit?: CSSProperties['objectFit']
   position?: CSSProperties['objectPosition']
 }

@@ -9,7 +9,7 @@ import { fillStyles, transparentGif } from './lib/styles'
 
 // An video rendered within a Visual that supports lazy loading
 export default function LazyVideo({
-  src, alt, fit, position, priority, noPoster
+  src, alt, fit, position, priority, noPoster, playing = true
 }: LazyVideoProps): ReactElement {
 
   // Watch for in viewport to load video unless using priority

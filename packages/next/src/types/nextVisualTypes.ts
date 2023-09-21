@@ -17,6 +17,8 @@ export type NextVisualProps = {
   sizes?: string
   imageLoader?: Function
 
+  playing?: boolean
+
   alt: string
 
   className?: string
