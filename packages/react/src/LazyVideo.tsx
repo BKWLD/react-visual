@@ -25,9 +25,11 @@ export default function LazyVideo({
 
       // Props that allow us to autoplay videos like a gif
       playsInline
-      autoPlay
       muted
       loop
+
+      // Whether to autoplay
+      autoPlay={ playing }
 
       // Load a transparent gif as a poster if an `image` was specified so
       // the image is used as poster rather than the first frame of video. This
