@@ -3,7 +3,7 @@ import { getFileAsset, type SanityFileSource } from '@sanity/asset-utils'
 import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
 import type { ImageLoader, ImageLoaderProps } from 'next/image'
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
-import { ObjectFit } from '@react-visual/next'
+import { ObjectFitOption } from '@react-visual/next'
 
 // Access ENV vars
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID as string,
@@ -16,7 +16,7 @@ const imageBuilder = createImageUrlBuilder({ projectId, dataset })
 type imageUrlBuildingOptions = {
   width?: number
   height?: number
-  fit?: ObjectFit
+  fit?: ObjectFitOption
 }
 
 // Helper for making image URLs
@@ -30,7 +30,7 @@ export function makeImageUrl(
 
 // Add common conventions when building URLs to images
 export function makeImageBuilder(source: SanityImageSource, {
-  width, height, fit = ObjectFit.Contain
+  width, height, fit = 'contain'
 }: imageUrlBuildingOptions = {}): ImageUrlBuilder {
 
   // Open up builder
@@ -39,7 +39,7 @@ export function makeImageBuilder(source: SanityImageSource, {
   // Map the ObjectFit values to Sanity image CDN equivalents. The default
   // is 'max'.
   // https://www.sanity.io/docs/image-urls#fit-45b29dc6f09f
-  builder = builder.fit(fit == ObjectFit.Cover ? 'min' : 'max')
+  builder = builder.fit(fit == 'cover' ? 'min' : 'max')
 
   // Conditionally add dimensions
   if (width) builder = builder.width(width)
