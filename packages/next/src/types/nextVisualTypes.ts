@@ -10,7 +10,7 @@ export type NextVisualProps = {
   aspect?: number // An explict aspect ratio
   width?: number | string
   height?: number | string
-  fit?: ObjectFit
+  fit?: ObjectFitOption | ObjectFit
   position?: string
 
   priority?: boolean
@@ -23,6 +23,9 @@ export type NextVisualProps = {
   style?: CSSProperties
 }
 
+export type ObjectFitOption = 'cover' | 'contain'
+
+// Deprecated
 export enum ObjectFit {
   Cover = 'cover',
   Contain = 'contain',

@@ -8,7 +8,7 @@ import {
   collectDataAttributes,
 } from '@react-visual/react'
 
-import { NextVisualProps, ObjectFit } from './types/nextVisualTypes'
+import { NextVisualProps } from './types/nextVisualTypes'
 
 // Render a Sanity image via Next/Image
 export default function NextVisual(
@@ -24,7 +24,7 @@ export default function NextVisual(
     aspect,
     width,
     height,
-    fit = ObjectFit.Cover,
+    fit = 'cover',
     position,
     priority,
     sizes,
