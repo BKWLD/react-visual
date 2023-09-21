@@ -3,13 +3,14 @@
 
 import { useInView } from 'react-intersection-observer'
 import type { ReactElement } from 'react'
+import type { LazyVideoProps } from './types/lazyVideoTypes';
 
 import { fillStyles, transparentGif } from './lib/styles'
 
 // An video rendered within a Visual that supports lazy loading
 export default function LazyVideo({
   src, alt, fit, position, priority, noPoster
-}: any): ReactElement {
+}: LazyVideoProps): ReactElement {
 
   // Watch for in viewport to load video unless using priority
   const { ref, inView } = useInView({
