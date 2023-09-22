@@ -9,7 +9,7 @@ import { fillStyles, transparentGif } from './lib/styles'
 
 // An video rendered within a Visual that supports lazy loading
 export default function LazyVideo({
-  src, alt, fit, position, priority, noPoster, playing = true
+  src, alt, fit, position, priority, noPoster, paused
 }: LazyVideoProps): ReactElement {
 
   // Make a ref to the video so it can be controlled
@@ -45,10 +45,10 @@ export default function LazyVideo({
     videoRef.current?.pause()
   }
 
-  // Respond to playing prop and call methods that control the video playback
+  // Respond to paused prop and call methods that control the video playback
   useEffect(() => {
-    playing ? play() : pause()
-  }, [ playing ])
+    paused ? pause() : play()
+  }, [ paused ])
 
   // Simplify logic for whether to load sources
   const shouldLoad = priority || inView
@@ -62,7 +62,7 @@ export default function LazyVideo({
       loop
 
       // Whether to autoplay
-      autoPlay={ playing }
+      autoPlay={ !paused }
 
       // Load a transparent gif as a poster if an `image` was specified so
       // the image is used as poster rather than the first frame of video. This
