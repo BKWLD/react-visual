@@ -10,7 +10,8 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "rm -rf dist/* && tsc"
+    "build": "rm -rf dist/* && tsc",
+    "test": "cypress run --component"
   },
   "dependencies": {
     "react-intersection-observer": "^9"
