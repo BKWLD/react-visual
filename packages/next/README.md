@@ -62,6 +62,13 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | `sizes` | `string` | Sets [`next/image`'s `sizes`](https://nextjs.org/docs/pages/api-reference/components/image#sizes) prop.
 | `imageLoader` | `Function` | This is passed through [to `next/image`'s `loader` prop](https://nextjs.org/docs/app/api-reference/components/image#loader).
 
+### Video
+
+| Prop | Type | Description
+| -- | -- | --
+| `paused` | `boolean` | Disables autoplay of videos. This prop is reactive, unlike the `paused` property of the html `<video>` tag.  You can set it to `true` to pause a playing video or set it to `false` to play a paused video.
+
+
 ### Accessibility
 
 | Prop | Type | Description

@@ -8,7 +8,7 @@ Cypress.Commands.add('isPlaying',
   cy.wrap(subject).should('have.prop', 'paused', false)
 })
 
-// Check that a video is playing
+// Check that a video is paused
 // https://glebbahmutov.com/blog/test-video-play/
 Cypress.Commands.add('isPaused',
   { prevSubject: true },

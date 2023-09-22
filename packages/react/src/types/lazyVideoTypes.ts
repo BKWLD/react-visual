@@ -12,8 +12,8 @@ export type LazyVideoProps = {
   // Use a transparent gif poster image
   noPoster?: boolean
 
-  // Controls autoplaying and current playing state
-  playing?: boolean
+  // Controls autoplaying and play state
+  paused?: boolean
 
   // Display props
   fit?: CSSProperties['objectFit']

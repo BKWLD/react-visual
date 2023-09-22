@@ -4,16 +4,16 @@ import { LazyVideo } from '../../src'
 // Make an instance of LazyVideo that can be controlled
 const Player = function({ autoplay }: any) {
 
-  const [playing, setPlaying] = useState(autoplay)
+  const [paused, setPaused] = useState(!autoplay)
 
   return (<>
     <LazyVideo
       src='https://placehold.co/300x200.mp4'
       alt=''
-      playing={ playing }/>
+      paused={ paused }/>
     <div style={{ position: 'relative' }}>
-      <button onClick={() => setPlaying(true)}>Play</button>
-      <button onClick={() => setPlaying(false)}>Pause</button>
+      <button onClick={() => setPaused(false)}>Play</button>
+      <button onClick={() => setPaused(true)}>Pause</button>
     </div>
   </>)
 }

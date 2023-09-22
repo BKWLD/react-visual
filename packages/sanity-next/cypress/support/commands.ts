@@ -10,7 +10,7 @@ Cypress.Commands.add('hasDimensions',
   return subject
 })
 
-// Check that a video is playing
+// Check that a video is paused
 // https://glebbahmutov.com/blog/test-video-play/
 Cypress.Commands.add('isPlaying',
   { prevSubject: true },
