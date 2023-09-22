@@ -1,6 +1,6 @@
 {
   "name": "@react-visual/next",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Image and video renderer for Next.js projects",
   "author": "Bukwild <info@bukwild.com>",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "test": "cypress run --component"
   },
   "dependencies": {
-    "@react-visual/react": "^0.4.1"
+    "@react-visual/react": "^0.5.0"
   },
   "peerDependencies": {
     "next": "^13",
