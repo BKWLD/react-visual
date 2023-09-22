@@ -95,6 +95,11 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | `priority` | `boolean` | Sets [`next/image`'s `priority`](https://nextjs.org/docs/pages/api-reference/components/image#priority) and videos to not lazy load.
 | `sizes` | `string` | Sets [`next/image`'s `sizes`](https://nextjs.org/docs/pages/api-reference/components/image#sizes) prop.
 
+### Video
+
+| Prop | Type | Description
+| -- | -- | --
+| `paused` | `boolean` | Disables autoplay of videos. This prop is reactive, unlike the `paused` property of the html `<video>` tag.  You can set it to `true` to pause a playing video or set it to `false` to play a paused video.
 
 ### Accessibility
 
