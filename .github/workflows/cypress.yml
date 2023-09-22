@@ -10,6 +10,7 @@ jobs:
       matrix:
         dir:
           - packages/next
+          - packages/react
           - packages/sanity-next
 
     steps:

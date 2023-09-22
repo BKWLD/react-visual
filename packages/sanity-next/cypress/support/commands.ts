@@ -15,7 +15,7 @@ Cypress.Commands.add('hasDimensions',
 Cypress.Commands.add('isPlaying',
   { prevSubject: true },
   (subject) => {
-  cy.wrap(subject).should('have.prop', 'paused', true)
+  cy.wrap(subject).should('have.prop', 'paused', false)
 })
 
 // Add Typescript support for custom commaands
