@@ -3,7 +3,7 @@ import { getFileAsset, type SanityFileSource } from '@sanity/asset-utils'
 import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
 import type { ImageLoader, ImageLoaderProps } from 'next/image'
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
-import { ObjectFitOption } from '@react-visual/next'
+import { ObjectFitOption } from '@react-visual/react'
 
 // Access ENV vars
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID as string,
