@@ -1,11 +1,69 @@
 import type { ReactElement } from 'react'
 
+import VisualWrapper from './VisualWrapper'
+import LazyVideo from './LazyVideo'
+import { collectDataAttributes } from './lib/attributes'
+
 import { ReactVisualTypes } from './types/reactVisualTypes'
 
 export default function ReactVisual(
   props: ReactVisualTypes
 ): ReactElement | null {
+
+  // Destructure props
+  const {
+    image,
+    video,
+    placeholderData,
+    expand,
+    aspect,
+    width,
+    height,
+    fit = 'cover',
+    position,
+    priority,
+    sizes,
+    imageLoader,
+    paused,
+    alt,
+    className = '',
+    style = {},
+  } = props
+
   return (
-    <h1>Hey</h1>
+    <VisualWrapper {...{
+      expand,
+      width,
+      height,
+      aspect,
+      className,
+      style,
+      dataAttributes: collectDataAttributes(props),
+    }}>
+
+      {/* Render image */}
+      { image && <img {...{
+        src: image,
+        sizes,
+        alt,
+        // fit,
+        // position,
+        // priority,
+        // loader: imageLoader,
+        // placeholderData,
+      }} /> }
+
+      {/* Render video element */}
+      { video && <LazyVideo {...{
+        src: video,
+        alt,
+        fit,
+        position,
+        priority,
+        noPoster: !!image, // Use `image` as poster frame
+        paused,
+      }} /> }
+
+    </VisualWrapper>
   )
 }
