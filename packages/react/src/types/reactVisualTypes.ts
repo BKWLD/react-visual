@@ -14,7 +14,7 @@ export type ReactVisualTypes = {
 
   priority?: boolean
   sizes?: string
-  imageLoader?: Function
+  imageLoader?: ImageLoader
 
   paused?: boolean
 
@@ -23,6 +23,11 @@ export type ReactVisualTypes = {
   className?: string
   style?: CSSProperties
 }
+
+export type ImageLoader = ({ src, width }: {
+  src: string
+  width: number
+}) => string
 
 export type ObjectFitOption = 'cover' | 'contain'
 

@@ -1,9 +1,5 @@
 import ReactVisual from '../../src'
 
-// Viewport sizes
-const VW = Cypress.config('viewportWidth'),
-  VH = Cypress.config('viewportHeight')
-
 describe('no asset', () => {
 
   it('renders nothing', () => {
@@ -51,4 +47,20 @@ describe('fixed size', () => {
     cy.get('video').hasDimensions(300, 200)
     cy.get('video').isPlaying()
   })
+})
+
+describe('sources', () => {
+
+  it.only('renders simple srcset', () => {
+    cy.mount(<ReactVisual
+      image='https://placehold.co/300x200'
+      imageLoader={({ src, width }) => {
+        const height = Math.round(width * 200 / 300)
+        return `https://placehold.co/${width}x${height}`
+      }}
+      aspect={300/200}
+      alt=''/>)
+    cy.get('img').hasDimensions(300, 200)
+  })
+
 })
