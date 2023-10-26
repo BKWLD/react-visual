@@ -4,7 +4,6 @@ export type ReactVisualTypes = {
 
   image?: string
   video?: string
-  placeholderData?: string
 
   expand?: boolean
   aspect?: number // An explict aspect ratio

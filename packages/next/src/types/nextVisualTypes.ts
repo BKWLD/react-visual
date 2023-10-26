@@ -1,3 +1,5 @@
 import type { ReactVisualTypes } from '@react-visual/react'
 
-export type NextVisualProps = ReactVisualTypes
+export type NextVisualProps = ReactVisualTypes & {
+  placeholderData?: string
+}

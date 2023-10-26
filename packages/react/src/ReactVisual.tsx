@@ -2,8 +2,9 @@ import type { ReactElement } from 'react'
 
 import VisualWrapper from './VisualWrapper'
 import LazyVideo from './LazyVideo'
-import { collectDataAttributes } from './lib/attributes'
+import PictureImage from './PictureImage'
 
+import { collectDataAttributes } from './lib/attributes'
 import { ReactVisualTypes } from './types/reactVisualTypes'
 
 export default function ReactVisual(
@@ -14,7 +15,6 @@ export default function ReactVisual(
   const {
     image,
     video,
-    placeholderData,
     expand,
     aspect,
     width,
@@ -30,6 +30,9 @@ export default function ReactVisual(
     style = {},
   } = props
 
+  // If no asset, return nothing
+  if (!image && !video) return null
+
   return (
     <VisualWrapper {...{
       expand,
@@ -42,15 +45,14 @@ export default function ReactVisual(
     }}>
 
       {/* Render image */}
-      { image && <img {...{
+      { image && <PictureImage {...{
         src: image,
         sizes,
         alt,
-        // fit,
-        // position,
-        // priority,
-        // loader: imageLoader,
-        // placeholderData,
+        fit,
+        position,
+        priority,
+        imageLoader,
       }} /> }
 
       {/* Render video element */}
