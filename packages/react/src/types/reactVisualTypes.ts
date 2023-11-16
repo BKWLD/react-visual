@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 
-export type ReactVisualTypes = {
+export type ReactVisualProps = {
 
   image?: string
   video?: string

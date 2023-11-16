@@ -1,6 +1,6 @@
-import { ReactVisualTypes } from './reactVisualTypes';
+import { ReactVisualProps } from './reactVisualTypes';
 
-export type PictureImageProps = Pick<ReactVisualTypes,
+export type PictureImageProps = Pick<ReactVisualProps,
   'sizes' |
   'alt' |
   'fit' |
@@ -9,5 +9,5 @@ export type PictureImageProps = Pick<ReactVisualTypes,
   'imageLoader' |
   'style'
 > & {
-  src: Required<ReactVisualTypes>['image']
+  src: Required<ReactVisualProps>['image']
 }

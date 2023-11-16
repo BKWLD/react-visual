@@ -6,7 +6,7 @@ import { collectDataAttributes } from './lib/attributes'
 export default ReactVisual
 export { LazyVideo, VisualWrapper, collectDataAttributes }
 export {
-  ReactVisualTypes,
+  ReactVisualProps,
   ObjectFit,
   ObjectFitOption
 } from './types/reactVisualTypes'

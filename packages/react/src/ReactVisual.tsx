@@ -5,10 +5,10 @@ import LazyVideo from './LazyVideo'
 import PictureImage from './PictureImage'
 
 import { collectDataAttributes } from './lib/attributes'
-import { ReactVisualTypes } from './types/reactVisualTypes'
+import { ReactVisualProps } from './types/reactVisualTypes'
 
 export default function ReactVisual(
-  props: ReactVisualTypes
+  props: ReactVisualProps
 ): ReactElement | null {
 
   // Destructure props
