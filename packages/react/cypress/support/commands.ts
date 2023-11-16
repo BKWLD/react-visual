@@ -26,6 +26,14 @@ Cypress.Commands.add('isPaused',
   cy.wrap(subject).should('have.prop', 'paused', true)
 })
 
+// Clear browser cache
+// https://stackoverflow.com/a/72945339/59160
+Cypress.Commands.add('clearCache', () => {
+  cy.wrap(Cypress.automation('remote:debugger:protocol', {
+    command: 'Network.clearBrowserCache',
+  }))
+})
+
 // Add Typescript support for custom commaands
 // https://docs.cypress.io/guides/tooling/typescript-support#Types-for-Custom-Commands
 export {};
@@ -40,6 +48,8 @@ declare global {
 
       isPlaying(): Chainable<void>
       isPaused(): Chainable<void>
+
+      clearCache(): Chainable<void>
     }
   }
 }

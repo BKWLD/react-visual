@@ -49,7 +49,7 @@ describe('fixed size', () => {
   })
 })
 
-describe('sources', () => {
+describe('srcset', () => {
 
   it('renders srset with no sizes prop', () => {
 
@@ -88,31 +88,83 @@ describe('sources', () => {
 
   it('it adds narrower widths with sizes prop', () => {
 
-    // Clear the browser cache
-    cy.wrap(Cypress.automation('remote:debugger:protocol', {
-      command: 'Network.clearBrowserCache',
-    }))
-
     // This is the particular image we expect to load
-    cy.intercept('https://placehold.co/256x171').as('50vw image')
+    cy.clearCache()
+    cy.intercept('https://placehold.co/256x256').as('50vw')
 
     cy.mount(<ReactVisual
-      image='https://placehold.co/300x200'
+      image='https://placehold.co/200x200'
       imageLoader={({ src, width }) => {
-        const height = Math.round(width * 200 / 300)
-        return `https://placehold.co/${width}x${height}`
+        return `https://placehold.co/${width}x${width}`
       }}
-      aspect={300/200}
+      aspect={1}
       width='50%'
       sizes='50vw'
       alt=''/>)
 
     // The image that should have been loaded
     cy.get('[srcset]').invoke('attr', 'srcset')
-    .should('contain', 'https://placehold.co/256x171 256w')
+    .should('contain', 'https://placehold.co/256x256 256w')
 
     // Ensure that we didn't load too big or small of an image
-    cy.wait('@50vw image')
+    cy.wait('@50vw')
+
+  })
+
+})
+
+describe('sources', () => {
+
+  it('supports rendering sources for mimetypes', () => {
+
+    cy.clearCache()
+    cy.intercept('https://placehold.co/640x640.webp').as('webp')
+
+    cy.mount(<ReactVisual
+      image='https://placehold.co/200x200'
+      sourceTypes={['image/webp']}
+      imageLoader={({ src, type, width }) => {
+        const ext = type?.includes('webp') ? '.webp' : ''
+        return `https://placehold.co/${width}x${width}${ext}`
+      }}
+      aspect={1}
+      alt=''/>)
+
+    cy.wait('@webp')
+
+  })
+
+  it('supports rendering sources for mimetypes and media queries', () => {
+
+    cy.clearCache()
+    cy.intercept('https://placehold.co/640x320.webp').as('landscape')
+    cy.intercept('https://placehold.co/640x640.webp').as('portrait')
+
+    // Start at a landscape viewport
+    cy.viewport(500, 400)
+
+    cy.mount(<ReactVisual
+      image='https://placehold.co/200x200'
+      sourceTypes={['image/webp']}
+      sourceMedia={['(orientation:landscape)', '(orientation:portrait)']}
+      imageLoader={({ src, type, media, width }) => {
+
+        // Use a narrower aspect on landscape and a square on mobile
+        const height = media?.includes('landscape') ?
+          width * 0.5 : width
+
+        const ext = type?.includes('webp') ? '.webp' : ''
+        return `https://placehold.co/${width}x${height}${ext}`
+      }}
+      width='100%'
+      alt=''/>)
+
+    // Landscape should have loaded
+    cy.wait('@landscape')
+
+    // Switch to portrait, which should load the other source
+    cy.viewport(500, 600)
+    cy.wait('@portrait')
 
   })
 

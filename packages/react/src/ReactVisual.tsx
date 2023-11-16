@@ -24,6 +24,8 @@ export default function ReactVisual(
     priority,
     sizes,
     imageLoader,
+    sourceTypes,
+    sourceMedia,
     paused,
     alt,
     className = '',
@@ -53,6 +55,8 @@ export default function ReactVisual(
         position,
         priority,
         imageLoader,
+        sourceTypes,
+        sourceMedia,
         style: { // Expand to wrapper when wrapper has layout
           width: expand || width || aspect ? '100%': undefined,
           height: expand || height ? '100%' : undefined,

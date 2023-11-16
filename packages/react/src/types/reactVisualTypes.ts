@@ -15,6 +15,8 @@ export type ReactVisualProps = {
   priority?: boolean
   sizes?: string
   imageLoader?: ImageLoader
+  sourceTypes?: SourceType[]
+  sourceMedia?: SourceMedia[]
 
   paused?: boolean
 
@@ -24,12 +26,19 @@ export type ReactVisualProps = {
   style?: CSSProperties
 }
 
-export type ImageLoader = ({ src, width }: {
+export type ImageLoader = ({ src, width, type, media }: {
   src: string
   width: number
+  type?: SourceType
+  media?: SourceMedia
 }) => string
 
 export type ObjectFitOption = 'cover' | 'contain'
+
+export type SourceType = 'image/jpeg' | 'image/png' | 'image/gif' |
+  'image/avif' | 'image/webp' | string
+
+export type SourceMedia = 'orientation:landscape' | 'orientation:portrait' | string
 
 // Deprecated
 export enum ObjectFit {
