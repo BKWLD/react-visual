@@ -51,9 +51,8 @@ describe('fixed size', () => {
 
 describe('sources', () => {
 
-  it.only('renders srset with no sizes prop', () => {
+  it('renders srset with no sizes prop', () => {
 
-    // Load the image
     cy.mount(<ReactVisual
       image='https://placehold.co/300x200'
       imageLoader={({ src, width }) => {
@@ -64,8 +63,57 @@ describe('sources', () => {
       alt=''/>)
 
     // Get one of the sizes that should be been rendered
-    cy.get('source').invoke('attr', 'srcset')
-      .should('contain', 'https://placehold.co/384x256 384w')
+    cy.get('[srcset]').invoke('attr', 'srcset')
+    .should('contain', '640x427 640w')
+
+    // Only be included when `sizes` specified
+    .should('not.contain', ' 16w')
+  })
+
+  it('doesn\'t use imageSizes when sizes == 100vw', () => {
+
+    cy.mount(<ReactVisual
+      image='https://placehold.co/300x200'
+      imageLoader={({ src, width }) => {
+        const height = Math.round(width * 200 / 300)
+        return `https://placehold.co/${width}x${height}`
+      }}
+      aspect={300/200}
+      sizes='100vw'
+      alt=''/>)
+
+    cy.get('[srcset]').invoke('attr', 'srcset')
+    .should('not.contain', ' 16w')
+  })
+
+  it('it adds narrower widths with sizes prop', () => {
+
+    // Clear the browser cache
+    cy.wrap(Cypress.automation('remote:debugger:protocol', {
+      command: 'Network.clearBrowserCache',
+    }))
+
+    // This is the particular image we expect to load
+    cy.intercept('https://placehold.co/256x171').as('50vw image')
+
+    cy.mount(<ReactVisual
+      image='https://placehold.co/300x200'
+      imageLoader={({ src, width }) => {
+        const height = Math.round(width * 200 / 300)
+        return `https://placehold.co/${width}x${height}`
+      }}
+      aspect={300/200}
+      width='50%'
+      sizes='50vw'
+      alt=''/>)
+
+    // The image that should have been loaded
+    cy.get('[srcset]').invoke('attr', 'srcset')
+    .should('contain', 'https://placehold.co/256x171 256w')
+
+    // Ensure that we didn't load too big or small of an image
+    cy.wait('@50vw image')
+
   })
 
 })
