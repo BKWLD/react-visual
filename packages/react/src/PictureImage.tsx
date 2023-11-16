@@ -65,7 +65,7 @@ function makeSrcSet(
   imageLoader: ImageLoader
 ): string {
   return widths.map((width) => {
-    return imageLoader({ src, width }) + ` w${width}`
+    return imageLoader({ src, width }) + ` ${width}w`
   }).join(', ')
 
 }

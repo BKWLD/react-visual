@@ -51,7 +51,9 @@ describe('fixed size', () => {
 
 describe('sources', () => {
 
-  it.only('renders simple srcset', () => {
+  it.only('renders srset with no sizes prop', () => {
+
+    // Load the image
     cy.mount(<ReactVisual
       image='https://placehold.co/300x200'
       imageLoader={({ src, width }) => {
@@ -60,7 +62,10 @@ describe('sources', () => {
       }}
       aspect={300/200}
       alt=''/>)
-    cy.get('img').hasDimensions(300, 200)
+
+    // Get one of the sizes that should be been rendered
+    cy.get('source').invoke('attr', 'srcset')
+      .should('contain', 'https://placehold.co/384x256 384w')
   })
 
 })
