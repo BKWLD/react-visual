@@ -57,6 +57,18 @@ describe('fixed size', () => {
   })
 })
 
+describe('natural size', () => {
+
+  it('renders image', () => {
+    cy.mount(<ReactVisual
+      image='https://placehold.co/200x200'
+      alt=''/>)
+    cy.wait('@asset')
+    cy.get('img').hasDimensions(200, 200)
+  })
+
+})
+
 describe('srcset', () => {
 
   it('renders srset with no sizes prop', () => {
