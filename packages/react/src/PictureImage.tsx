@@ -16,11 +16,12 @@ export default function PictureImage(
     priority,
     sizes,
     imageLoader,
+    style,
     alt,
   } = props
 
   // Apply layout styles
-  const style = {
+  const layoutStyles = {
     objectFit: fit,
     objectPosition: position
   }
@@ -32,7 +33,10 @@ export default function PictureImage(
   return (
     <picture>
       {imageLoader && <Sources {...{ src, imageLoader }} />}
-      <img {...{ src, style, loading, alt, sizes }} />
+      <img
+        style={{ ...layoutStyles, ...style }}
+        {...{ src, loading, alt, sizes }}
+      />
     </picture>
   )
 }

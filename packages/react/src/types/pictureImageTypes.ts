@@ -6,7 +6,8 @@ export type pictureImageProps = Pick<ReactVisualTypes,
   'fit' |
   'position' |
   'priority' |
-  'imageLoader'
+  'imageLoader' |
+  'style'
 > & {
   src: Required<ReactVisualTypes>['image']
 }

@@ -53,6 +53,10 @@ export default function ReactVisual(
         position,
         priority,
         imageLoader,
+        style: { // Expand to wrapper when wrapper has layout
+          width: expand || width || aspect ? '100%': undefined,
+          height: expand || height ? '100%' : undefined,
+        }
       }} /> }
 
       {/* Render video element */}
