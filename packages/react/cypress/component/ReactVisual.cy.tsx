@@ -22,7 +22,7 @@ describe('fixed size', () => {
 
   it('renders image', () => {
     cy.mount(<ReactVisual
-      image='https://placehold.co/300x200'
+      image='https://placehold.co/600x400'
       width={300}
       height={200}
       alt=''/>)
@@ -32,7 +32,7 @@ describe('fixed size', () => {
 
   it('renders video', () => {
     cy.mount(<ReactVisual
-      video='https://placehold.co/300x200.mp4'
+      video='https://placehold.co/600x400.mp4'
       width={300}
       height={200}
       alt=''/>)
@@ -43,8 +43,8 @@ describe('fixed size', () => {
 
   it('renders image & video', () => {
     cy.mount(<ReactVisual
-      image='https://placehold.co/300x200/black/white'
-      video='https://placehold.co/300x200.mp4'
+      image='https://placehold.co/600x400/black/white'
+      video='https://placehold.co/600x400.mp4'
       width={300}
       height={200}
       alt=''
