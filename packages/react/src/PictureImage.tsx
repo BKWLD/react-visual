@@ -1,11 +1,11 @@
 import type { ReactElement } from 'react'
-import type { pictureImageProps } from './types/pictureImageTypes'
+import type { PictureImageProps } from './types/pictureImageTypes'
 import type { ImageLoader } from './types/reactVisualTypes'
 import { srcsetSizes } from './lib/sizes'
 type ImageSrc = pictureImageProps['src']
 
 export default function PictureImage(
-  props: pictureImageProps
+  props: PictureImageProps
 ): ReactElement {
 
   // Destructure props
