@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react'
 import type { pictureImageProps } from './types/pictureImageTypes'
 import type { ImageLoader } from './types/reactVisualTypes'
+import { srcsetSizes } from './lib/sizes'
 type ImageSrc = pictureImageProps['src']
 
 export default function PictureImage(
@@ -42,10 +43,8 @@ function Sources({ src, imageLoader }: {
   imageLoader: ImageLoader
 }): ReactElement {
 
-  const widths = [400, 200]
-
   // Make the srcset
-  const srcSet = makeSrcSet(src, widths, imageLoader)
+  const srcSet = makeSrcSet(src, srcsetSizes, imageLoader)
 
   // Make the source
   return (
