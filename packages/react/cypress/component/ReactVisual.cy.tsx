@@ -57,15 +57,11 @@ describe('fixed size', () => {
 
 describe('natural size', () => {
 
-  // https://glebbahmutov.com/cypress-examples/recipes/image-loaded.html
   it('renders image', () => {
     cy.mount(<ReactVisual
       image='https://placehold.co/200x200.png'
       alt=''/>)
-    cy.get('img')
-      .should('be.visible')
-      .and('have.prop', 'naturalWidth')
-      .should('be.greaterThan', 0)
+    cy.get('img').imgLoaded()
     cy.get('img').hasDimensions(200, 200)
   })
 

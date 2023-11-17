@@ -8,6 +8,17 @@ Cypress.Commands.add('hasDimensions',
   cy.wrap(subject).invoke('height').should('equal', height)
 })
 
+// Asset has loaded
+// https://glebbahmutov.com/cypress-examples/recipes/image-loaded.html
+Cypress.Commands.add('imgLoaded',
+  { prevSubject: true },
+  (subject) => {
+  cy.wrap(subject)
+    .should('be.visible')
+    .and('have.prop', 'naturalWidth')
+    .should('be.greaterThan', 0)
+})
+
 // Check that a video is playing
 // https://glebbahmutov.com/blog/test-video-play/
 Cypress.Commands.add('isPlaying',
@@ -43,6 +54,8 @@ declare global {
         width: number,
         height: number
       ): Chainable<void>
+
+      imgLoaded(): Chainable<void>
 
       isPlaying(): Chainable<void>
       isPaused(): Chainable<void>
