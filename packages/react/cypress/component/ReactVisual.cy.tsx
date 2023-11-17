@@ -2,7 +2,6 @@ import ReactVisual from '../../src'
 
 beforeEach(() => {
   cy.clearCache()
-  cy.intercept({ hostname: 'placehold.co' }).as('asset')
 })
 
 describe('no asset', () => {
@@ -26,7 +25,6 @@ describe('fixed size', () => {
       width={300}
       height={200}
       alt=''/>)
-    cy.wait('@asset')
     cy.get('img').hasDimensions(300, 200)
   })
 
@@ -36,7 +34,6 @@ describe('fixed size', () => {
       width={300}
       height={200}
       alt=''/>)
-    cy.wait('@asset')
     cy.get('video').hasDimensions(300, 200)
     cy.get('video').isPlaying()
   })
@@ -49,7 +46,6 @@ describe('fixed size', () => {
       height={200}
       alt=''
       data-cy='next-visual' />)
-    cy.wait('@asset')
     cy.get('[data-cy=next-visual]').hasDimensions(300, 200)
     cy.get('img').hasDimensions(300, 200)
     cy.get('video').hasDimensions(300, 200)
@@ -63,7 +59,6 @@ describe('natural size', () => {
     cy.mount(<ReactVisual
       image='https://placehold.co/200x200'
       alt=''/>)
-    cy.wait('@asset')
     cy.get('img').hasDimensions(200, 200)
   })
 
@@ -81,7 +76,6 @@ describe('srcset', () => {
       }}
       aspect={300/200}
       alt=''/>)
-    cy.wait('@asset')
 
     // Get one of the sizes that should be been rendered
     cy.get('[srcset]').invoke('attr', 'srcset')
@@ -102,16 +96,12 @@ describe('srcset', () => {
       aspect={300/200}
       sizes='100vw'
       alt=''/>)
-    cy.wait('@asset')
 
     cy.get('[srcset]').invoke('attr', 'srcset')
     .should('not.contain', ' 16w')
   })
 
   it('it adds narrower widths with sizes prop', () => {
-
-    // This is the particular image we expect to load
-    cy.intercept('https://placehold.co/256x256').as('50vw')
 
     cy.mount(<ReactVisual
       image='https://placehold.co/200x200'
@@ -122,14 +112,10 @@ describe('srcset', () => {
       width='50%'
       sizes='50vw'
       alt=''/>)
-    cy.wait('@asset')
 
-    // The image that should have been loaded
-    cy.get('[srcset]').invoke('attr', 'srcset')
-    .should('contain', 'https://placehold.co/256x256 256w')
-
-    // Ensure that we didn't load too big or small of an image
-    cy.wait('@50vw')
+    // Should be half width
+    cy.get('img').its('[0].currentSrc')
+    .should('eq', 'https://placehold.co/256x256')
 
   })
 
@@ -138,8 +124,6 @@ describe('srcset', () => {
 describe('sources', () => {
 
   it('supports rendering sources for mimetypes', () => {
-
-    cy.intercept('https://placehold.co/640x640.webp').as('webp')
 
     cy.mount(<ReactVisual
       image='https://placehold.co/200x200'
@@ -150,16 +134,14 @@ describe('sources', () => {
       }}
       aspect={1}
       alt=''/>)
-    cy.wait('@asset')
 
-    cy.wait('@webp')
+    // Should be webp source
+    cy.get('img').its('[0].currentSrc')
+    .should('eq', 'https://placehold.co/640x640.webp')
 
   })
 
   it('supports rendering sources for mimetypes and media queries', () => {
-
-    cy.intercept('https://placehold.co/640x320.webp').as('landscape')
-    cy.intercept('https://placehold.co/640x640.webp').as('portrait')
 
     // Start at a landscape viewport
     cy.viewport(500, 400)
@@ -179,14 +161,15 @@ describe('sources', () => {
       }}
       width='100%'
       alt=''/>)
-    cy.wait('@asset')
 
-    // Landscape should have loaded
-    cy.wait('@landscape')
+    // Should be landscape source
+    cy.get('img').its('[0].currentSrc')
+    .should('eq', 'https://placehold.co/640x320.webp')
 
     // Switch to portrait, which should load the other source
     cy.viewport(500, 600)
-    cy.wait('@portrait')
+    cy.get('img').its('[0].currentSrc')
+    .should('eq', 'https://placehold.co/640x640.webp')
 
   })
 
