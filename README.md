@@ -8,6 +8,8 @@ A monorepo hosting components for rendering image and video in a single containe
 
 ## Examples
 
+### @react-visual/react
+
 Using `sourceTypes` and `sourceMedia` with `imageLoader` to produce multiple `<source>` tags with `srcset` attributes.
 
 ```jsx
