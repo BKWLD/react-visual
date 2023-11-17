@@ -61,6 +61,7 @@ describe('natural size', () => {
     cy.mount(<ReactVisual
       image='https://placehold.co/200x200'
       alt=''/>)
+    cy.get('img').its('[0].complete').should('equal', true)
     cy.get('img').hasDimensions(200, 200)
   })
 
