@@ -36,6 +36,7 @@ describe('fixed size', () => {
       alt=''/>)
     cy.get('video').hasDimensions(300, 200)
     cy.get('video').isPlaying()
+    cy.wait(100) // Wait for video play to finish before moving on
   })
 
   it('renders image & video', () => {
@@ -50,6 +51,7 @@ describe('fixed size', () => {
     cy.get('img').hasDimensions(300, 200)
     cy.get('video').hasDimensions(300, 200)
     cy.get('video').isPlaying()
+    cy.wait(100) // Wait for video play to finish before moving on
   })
 })
 
