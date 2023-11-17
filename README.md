@@ -8,6 +8,32 @@ A monorepo hosting components for rendering image and video in a single containe
 
 ## Examples
 
+Using `sourceTypes` and `sourceMedia` with `imageLoader` to produce multiple `<source>` tags with `srcset` attributes.
+
+```jsx
+import Visual from '@react-visual/react'
+
+export default function ResponsiveExample() {
+  return (
+    <Visual
+      image="https://placehold.co/300x150"
+      sourceTypes={["image/webp", "image/jpeg"]}
+      sourceMedia={["(orientation:landscape)", "(orientation:portrait)"]}
+      imageLoader={({ type, media, width }) => {
+        const ext = type?.includes("webp") ? ".webp" : ".jpg";
+        const height = media?.includes("landscape") ? width * 0.5 : width;
+        return `https://placehold.co/${width}x${height}${ext}`;
+      }}
+      aspect={300 / 150}
+      sizes="100vw"
+      alt="Example of responsive images"
+    />
+  )
+}
+```
+
+[View CodeSandbox demo](https://codesandbox.io/p/sandbox/react-visual-react-demo-w4sh62)
+
 ### @react-visual/next
 
 Using framework adapter for Next.js:

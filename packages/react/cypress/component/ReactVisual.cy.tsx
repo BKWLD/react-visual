@@ -151,7 +151,7 @@ describe('sources', () => {
 
     cy.mount(<ReactVisual
       image='https://placehold.co/200x200'
-      sourceTypes={['image/webp']}
+      sourceTypes={['image/webp', 'image/jpeg']}
       sourceMedia={['(orientation:landscape)', '(orientation:portrait)']}
       imageLoader={({ src, type, media, width }) => {
 
@@ -159,7 +159,7 @@ describe('sources', () => {
         const height = media?.includes('landscape') ?
           width * 0.5 : width
 
-        const ext = type?.includes('webp') ? '.webp' : ''
+        const ext = type?.includes('webp') ? '.webp' : '.jpg'
         return `https://placehold.co/${width}x${height}${ext}`
       }}
       width='100%'

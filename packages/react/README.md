@@ -41,20 +41,47 @@ import Visual from '@react-visual/react'
 export default function ResponsiveExample() {
   return (
     <Visual
-      image='https://placehold.co/300x150'
-      sourceTypes={['image/avif', 'image/webp']}
+      image='https://placehold.co/200x200'
+      sourceTypes={['image/webp', 'image/jpeg']}
       sourceMedia={['(orientation:landscape)', '(orientation:portrait)']}
-      imageLoader={({ type, media, width }) => {
-        const ext = type?.includes('webp') ? '.webp' : ''
-        const height = media?.includes('landscape') ?
-          width * 0.5 : width
+      imageLoader={({ src, type, media, width }) => {
+        const height = media?.includes('landscape') ? width * 0.5 : width
+        const ext = type?.includes('webp') ? '.webp' : '.jpg'
         return `https://placehold.co/${width}x${height}${ext}`
       }}
-      aspect={300/150}
-      sizes='100vw'
-      alt='Example of responsive images' />
+      width='100%'
+      alt=''/>
   )
 }
+```
+
+The above would produce:
+
+```html
+<picture>
+  <source
+    type='image/webp'
+    media='(orientation:landscape)'
+    srcset='https://placehold.co/640x320.webp 640w, https://placehold.co/750x375.webp 750w, https://placehold.co/828x414.webp 828w, https://placehold.co/1080x540.webp 1080w, https://placehold.co/1200x600.webp 1200w, https://placehold.co/1920x960.webp 1920w, https://placehold.co/2048x1024.webp 2048w, https://placehold.co/3840x1920.webp 3840w'>
+  <source
+    type='image/webp'
+    media='(orientation:portrait)'
+    srcset='https://placehold.co/640x640.webp 640w, https://placehold.co/750x750.webp 750w, https://placehold.co/828x828.webp 828w, https://placehold.co/1080x1080.webp 1080w, https://placehold.co/1200x1200.webp 1200w, https://placehold.co/1920x1920.webp 1920w, https://placehold.co/2048x2048.webp 2048w, https://placehold.co/3840x3840.webp 3840w'>
+  <source
+    type='image/jpeg'
+    media='(orientation:landscape)'
+    srcset='https://placehold.co/640x320.jpg 640w, https://placehold.co/750x375.jpg 750w, https://placehold.co/828x414.jpg 828w, https://placehold.co/1080x540.jpg 1080w, https://placehold.co/1200x600.jpg 1200w, https://placehold.co/1920x960.jpg 1920w, https://placehold.co/2048x1024.jpg 2048w, https://placehold.co/3840x1920.jpg 3840w'>
+  <source
+    type='image/jpeg'
+    media='(orientation:portrait)'
+    srcset='https://placehold.co/640x640.jpg 640w, https://placehold.co/750x750.jpg 750w, https://placehold.co/828x828.jpg 828w, https://placehold.co/1080x1080.jpg 1080w, https://placehold.co/1200x1200.jpg 1200w, https://placehold.co/1920x1920.jpg 1920w, https://placehold.co/2048x2048.jpg 2048w, https://placehold.co/3840x3840.jpg 3840w'>
+  <img
+    src='https://placehold.co/200x200'
+    loading='lazy'
+    alt='Example of responsive images'
+    srcset='https://placehold.co/640x640.jpg 640w, https://placehold.co/750x750.jpg 750w, https://placehold.co/828x828.jpg 828w, https://placehold.co/1080x1080.jpg 1080w, https://placehold.co/1200x1200.jpg 1200w, https://placehold.co/1920x1920.jpg 1920w, https://placehold.co/2048x2048.jpg 2048w, https://placehold.co/3840x3840.jpg 3840w'
+    style='object-fit: cover; width: 100%;'>
+</picture>
 ```
 
 For more examples, read [the Cypress component tests](./cypress/component).
