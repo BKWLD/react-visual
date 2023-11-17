@@ -50,7 +50,7 @@ export default function ResponsiveExample() {
         return `https://placehold.co/${width}x${height}${ext}`
       }}
       width='100%'
-      alt=''/>
+      alt='Example of responsive images'/>
   )
 }
 ```
