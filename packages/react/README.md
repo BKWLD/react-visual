@@ -1,3 +1,110 @@
 # @react-visual/react [![react-visual](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/fn6c7w&style=flat&logo=cypress)](https://cloud.cypress.io/projects/fn6c7w/runs)
 
-This component package isn't fully implemented yet, it's just olding some shared components but not ready to be implemented on it's own.
+
+Renders images and videos into a container.  Features:
+
+- Supports a next.js style image loader for making srcsets
+- Creates `<source>` tags for different MIME types and media queries
+- Easily render assets using aspect ratios
+- Videos are lazyloaded (unless `priority` flag is set)
+
+## Install
+
+```sh
+yarn add @react-visual/react
+```
+
+## Usage
+
+Play a video with a poster image.
+
+```jsx
+import Visual from '@react-visual/react'
+
+export default function VideoExample() {
+  return (
+    <Visual
+      image='https://placehold.co/300x150'
+      video='https://placehold.co/300x150.mp4'
+      aspect={300/150}
+      sizes='100vw'
+      alt='Example using placeholder images' />
+  )
+}
+```
+
+Generate multiple landscape and portrait sources in webp and avif using an image CDN to create a srcset.
+
+```jsx
+import Visual from '@react-visual/react'
+
+export default function ResponsiveExample() {
+  return (
+    <Visual
+      image='https://placehold.co/300x150'
+      sourceTypes={['image/avif', 'image/webp']}
+      sourceMedia={['(orientation:landscape)', '(orientation:portrait)']}
+      imageLoader={({ type, media, width }) => {
+        const ext = type?.includes('webp') ? '.webp' : ''
+        const height = media?.includes('landscape') ?
+          width * 0.5 : width
+        return `https://placehold.co/${width}x${height}${ext}`
+      }}
+      aspect={300/150}
+      sizes='100vw'
+      alt='Example of responsive images' />
+  )
+}
+```
+
+For more examples, read [the Cypress component tests](./cypress/component).
+
+## Props
+
+### Sources
+
+| Prop | Type | Description
+| -- | -- | --
+| `image` | `string` | URL to an image asset.
+| `video` | `string` | URL to a video asset asset.
+
+### Layout
+
+| Prop | Type | Description
+| -- | -- | --
+| `expand` | `boolean` | Make the Visual fill it's container via CSS using absolute positioning.
+| `aspect` | `number` | Force the Visual to a specific aspect ratio.
+| `width` | `number`, `string` | A CSS dimension value or a px number.
+| `height` | `number`, `string` | A CSS dimension value or a px number.
+| `fit` | `string` | An [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) value that is applied to the assets.  Defaults to `cover`.
+| `position` | `string` | An [`object-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) value.
+
+### Loading
+
+| Prop | Type | Description
+| -- | -- | --
+| `priority` | `boolean` | Disables [`<img loading="lazy>"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#loading) and prevents videos from lazy loading based on IntersectionObserver.
+| `sizes` | `string` | Sets the `<img sizes>` attribute.
+| `sourceTypes` | `string[]` | Specify image MIME types that will be passed to the `imageLoader` and used to create additional `<source>` tags.  Use this to create `webp` or `avif` sources with a CDN like Contentful.
+| `sourceMedia` | `string[]` | Specify media queries that will be passed to the `imageLoader` and used to create additional `<source>` tags.
+| `imageLoader` | `Function` | Uses syntax that is similar [to `next/image`'s `loader` prop](https://nextjs.org/docs/app/api-reference/components/image#loader).  A srcset is built with a hardcoded list of widths.
+
+### Video
+
+| Prop | Type | Description
+| -- | -- | --
+| `paused` | `boolean` | Disables autoplay of videos. This prop is reactive, unlike the `paused` property of the html `<video>` tag.  You can set it to `true` to pause a playing video or set it to `false` to play a paused video.
+
+
+### Accessibility
+
+| Prop | Type | Description
+| -- | -- | --
+| `alt` | `string` | Sets the  alt attribute or aria-label value, depending on asset type.
+
+### Theming
+
+| Prop | Type | Description
+| -- | -- | --
+| `className` | `string` | Add a custom CSS class.
+| `style` | `CSSProperties` | Add additional styles.

@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactElement } from 'react'
 import { fillStyles } from './lib/styles'
+import { isNumeric } from './lib/values'
 
 // Wraps media elements and applys layout and other functionality
 export default function VisualWrapper({
@@ -10,8 +11,8 @@ export default function VisualWrapper({
   // apply width, height and aspect
   const layoutStyles = expand ? fillStyles : {
     position: 'relative', // For expanded elements
-    width: typeof width == 'number' ? `${width}px` : width,
-    height: typeof height == 'number' ? `${height}px` : height,
+    width: isNumeric(width) ? `${width}px` : width,
+    height: isNumeric(height) ? `${height}px` : height,
     aspectRatio: aspect,
     maxWidth: '100%', // Don't exceed container width
   } as CSSProperties
