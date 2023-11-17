@@ -4,10 +4,8 @@
 Cypress.Commands.add('hasDimensions',
   { prevSubject: true },
   (subject, width, height) => {
-
-  expect(subject.width()).to.equal(width)
-  expect(subject.height()).to.equal(height)
-  return subject
+  cy.wrap(subject).invoke('width').should('equal', width)
+  cy.wrap(subject).invoke('height').should('equal', height)
 })
 
 // Check that a video is playing
@@ -28,7 +26,7 @@ declare global {
       hasDimensions(
         width: number,
         height: number
-      ): Chainable<JQueryWithSelector>
+      ): Chainable<void>
 
       isPlaying(): Chainable<void>
     }
