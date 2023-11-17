@@ -1,5 +1,5 @@
 // Import commands.js using ES2015 syntax:
-import '../../../../lib/cypress/commands'
+import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
