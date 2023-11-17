@@ -4,6 +4,7 @@
 Cypress.Commands.add('hasDimensions',
   { prevSubject: true },
   (subject, width, height) => {
+  cy.wrap(subject).should('be.visible')
   cy.wrap(subject).invoke('width').should('equal', width)
   cy.wrap(subject).invoke('height').should('equal', height)
 })
