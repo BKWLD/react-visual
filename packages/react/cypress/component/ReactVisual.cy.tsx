@@ -136,11 +136,16 @@ describe('sources', () => {
         return `https://placehold.co/${width}x${width}${ext}`
       }}
       aspect={1}
+      width='50%'
+      sizes='50vw'
       alt=''/>)
 
-    // Should be webp source
+    // Should be webp source at reduced width
     cy.get('img').its('[0].currentSrc')
-    .should('eq', 'https://placehold.co/640x640.webp')
+    .should('eq', 'https://placehold.co/256x256.webp')
+
+    // It should also have a fallback source
+    cy.get('source:not([type])').should('have.length', 1)
 
   })
 
@@ -151,7 +156,7 @@ describe('sources', () => {
 
     cy.mount(<ReactVisual
       image='https://placehold.co/200x200'
-      sourceTypes={['image/webp', 'image/jpeg']}
+      sourceTypes={['image/webp']}
       sourceMedia={['(orientation:landscape)', '(orientation:portrait)']}
       imageLoader={({ src, type, media, width }) => {
 
@@ -174,9 +179,12 @@ describe('sources', () => {
     cy.get('img').its('[0].currentSrc')
     .should('eq', 'https://placehold.co/640x640.webp')
 
+    // There should be fallback sources (non-web) for each orientation
+    cy.get('source').should('have.length', 4)
+    cy.get('source:not([type])').should('have.length', 2)
   })
 
-  it.only('supports rendering object based sources', () => {
+  it('supports rendering object based sources', () => {
 
     // Start at a landscape viewport
     cy.viewport(500, 400)

@@ -3,7 +3,6 @@ import type { CSSProperties } from 'react'
 // Sources can be simple strings or arbitrary objects
 type AssetSrc = string | any
 
-// https://chat.openai.com/share/103de5c4-0af0-44c1-8f36-46743a0f964c
 export type ReactVisualProps= {
 
   image?: AssetSrc
@@ -42,10 +41,16 @@ export type AssetLoader = ({ src, width, type, media }: {
 
 export type ObjectFitOption = 'cover' | 'contain'
 
-export type SourceType = 'image/jpeg' | 'image/png' | 'image/gif' |
-  'image/avif' | 'image/webp' | string
+export type SourceType = 'image/jpeg'
+  | 'image/png'
+  | 'image/gif'
+  | 'image/avif'
+  | 'image/webp'
+  | string
 
-export type SourceMedia = 'orientation:landscape' | 'orientation:portrait' | string
+export type SourceMedia = 'orientation:landscape'
+  | 'orientation:portrait'
+  | string
 
 // Deprecated
 export enum ObjectFit {

@@ -50,12 +50,10 @@ export default function PictureImage(
   // Make the img src url
   const srcUrl = makeSrcUrl(src, imageLoader)
 
-  // Make the img srcset. When I had a single <source> with no type or media
-  // attribute, the srcset would not affect the image loaded.  Thus, I'm
-  // applying it to the img tag
-  const srcSet = imageLoader && makeSrcSet(srcsetWidths, imageLoader, { src })
-
-  // Additional sources to create
+  // Make array or props that will be used to make <source>s.  A `null` type is
+  // always added to create fallback sources for native mime-type of the
+  // uploaded image. Additionally, this how a <source> is create to store the
+  // srcset when no `sourceTypes` were specified.
   const sourceVariants = makeSourceVariants(sourceTypes, sourceMedia)
 
   // Always wrap in picture element for standard DOM structure
@@ -75,7 +73,7 @@ export default function PictureImage(
       <img
         style={{ ...layoutStyles, ...style }}
         src={ srcUrl }
-        {...{ loading, alt, srcSet, sizes }}
+        {...{ loading, alt, sizes }}
       />
     </picture>
   )
@@ -94,8 +92,7 @@ function makeSrcUrl(
   return imageLoader({ src, width: 1920 })
 }
 
-// Make an array of all the source variants to make. If these arrays are
-// empty, I add an `undefined` so my ability to loop though isn't blocked.
+// Make an array of all the source variants to make
 function makeSourceVariants(
   sourceTypes: SourceType[] | undefined,
   sourceMedia: SourceMedia[] | undefined
@@ -104,14 +101,15 @@ function makeSourceVariants(
   media?: SourceMedia
   key: string
 }[] {
+  const typesWithUntypedFallback = [...(sourceTypes || []), undefined]
   const variants = []
-  for (const type of (sourceTypes || [ undefined ])) {
-    for (const media of (sourceMedia || [ undefined ])) {
-      if (!type && !media) continue
-      variants.push({
-        type, media,
-        key: `${type}-${media}` // Make a key for React looping
-      })
+  for (const type of typesWithUntypedFallback) {
+    if (sourceMedia?.length) {
+      for (const media of sourceMedia) {
+        variants.push({ type, media, key: `${type}-${media}` })
+      }
+    } else {
+      variants.push({ type, key: type || 'fallback' })
     }
   }
   return variants
