@@ -24,6 +24,7 @@ export default function ReactVisual(
     priority,
     sizes,
     imageLoader,
+    videoLoader,
     sourceTypes,
     sourceMedia,
     paused,
@@ -72,6 +73,8 @@ export default function ReactVisual(
         priority,
         noPoster: !!image, // Use `image` as poster frame
         paused,
+        sourceMedia,
+        videoLoader,
       }} /> }
 
     </VisualWrapper>

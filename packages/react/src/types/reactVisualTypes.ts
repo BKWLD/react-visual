@@ -17,8 +17,8 @@ export type ReactVisualProps= {
 
   priority?: boolean
   sizes?: string
-  imageLoader?: AssetLoader
-  videoLoader?: AssetLoader
+  imageLoader?: ImageLoader
+  videoLoader?: VideoLoader
   sourceTypes?: SourceType[]
   sourceMedia?: SourceMedia[]
 
@@ -30,14 +30,19 @@ export type ReactVisualProps= {
   style?: CSSProperties
 }
 
-// The callback that is used to produce asset URL strings
-export type AssetLoader = ({ src, width, type, media }: {
+// The callback that is used to produce img URLs
+export type ImageLoader = ({ src, width, type, media }: {
   src: AssetSrc
   width: number
   type?: SourceType
   media?: SourceMedia
 }) => string
 
+// The callback that is used to produce video URLs
+export type VideoLoader = ({ src, media }: {
+  src: AssetSrc
+  media?: SourceMedia
+}) => string
 
 export type ObjectFitOption = 'cover' | 'contain'
 

@@ -1,10 +1,11 @@
 import type { ReactElement } from 'react'
 import type { PictureImageProps } from './types/pictureImageTypes'
-import type { AssetLoader, SourceMedia, SourceType } from './types/reactVisualTypes'
+import type { ImageLoader, SourceMedia, SourceType } from './types/reactVisualTypes'
 import { deviceSizes, imageSizes } from './lib/sizes'
+import { makeSourceVariants } from './lib/sources'
 
 type ImageSrc = PictureImageProps['src']
-type SourcesProps = {
+type ImageSourceProps = {
   widths: number[]
   imageLoader: Required<PictureImageProps>['imageLoader']
   sizes: PictureImageProps['sizes']
@@ -54,14 +55,14 @@ export default function PictureImage(
   // always added to create fallback sources for native mime-type of the
   // uploaded image. Additionally, this how a <source> is create to store the
   // srcset when no `sourceTypes` were specified.
-  const sourceVariants = makeSourceVariants(sourceTypes, sourceMedia)
+  const sourceVariants = makeSourceVariants({ sourceTypes, sourceMedia })
 
   // Always wrap in picture element for standard DOM structure
   return (
     <picture>
 
       {/* Make <source>s */}
-      {imageLoader && sourceVariants?.map(({ type, media, key }) => (
+      {imageLoader && sourceVariants.map(({ type, media, key }) => (
         <Source {...{
           key,
           widths: srcsetWidths,
@@ -83,7 +84,7 @@ export default function PictureImage(
 // Using a 1920 width in this case.
 function makeSrcUrl(
   src: ImageSrc,
-  imageLoader: AssetLoader | undefined
+  imageLoader: ImageLoader | undefined
 ): string {
   if (typeof src == 'string') return src
   if (!imageLoader) {
@@ -92,33 +93,10 @@ function makeSrcUrl(
   return imageLoader({ src, width: 1920 })
 }
 
-// Make an array of all the source variants to make
-function makeSourceVariants(
-  sourceTypes: SourceType[] | undefined,
-  sourceMedia: SourceMedia[] | undefined
-): {
-  type?: SourceType
-  media?: SourceMedia
-  key: string
-}[] {
-  const typesWithUntypedFallback = [...(sourceTypes || []), undefined]
-  const variants = []
-  for (const type of typesWithUntypedFallback) {
-    if (sourceMedia?.length) {
-      for (const media of sourceMedia) {
-        variants.push({ type, media, key: `${type}-${media}` })
-      }
-    } else {
-      variants.push({ type, key: type || 'fallback' })
-    }
-  }
-  return variants
-}
-
 // Make a source tag with srcset for the provided type and/or media attribute
 function Source({
    widths, imageLoader, sizes, src, type, media
-}: SourcesProps): ReactElement {
+}: ImageSourceProps): ReactElement {
   const srcSet = makeSrcSet(widths, imageLoader, { src, type, media })
   return (
     <source {...{ type, media, srcSet, sizes }} />
@@ -130,7 +108,7 @@ function Source({
 // function to customize the image returned.
 function makeSrcSet(
   widths: number[],
-  imageLoader: AssetLoader,
+  imageLoader: ImageLoader,
   params: {
     src: ImageSrc
     type?: SourceType

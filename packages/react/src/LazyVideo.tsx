@@ -4,12 +4,20 @@
 import { useInView } from 'react-intersection-observer'
 import { useEffect, type ReactElement, useRef, useCallback } from 'react'
 import type { LazyVideoProps } from './types/lazyVideoTypes';
-
+import type { SourceMedia } from './types/reactVisualTypes'
+import { makeSourceVariants } from './lib/sources'
 import { fillStyles, transparentGif } from './lib/styles'
+
+type VideoSourceProps = {
+  src: Required<LazyVideoProps>['src']
+  videoLoader: LazyVideoProps['videoLoader']
+  media?: SourceMedia
+}
 
 // An video rendered within a Visual that supports lazy loading
 export default function LazyVideo({
-  src, alt, fit, position, priority, noPoster, paused
+  src, sourceMedia, videoLoader,
+  alt, fit, position, priority, noPoster, paused,
 }: LazyVideoProps): ReactElement {
 
   // Make a ref to the video so it can be controlled
@@ -53,6 +61,10 @@ export default function LazyVideo({
   // Simplify logic for whether to load sources
   const shouldLoad = priority || inView
 
+  // Make source variants
+  const sourceVariants = makeSourceVariants({ sourceMedia })
+
+  // Render video tag
   return (
     <video
 
@@ -80,7 +92,21 @@ export default function LazyVideo({
       }}>
 
       {/* Implement lazy loading by not adding the source until ready */}
-      { shouldLoad && <source src={ src } /> }
+      { shouldLoad && sourceVariants.map(({ media, key }) => (
+        <Source {...{ key, videoLoader, src, media }} />
+      ))}
     </video>
+  )
+}
+
+// Make a video source tag
+function Source({
+  videoLoader, src, media
+}: VideoSourceProps): ReactElement {
+  const srcUrl = videoLoader ?
+    videoLoader({ src, media }) :
+    src
+  return (
+    <source src={ srcUrl } {...{ media }} type='video/mp4' />
   )
 }
