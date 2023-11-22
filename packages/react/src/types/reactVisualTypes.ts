@@ -1,9 +1,13 @@
 import type { CSSProperties } from 'react'
 
-export type ReactVisualProps = {
+// Sources can be simple strings or arbitrary objects
+type AssetSrc = string | any
 
-  image?: string
-  video?: string
+// https://chat.openai.com/share/103de5c4-0af0-44c1-8f36-46743a0f964c
+export type ReactVisualProps= {
+
+  image?: AssetSrc
+  video?: AssetSrc
 
   expand?: boolean
   aspect?: number // An explict aspect ratio
@@ -14,7 +18,8 @@ export type ReactVisualProps = {
 
   priority?: boolean
   sizes?: string
-  imageLoader?: ImageLoader
+  imageLoader?: AssetLoader
+  videoLoader?: AssetLoader
   sourceTypes?: SourceType[]
   sourceMedia?: SourceMedia[]
 
@@ -26,12 +31,14 @@ export type ReactVisualProps = {
   style?: CSSProperties
 }
 
-export type ImageLoader = ({ src, width, type, media }: {
-  src: string
+// The callback that is used to produce asset URL strings
+export type AssetLoader = ({ src, width, type, media }: {
+  src: AssetSrc
   width: number
   type?: SourceType
   media?: SourceMedia
 }) => string
+
 
 export type ObjectFitOption = 'cover' | 'contain'
 

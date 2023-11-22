@@ -176,4 +176,76 @@ describe('sources', () => {
 
   })
 
+  it.only('supports rendering object based sources', () => {
+
+    // Start at a landscape viewport
+    cy.viewport(500, 400)
+
+    cy.mount(<ReactVisual
+      image={{
+        landscape: {
+          url: 'https://placehold.co/500x250?text=landscape+image',
+          aspect: 2,
+        },
+        portrait: {
+          url: 'https://placehold.co/500x500?text=portrait+image',
+          aspect: 1,
+        }
+      }}
+      // video={{
+      //   landscape: {
+      //     url: 'https://placehold.co/500x250.mp4?text=landscape+video',
+      //     aspect: 2,
+      //   },
+      //   portrait: {
+      //     url: 'https://placehold.co/500x500.mp4?text=portrait+video',
+      //     aspect: 1,
+      //   }
+      // }}
+      sourceTypes={['image/webp', 'image/jpeg']}
+      sourceMedia={['(orientation: landscape)', '(orientation: portrait)']}
+      imageLoader={({ src, type, media, width }) => {
+
+        // Choose the right source
+        const asset = media?.includes('landscape') ?
+          src.landscape : src.portrait
+
+        // Make the dimensions
+        const dimensions = `${width}x${width / asset.aspect}`
+
+        // Choose the right format
+        const ext = type?.includes('webp') ? '.webp' : '.jpg'
+
+        // Get text message from src url
+        const text = (new URL(asset.url)).searchParams.get('text')
+          + `\\n${dimensions}${ext}`
+
+        // Make the url
+        return `https://placehold.co/${dimensions}${ext}?text=`+
+          encodeURIComponent(text)
+      }}
+      videoLoader={({ src, type, media, width }) => {
+        return media?.includes('landscape') ?
+          src.landscape.url : src.portrait.url
+      }}
+      width='100%'
+      alt=''/>)
+
+    // Generates a default from the first asset found
+    cy.get('img').invoke('attr', 'src')
+    .should('contain', 'https://placehold.co/1920x1920')
+
+    // Expect a landscape image
+    cy.get('img').its('[0].currentSrc')
+    .should('contain', 'https://placehold.co/640x320')
+    .should('contain', 'landscape')
+
+    // Switch to portrait, which should load the other source
+    cy.viewport(500, 600)
+    cy.get('img').its('[0].currentSrc')
+    .should('contain', 'https://placehold.co/640x640')
+    .should('contain', 'portrait')
+
+  })
+
 })

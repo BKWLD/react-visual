@@ -1,12 +1,13 @@
 import type { ReactElement } from 'react'
 import type { PictureImageProps } from './types/pictureImageTypes'
-import type { ImageLoader, SourceMedia, SourceType } from './types/reactVisualTypes'
+import type { AssetLoader, SourceMedia, SourceType } from './types/reactVisualTypes'
 import { deviceSizes, imageSizes } from './lib/sizes'
 
 type ImageSrc = PictureImageProps['src']
 type SourcesProps = {
   widths: number[]
   imageLoader: Required<PictureImageProps>['imageLoader']
+  sizes: PictureImageProps['sizes']
   src: ImageSrc
   type?: SourceType
   media?: SourceMedia
@@ -46,6 +47,9 @@ export default function PictureImage(
     ...deviceSizes,
   ]
 
+  // Make the img src url
+  const srcUrl = makeSrcUrl(src, imageLoader)
+
   // Make the img srcset. When I had a single <source> with no type or media
   // attribute, the srcset would not affect the image loaded.  Thus, I'm
   // applying it to the img tag
@@ -63,17 +67,31 @@ export default function PictureImage(
         <Source {...{
           key,
           widths: srcsetWidths,
-          imageLoader, src, type, media
+          imageLoader, sizes, src, type, media
         }} />
       ))}
 
       {/* The main <img> */}
       <img
         style={{ ...layoutStyles, ...style }}
-        {...{ src, loading, alt, srcSet, sizes }}
+        src={ srcUrl }
+        {...{ loading, alt, srcSet, sizes }}
       />
     </picture>
   )
+}
+
+// Make the <img> src value, using imageLoader if the src is not a string.
+// Using a 1920 width in this case.
+function makeSrcUrl(
+  src: ImageSrc,
+  imageLoader: AssetLoader | undefined
+): string {
+  if (typeof src == 'string') return src
+  if (!imageLoader) {
+    throw "An `imageLoader` is required when `src` isn't a string"
+  }
+  return imageLoader({ src, width: 1920 })
 }
 
 // Make an array of all the source variants to make. If these arrays are
@@ -101,11 +119,11 @@ function makeSourceVariants(
 
 // Make a source tag with srcset for the provided type and/or media attribute
 function Source({
-   widths, imageLoader, src, type, media
+   widths, imageLoader, sizes, src, type, media
 }: SourcesProps): ReactElement {
   const srcSet = makeSrcSet(widths, imageLoader, { src, type, media })
   return (
-    <source {...{ type, media, srcSet }} />
+    <source {...{ type, media, srcSet, sizes }} />
   )
 }
 
@@ -114,7 +132,7 @@ function Source({
 // function to customize the image returned.
 function makeSrcSet(
   widths: number[],
-  imageLoader: ImageLoader,
+  imageLoader: AssetLoader,
   params: {
     src: ImageSrc
     type?: SourceType
