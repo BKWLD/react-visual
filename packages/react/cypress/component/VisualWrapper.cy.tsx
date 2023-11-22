@@ -5,7 +5,6 @@ const sharedProps = {
   style: { background: 'black', color: 'white' },
   className: 'wrapper',
 }
-const style = { background: 'black' }
 
 // Viewport sizes
 const VW = Cypress.config('viewportWidth'),
