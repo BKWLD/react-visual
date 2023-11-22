@@ -99,7 +99,9 @@ export default function LazyVideo({
   )
 }
 
-// Make a video source tag
+// Make a video source tag. Note, media attribute on source isn't supported
+// in Chrome. This will need to be converted to a JS solution at some point.
+// https://github.com/BKWLD/react-visual/issues/35
 function Source({
   videoLoader, src, media
 }: VideoSourceProps): ReactElement {

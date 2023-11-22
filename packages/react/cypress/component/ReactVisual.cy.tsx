@@ -200,16 +200,6 @@ describe('sources', () => {
           aspect: 1,
         }
       }}
-      video={{
-        landscape: {
-          url: 'https://placehold.co/500x250.mp4?text=landscape+video',
-          aspect: 2,
-        },
-        portrait: {
-          url: 'https://placehold.co/500x500.mp4?text=portrait+video',
-          aspect: 1,
-        }
-      }}
       sourceTypes={['image/webp', 'image/jpeg']}
       sourceMedia={['(orientation: landscape)', '(orientation: portrait)']}
       imageLoader={({ src, type, media, width }) => {
@@ -232,10 +222,6 @@ describe('sources', () => {
         return `https://placehold.co/${dimensions}${ext}?text=`+
           encodeURIComponent(text)
       }}
-      videoLoader={({ src, media }) => {
-        return media?.includes('landscape') ?
-          src.landscape.url : src.portrait.url
-      }}
       width='100%'
       alt=''/>)
 
@@ -248,22 +234,11 @@ describe('sources', () => {
     .should('contain', 'https://placehold.co/640x320')
     .should('contain', 'landscape')
 
-    // ... and a landscape video
-    cy.get('video').its('[0].currentSrc')
-    .should('contain', 'https://placehold.co/500x250.mp4')
-    .should('contain', 'landscape')
-
     // Switch to portrait, which should load the other source
     cy.viewport(500, 600)
     cy.get('img').its('[0].currentSrc')
     .should('contain', 'https://placehold.co/640x640')
     .should('contain', 'portrait')
-
-    // ... portrait video should also load
-    cy.get('video').its('[0].currentSrc')
-    .should('contain', 'https://placehold.co/500x500.mp4')
-    .should('contain', 'portrait')
-
 
   })
 
