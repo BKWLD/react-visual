@@ -45,6 +45,34 @@ it('supports aspect', () => {
   cy.get('.wrapper').hasDimensions(VW, VH / 2)
 })
 
+it('supports respponsive aspect function', () => {
+  cy.mount(<VisualWrapper
+    {...sharedProps }
+    image={{
+      landscape: {
+        aspect: 2,
+      },
+      portrait: {
+        aspect: 1,
+      }
+    }}
+    sourceMedia={[
+      '(orientation: landscape)',
+      '(orientation: portrait)'
+    ]}
+    aspect={({ image, media }) => {
+      return media?.includes('landscape') ?
+        image.landscape.aspect :
+        image.portrait.aspect
+    }}
+  />)
+  cy.viewport(500, 400)
+  cy.get('.wrapper').hasDimensions(500, 250)
+  cy.viewport(400, 500)
+  cy.get('.wrapper').hasDimensions(400, 400)
+})
+
+
 it('supports children', () => {
   cy.mount(<VisualWrapper  {...sharedProps }>
     <h1>Hey</h1>

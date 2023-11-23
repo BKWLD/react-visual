@@ -192,11 +192,11 @@ describe('sources', () => {
     cy.mount(<ReactVisual
       image={{
         landscape: {
-          url: 'https://placehold.co/500x250?text=landscape+image',
+          url: 'https://placehold.co/500x255?text=landscape+image',
           aspect: 2,
         },
         portrait: {
-          url: 'https://placehold.co/500x500?text=portrait+image',
+          url: 'https://placehold.co/500x505?text=portrait+image',
           aspect: 1,
         }
       }}
@@ -222,7 +222,12 @@ describe('sources', () => {
         return `https://placehold.co/${dimensions}${ext}?text=`+
           encodeURIComponent(text)
       }}
-      width='100%'
+      aspect={({ image, media }) => {
+        return media?.includes('landscape') ?
+          image.landscape.aspect :
+          image.portrait.aspect
+      }}
+      data-cy='react-visual'
       alt=''/>)
 
     // Generates a default from the first asset found
@@ -234,11 +239,17 @@ describe('sources', () => {
     .should('contain', 'https://placehold.co/640x320')
     .should('contain', 'landscape')
 
+    // Check that the aspect is informing the size, not the image size
+    cy.get('[data-cy=react-visual]').hasDimensions(500, 250)
+
     // Switch to portrait, which should load the other source
     cy.viewport(500, 600)
     cy.get('img').its('[0].currentSrc')
     .should('contain', 'https://placehold.co/640x640')
     .should('contain', 'portrait')
+
+    // Check aspect again
+    cy.get('[data-cy=react-visual]').hasDimensions(500, 500)
 
   })
 

@@ -11,3 +11,13 @@ export const fillStyles = {
 // Transparent gif to use own image as poster
 // https://stackoverflow.com/a/13139830/59160
 export const transparentGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+
+// Combine classes
+// https://dev.to/gugaguichard/replace-clsx-classnames-or-classcat-with-your-own-little-helper-3bf
+export function cx(...args: unknown[]) {
+  return args
+    .flat()
+    .filter(x => typeof x === 'string')
+    .join(' ')
+    .trim()
+}

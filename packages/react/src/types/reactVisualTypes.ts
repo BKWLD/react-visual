@@ -9,7 +9,7 @@ export type ReactVisualProps= {
   video?: AssetSrc
 
   expand?: boolean
-  aspect?: number // An explict aspect ratio
+  aspect?: number | AspectCalculator // An explict aspect ratio
   width?: number | string
   height?: number | string
   fit?: ObjectFitOption | ObjectFit
@@ -43,6 +43,13 @@ export type VideoLoader = ({ src, media }: {
   src: AssetSrc
   media?: SourceMedia
 }) => string
+
+// Callback for producing the aspect ratio
+export type AspectCalculator = ({ media, image, video }: {
+  media: SourceMedia
+  image?: AssetSrc
+  video?: AssetSrc
+}) => number
 
 export type ObjectFitOption = 'cover' | 'contain'
 

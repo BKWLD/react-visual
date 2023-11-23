@@ -6,6 +6,7 @@ import PictureImage from './PictureImage'
 
 import { collectDataAttributes } from './lib/attributes'
 import { ReactVisualProps } from './types/reactVisualTypes'
+import { fillStyles } from './lib/styles'
 
 export default function ReactVisual(
   props: ReactVisualProps
@@ -42,6 +43,9 @@ export default function ReactVisual(
       width,
       height,
       aspect,
+      sourceMedia,
+      image,
+      video,
       className,
       style,
       dataAttributes: collectDataAttributes(props),
@@ -59,8 +63,9 @@ export default function ReactVisual(
         sourceTypes,
         sourceMedia,
         style: { // Expand to wrapper when wrapper has layout
-          width: expand || width || aspect ? '100%': undefined,
-          height: expand || height ? '100%' : undefined,
+          ...(aspect || expand ? fillStyles : undefined),
+          width: width ? '100%': undefined,
+          height: height ? '100%' : undefined,
         }
       }} /> }
 
