@@ -46,7 +46,7 @@ export default function ResponsiveExample() {
       sourceMedia={['(orientation:landscape)', '(orientation:portrait)']}
       imageLoader={({ src, type, media, width }) => {
         const height = media?.includes('landscape') ? width * 0.5 : width
-        const ext = type?.includes('webp') ? '.webp' : '.jpg'
+        const ext = type?.includes('webp') ? '.webp' : ''
         return `https://placehold.co/${width}x${height}${ext}`
       }}
       width='100%'
@@ -68,11 +68,17 @@ The above would produce:
       type='image/webp'
       media='(orientation:portrait)'
       srcset='https://placehold.co/640x640.webp 640w, https://placehold.co/750x750.webp 750w, https://placehold.co/828x828.webp 828w, https://placehold.co/1080x1080.webp 1080w, https://placehold.co/1200x1200.webp 1200w, https://placehold.co/1920x1920.webp 1920w, https://placehold.co/2048x2048.webp 2048w, https://placehold.co/3840x3840.webp 3840w'>
+    <source
+      type='image/webp'
+      media='(orientation:landscape)'
+      srcset='https://placehold.co/640x320 640w, https://placehold.co/750x375 750w, https://placehold.co/828x414 828w, https://placehold.co/1080x540 1080w, https://placehold.co/1200x600 1200w, https://placehold.co/1920x960 1920w, https://placehold.co/2048x1024 2048w, https://placehold.co/3840x1920 3840w'>
+    <source
+      media='(orientation:portrait)'
+      srcset='https://placehold.co/640x640 640w, https://placehold.co/750x750 750w, https://placehold.co/828x828 828w, https://placehold.co/1080x1080 1080w, https://placehold.co/1200x1200 1200w, https://placehold.co/1920x1920 1920w, https://placehold.co/2048x2048 2048w, https://placehold.co/3840x3840 3840w'>
     <img
       src='https://placehold.co/200x200'
       loading='lazy'
       alt='Example of responsive images'
-      srcset='https://placehold.co/640x640.jpg 640w, https://placehold.co/750x750.jpg 750w, https://placehold.co/828x828.jpg 828w, https://placehold.co/1080x1080.jpg 1080w, https://placehold.co/1200x1200.jpg 1200w, https://placehold.co/1920x1920.jpg 1920w, https://placehold.co/2048x2048.jpg 2048w, https://placehold.co/3840x3840.jpg 3840w'
       style='object-fit: cover; width: 100%;'>
   </picture>
 </div>
