@@ -171,15 +171,15 @@ For more examples, read [the Cypress component tests](./cypress/component).
 
 | Prop | Type | Description
 | -- | -- | --
-| `image` | `string | object` | URL to an image asset.
-| `video` | `string | object` | URL to a video asset asset.
+| `image` | `string`, `object` | URL to an image asset.
+| `video` | `string`, `object` | URL to a video asset asset.
 
 ### Layout
 
 | Prop | Type | Description
 | -- | -- | --
 | `expand` | `boolean` | Make the Visual fill it's container via CSS using absolute positioning.
-| `aspect` | `number | function` | Force the Visual to a specific aspect ratio.
+| `aspect` | `number`, `function` | Force the Visual to a specific aspect ratio.
 | `width` | `number`, `string` | A CSS dimension value or a px number.
 | `height` | `number`, `string` | A CSS dimension value or a px number.
 | `fit` | `string` | An [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) value that is applied to the assets.  Defaults to `cover`.
