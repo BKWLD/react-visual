@@ -200,7 +200,7 @@ describe('sources', () => {
           aspect: 1,
         }
       }}
-      sourceTypes={['image/webp', 'image/jpeg']}
+      sourceTypes={['image/webp']}
       sourceMedia={['(orientation: landscape)', '(orientation: portrait)']}
       imageLoader={({ src, type, media, width }) => {
 
