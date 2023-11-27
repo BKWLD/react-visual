@@ -63,8 +63,7 @@ export default function PictureImage(
 
       {/* Make <source>s */}
       {imageLoader && sourceVariants.map(({ type, media, key }) => (
-        <Source {...{
-          key,
+        <Source key={ key } {...{
           widths: srcsetWidths,
           imageLoader, sizes, src, type, media
         }} />

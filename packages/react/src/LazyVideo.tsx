@@ -93,7 +93,7 @@ export default function LazyVideo({
 
       {/* Implement lazy loading by not adding the source until ready */}
       { shouldLoad && sourceVariants.map(({ media, key }) => (
-        <Source {...{ key, videoLoader, src, media }} />
+        <Source key={ key } {...{ videoLoader, src, media }} />
       ))}
     </video>
   )
