@@ -13,6 +13,7 @@ Cypress.Commands.add('hasDimensions',
 Cypress.Commands.add('imgLoaded',
   { prevSubject: true },
   (subject) => {
+  cy.wait(100) // Wait a tick to solve for inexplicable flake
   cy.wrap(subject)
     .should('be.visible')
     .and('have.prop', 'naturalWidth')

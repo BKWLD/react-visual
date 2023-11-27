@@ -1,4 +1,4 @@
-import { ReactVisualProps } from './reactVisualTypes';
+import { ReactVisualProps } from './reactVisualTypes'
 
 export type PictureImageProps = Pick<ReactVisualProps,
   'sizes' |

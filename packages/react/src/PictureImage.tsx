@@ -2,11 +2,13 @@ import type { ReactElement } from 'react'
 import type { PictureImageProps } from './types/pictureImageTypes'
 import type { ImageLoader, SourceMedia, SourceType } from './types/reactVisualTypes'
 import { deviceSizes, imageSizes } from './lib/sizes'
+import { makeSourceVariants } from './lib/sources'
 
 type ImageSrc = PictureImageProps['src']
-type SourcesProps = {
+type ImageSourceProps = {
   widths: number[]
   imageLoader: Required<PictureImageProps>['imageLoader']
+  sizes: PictureImageProps['sizes']
   src: ImageSrc
   type?: SourceType
   media?: SourceMedia
@@ -46,66 +48,58 @@ export default function PictureImage(
     ...deviceSizes,
   ]
 
-  // Make the img srcset. When I had a single <source> with no type or media
-  // attribute, the srcset would not affect the image loaded.  Thus, I'm
-  // applying it to the img tag
-  const srcSet = imageLoader && makeSrcSet(srcsetWidths, imageLoader, { src })
+  // Make the img src url
+  const srcUrl = makeSrcUrl(src, imageLoader)
 
-  // Additional sources to create
-  const sourceVariants = makeSourceVariants(sourceTypes, sourceMedia)
+  // Make array or props that will be used to make <source>s.  A `null` type is
+  // always added to create fallback sources for native mime-type of the
+  // uploaded image. Additionally, this how a <source> is create to store the
+  // srcset when no `sourceTypes` were specified.
+  const sourceVariants = makeSourceVariants({ sourceTypes, sourceMedia })
 
   // Always wrap in picture element for standard DOM structure
   return (
     <picture>
 
       {/* Make <source>s */}
-      {imageLoader && sourceVariants?.map(({ type, media, key }) => (
+      {imageLoader && sourceVariants.map(({ type, media, key }) => (
         <Source {...{
           key,
           widths: srcsetWidths,
-          imageLoader, src, type, media
+          imageLoader, sizes, src, type, media
         }} />
       ))}
 
       {/* The main <img> */}
       <img
         style={{ ...layoutStyles, ...style }}
-        {...{ src, loading, alt, srcSet, sizes }}
+        src={ srcUrl }
+        {...{ loading, alt, sizes }}
       />
     </picture>
   )
 }
 
-// Make an array of all the source variants to make. If these arrays are
-// empty, I add an `undefined` so my ability to loop though isn't blocked.
-function makeSourceVariants(
-  sourceTypes: SourceType[] | undefined,
-  sourceMedia: SourceMedia[] | undefined
-): {
-  type?: SourceType
-  media?: SourceMedia
-  key: string
-}[] {
-  const variants = []
-  for (const type of (sourceTypes || [ undefined ])) {
-    for (const media of (sourceMedia || [ undefined ])) {
-      if (!type && !media) continue
-      variants.push({
-        type, media,
-        key: `${type}-${media}` // Make a key for React looping
-      })
-    }
+// Make the <img> src value, using imageLoader if the src is not a string.
+// Using a 1920 width in this case.
+function makeSrcUrl(
+  src: ImageSrc,
+  imageLoader: ImageLoader | undefined
+): string {
+  if (typeof src == 'string') return src
+  if (!imageLoader) {
+    throw "An `imageLoader` is required when `src` isn't a string"
   }
-  return variants
+  return imageLoader({ src, width: 1920 })
 }
 
 // Make a source tag with srcset for the provided type and/or media attribute
 function Source({
-   widths, imageLoader, src, type, media
-}: SourcesProps): ReactElement {
+   widths, imageLoader, sizes, src, type, media
+}: ImageSourceProps): ReactElement {
   const srcSet = makeSrcSet(widths, imageLoader, { src, type, media })
   return (
-    <source {...{ type, media, srcSet }} />
+    <source {...{ type, media, srcSet, sizes }} />
   )
 }
 

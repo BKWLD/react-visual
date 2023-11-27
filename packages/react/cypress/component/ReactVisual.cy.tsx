@@ -136,11 +136,16 @@ describe('sources', () => {
         return `https://placehold.co/${width}x${width}${ext}`
       }}
       aspect={1}
+      width='50%'
+      sizes='50vw'
       alt=''/>)
 
-    // Should be webp source
+    // Should be webp source at reduced width
     cy.get('img').its('[0].currentSrc')
-    .should('eq', 'https://placehold.co/640x640.webp')
+    .should('eq', 'https://placehold.co/256x256.webp')
+
+    // It should also have a fallback source
+    cy.get('source:not([type])').should('have.length', 1)
 
   })
 
@@ -151,7 +156,7 @@ describe('sources', () => {
 
     cy.mount(<ReactVisual
       image='https://placehold.co/200x200'
-      sourceTypes={['image/webp', 'image/jpeg']}
+      sourceTypes={['image/webp']}
       sourceMedia={['(orientation:landscape)', '(orientation:portrait)']}
       imageLoader={({ src, type, media, width }) => {
 
@@ -173,6 +178,78 @@ describe('sources', () => {
     cy.viewport(500, 600)
     cy.get('img').its('[0].currentSrc')
     .should('eq', 'https://placehold.co/640x640.webp')
+
+    // There should be fallback sources (non-web) for each orientation
+    cy.get('source').should('have.length', 4)
+    cy.get('source:not([type])').should('have.length', 2)
+  })
+
+  it('supports rendering object based sources', () => {
+
+    // Start at a landscape viewport
+    cy.viewport(500, 400)
+
+    cy.mount(<ReactVisual
+      image={{
+        landscape: {
+          url: 'https://placehold.co/500x255?text=landscape+image',
+          aspect: 2,
+        },
+        portrait: {
+          url: 'https://placehold.co/500x505?text=portrait+image',
+          aspect: 1,
+        }
+      }}
+      sourceTypes={['image/webp']}
+      sourceMedia={['(orientation: landscape)', '(orientation: portrait)']}
+      imageLoader={({ src, type, media, width }) => {
+
+        // Choose the right source
+        const asset = media?.includes('landscape') ?
+          src.landscape : src.portrait
+
+        // Make the dimensions
+        const dimensions = `${width}x${width / asset.aspect}`
+
+        // Choose the right format
+        const ext = type?.includes('webp') ? '.webp' : '.jpg'
+
+        // Get text message from src url
+        const text = (new URL(asset.url)).searchParams.get('text')
+          + `\\n${dimensions}${ext}`
+
+        // Make the url
+        return `https://placehold.co/${dimensions}${ext}?text=`+
+          encodeURIComponent(text)
+      }}
+      aspect={({ image, media }) => {
+        return media?.includes('landscape') ?
+          image.landscape.aspect :
+          image.portrait.aspect
+      }}
+      data-cy='react-visual'
+      alt=''/>)
+
+    // Generates a default from the first asset found
+    cy.get('img').invoke('attr', 'src')
+    .should('contain', 'https://placehold.co/1920x1920')
+
+    // Expect a landscape image
+    cy.get('img').its('[0].currentSrc')
+    .should('contain', 'https://placehold.co/640x320')
+    .should('contain', 'landscape')
+
+    // Check that the aspect is informing the size, not the image size
+    cy.get('[data-cy=react-visual]').hasDimensions(500, 250)
+
+    // Switch to portrait, which should load the other source
+    cy.viewport(500, 600)
+    cy.get('img').its('[0].currentSrc')
+    .should('contain', 'https://placehold.co/640x640')
+    .should('contain', 'portrait')
+
+    // Check aspect again
+    cy.get('[data-cy=react-visual]').hasDimensions(500, 500)
 
   })
 

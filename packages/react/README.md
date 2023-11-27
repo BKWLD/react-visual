@@ -33,7 +33,7 @@ export default function VideoExample() {
 }
 ```
 
-Generate multiple landscape and portrait sources in webp and avif using an image CDN to create a srcset.
+Generate multiple landscape and portrait sources using an image CDN to create a srcset.
 
 ```jsx
 import Visual from '@react-visual/react'
@@ -42,11 +42,11 @@ export default function ResponsiveExample() {
   return (
     <Visual
       image='https://placehold.co/200x200'
-      sourceTypes={['image/webp', 'image/jpeg']}
+      sourceTypes={['image/webp']}
       sourceMedia={['(orientation:landscape)', '(orientation:portrait)']}
       imageLoader={({ src, type, media, width }) => {
         const height = media?.includes('landscape') ? width * 0.5 : width
-        const ext = type?.includes('webp') ? '.webp' : '.jpg'
+        const ext = type?.includes('webp') ? '.webp' : ''
         return `https://placehold.co/${width}x${height}${ext}`
       }}
       width='100%'
@@ -58,30 +58,109 @@ export default function ResponsiveExample() {
 The above would produce:
 
 ```html
-<picture>
-  <source
-    type='image/webp'
-    media='(orientation:landscape)'
-    srcset='https://placehold.co/640x320.webp 640w, https://placehold.co/750x375.webp 750w, https://placehold.co/828x414.webp 828w, https://placehold.co/1080x540.webp 1080w, https://placehold.co/1200x600.webp 1200w, https://placehold.co/1920x960.webp 1920w, https://placehold.co/2048x1024.webp 2048w, https://placehold.co/3840x1920.webp 3840w'>
-  <source
-    type='image/webp'
-    media='(orientation:portrait)'
-    srcset='https://placehold.co/640x640.webp 640w, https://placehold.co/750x750.webp 750w, https://placehold.co/828x828.webp 828w, https://placehold.co/1080x1080.webp 1080w, https://placehold.co/1200x1200.webp 1200w, https://placehold.co/1920x1920.webp 1920w, https://placehold.co/2048x2048.webp 2048w, https://placehold.co/3840x3840.webp 3840w'>
-  <source
-    type='image/jpeg'
-    media='(orientation:landscape)'
-    srcset='https://placehold.co/640x320.jpg 640w, https://placehold.co/750x375.jpg 750w, https://placehold.co/828x414.jpg 828w, https://placehold.co/1080x540.jpg 1080w, https://placehold.co/1200x600.jpg 1200w, https://placehold.co/1920x960.jpg 1920w, https://placehold.co/2048x1024.jpg 2048w, https://placehold.co/3840x1920.jpg 3840w'>
-  <source
-    type='image/jpeg'
-    media='(orientation:portrait)'
-    srcset='https://placehold.co/640x640.jpg 640w, https://placehold.co/750x750.jpg 750w, https://placehold.co/828x828.jpg 828w, https://placehold.co/1080x1080.jpg 1080w, https://placehold.co/1200x1200.jpg 1200w, https://placehold.co/1920x1920.jpg 1920w, https://placehold.co/2048x2048.jpg 2048w, https://placehold.co/3840x3840.jpg 3840w'>
-  <img
-    src='https://placehold.co/200x200'
-    loading='lazy'
-    alt='Example of responsive images'
-    srcset='https://placehold.co/640x640.jpg 640w, https://placehold.co/750x750.jpg 750w, https://placehold.co/828x828.jpg 828w, https://placehold.co/1080x1080.jpg 1080w, https://placehold.co/1200x1200.jpg 1200w, https://placehold.co/1920x1920.jpg 1920w, https://placehold.co/2048x2048.jpg 2048w, https://placehold.co/3840x3840.jpg 3840w'
-    style='object-fit: cover; width: 100%;'>
-</picture>
+<div style="position: relative; width: 100%; max-width: 100%;">
+  <picture>
+    <source
+      type='image/webp'
+      media='(orientation:landscape)'
+      srcset='https://placehold.co/640x320.webp 640w, https://placehold.co/750x375.webp 750w, https://placehold.co/828x414.webp 828w, https://placehold.co/1080x540.webp 1080w, https://placehold.co/1200x600.webp 1200w, https://placehold.co/1920x960.webp 1920w, https://placehold.co/2048x1024.webp 2048w, https://placehold.co/3840x1920.webp 3840w'>
+    <source
+      type='image/webp'
+      media='(orientation:portrait)'
+      srcset='https://placehold.co/640x640.webp 640w, https://placehold.co/750x750.webp 750w, https://placehold.co/828x828.webp 828w, https://placehold.co/1080x1080.webp 1080w, https://placehold.co/1200x1200.webp 1200w, https://placehold.co/1920x1920.webp 1920w, https://placehold.co/2048x2048.webp 2048w, https://placehold.co/3840x3840.webp 3840w'>
+    <source
+      type='image/webp'
+      media='(orientation:landscape)'
+      srcset='https://placehold.co/640x320 640w, https://placehold.co/750x375 750w, https://placehold.co/828x414 828w, https://placehold.co/1080x540 1080w, https://placehold.co/1200x600 1200w, https://placehold.co/1920x960 1920w, https://placehold.co/2048x1024 2048w, https://placehold.co/3840x1920 3840w'>
+    <source
+      media='(orientation:portrait)'
+      srcset='https://placehold.co/640x640 640w, https://placehold.co/750x750 750w, https://placehold.co/828x828 828w, https://placehold.co/1080x1080 1080w, https://placehold.co/1200x1200 1200w, https://placehold.co/1920x1920 1920w, https://placehold.co/2048x2048 2048w, https://placehold.co/3840x3840 3840w'>
+    <img
+      src='https://placehold.co/200x200'
+      loading='lazy'
+      alt='Example of responsive images'
+      style='object-fit: cover; width: 100%;'>
+  </picture>
+</div>
+```
+
+Accept objects from a CMS to produce responsive assets at different aspect ratios.
+
+```jsx
+import Visual from '@react-visual/react'
+
+export default function ResponsiveExample() {
+  return (
+    <Visual
+      image={{
+        landscape: {
+          url: 'https://placehold.co/500x250',
+          aspect: 2,
+        },
+        portrait: {
+          url: 'https://placehold.co/500x500',
+          aspect: 1,
+        }
+      }}
+      sourceMedia={['(orientation: landscape)', '(orientation: portrait)']}
+      imageLoader={({ src, type, media, width }) => {
+
+        // Choose the right source
+        const asset = media?.includes('landscape') ?
+          src.landscape : src.portrait
+
+        // Make the dimensions
+        const dimensions = `${width}x${width / asset.aspect}`
+
+        // Choose the right format
+        const ext = type?.includes('webp') ? '.webp' : '.jpg'
+
+        // Make the url
+        return `https://placehold.co/${dimensions}${ext}`
+
+      }}
+      aspect={({ image, media }) => {
+        return media?.includes('landscape') ?
+          image.landscape.aspect :
+          image.portrait.aspect
+      }}
+      alt='Example of responsive images'/>
+  )
+}
+```
+
+This produces:
+
+```html
+<div
+  class="rv-orientation-landscape-2 rv-orientation-portrait-1"
+  style="position: relative; max-width: 100%;">
+  <picture>
+    <source
+      media="(orientation: landscape)"
+      srcset="https://placehold.co/640x320.jpg 640w, https://placehold.co/750x375.jpg 750w, https://placehold.co/828x414.jpg 828w, https://placehold.co/1080x540.jpg 1080w, https://placehold.co/1200x600.jpg 1200w, https://placehold.co/1920x960.jpg 1920w, https://placehold.co/2048x1024.jpg 2048w, https://placehold.co/3840x1920.jpg 3840w">
+    <source
+      media="(orientation: portrait)"
+      srcset="https://placehold.co/640x640.jpg 640w, https://placehold.co/750x750.jpg 750w, https://placehold.co/828x828.jpg 828w, https://placehold.co/1080x1080.jpg 1080w, https://placehold.co/1200x1200.jpg 1200w, https://placehold.co/1920x1920.jpg 1920w, https://placehold.co/2048x2048.jpg 2048w, https://placehold.co/3840x3840.jpg 3840w">
+    <img
+      src="https://placehold.co/1920x1920.jpg"
+      loading="lazy"
+      alt="Example of responsive images"
+      style="object-fit: cover; position: absolute; inset: 0px;">
+  </picture>
+  <style>
+    @media (orientation: landscape) {
+      .rv-orientation-landscape-2 {
+        aspect-ratio: 2;
+      }
+    }
+    @media (orientation: portrait) {
+      .rv-orientation-portrait-1 {
+        aspect-ratio: 1;
+      }
+    }
+  </style>
+</div>
 ```
 
 For more examples, read [the Cypress component tests](./cypress/component).
@@ -92,15 +171,15 @@ For more examples, read [the Cypress component tests](./cypress/component).
 
 | Prop | Type | Description
 | -- | -- | --
-| `image` | `string` | URL to an image asset.
-| `video` | `string` | URL to a video asset asset.
+| `image` | `string`, `object` | URL to an image asset.
+| `video` | `string`, `object` | URL to a video asset asset.
 
 ### Layout
 
 | Prop | Type | Description
 | -- | -- | --
 | `expand` | `boolean` | Make the Visual fill it's container via CSS using absolute positioning.
-| `aspect` | `number` | Force the Visual to a specific aspect ratio.
+| `aspect` | `number`, `function` | Force the Visual to a specific aspect ratio.
 | `width` | `number`, `string` | A CSS dimension value or a px number.
 | `height` | `number`, `string` | A CSS dimension value or a px number.
 | `fit` | `string` | An [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) value that is applied to the assets.  Defaults to `cover`.

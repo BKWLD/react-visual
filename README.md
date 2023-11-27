@@ -18,18 +18,16 @@ import Visual from '@react-visual/react'
 export default function ResponsiveExample() {
   return (
     <Visual
-      image="https://placehold.co/300x150"
-      sourceTypes={["image/webp", "image/jpeg"]}
-      sourceMedia={["(orientation:landscape)", "(orientation:portrait)"]}
-      imageLoader={({ type, media, width }) => {
-        const ext = type?.includes("webp") ? ".webp" : ".jpg";
-        const height = media?.includes("landscape") ? width * 0.5 : width;
-        return `https://placehold.co/${width}x${height}${ext}`;
+      image='https://placehold.co/200x200'
+      sourceTypes={['image/webp']}
+      sourceMedia={['(orientation:landscape)', '(orientation:portrait)']}
+      imageLoader={({ src, type, media, width }) => {
+        const height = media?.includes('landscape') ? width * 0.5 : width
+        const ext = type?.includes('webp') ? '.webp' : ''
+        return `https://placehold.co/${width}x${height}${ext}`
       }}
-      aspect={300 / 150}
-      sizes="100vw"
-      alt="Example of responsive images"
-    />
+      width='100%'
+      alt='Example of responsive images'/>
   )
 }
 ```

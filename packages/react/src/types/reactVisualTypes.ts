@@ -1,12 +1,15 @@
 import type { CSSProperties } from 'react'
 
-export type ReactVisualProps = {
+// Sources can be simple strings or arbitrary objects
+type AssetSrc = string | any
 
-  image?: string
-  video?: string
+export type ReactVisualProps= {
+
+  image?: AssetSrc
+  video?: AssetSrc
 
   expand?: boolean
-  aspect?: number // An explict aspect ratio
+  aspect?: number | AspectCalculator // An explict aspect ratio
   width?: number | string
   height?: number | string
   fit?: ObjectFitOption | ObjectFit
@@ -15,6 +18,7 @@ export type ReactVisualProps = {
   priority?: boolean
   sizes?: string
   imageLoader?: ImageLoader
+  videoLoader?: VideoLoader
   sourceTypes?: SourceType[]
   sourceMedia?: SourceMedia[]
 
@@ -26,19 +30,39 @@ export type ReactVisualProps = {
   style?: CSSProperties
 }
 
+// The callback that is used to produce img URLs
 export type ImageLoader = ({ src, width, type, media }: {
-  src: string
+  src: AssetSrc
   width: number
   type?: SourceType
   media?: SourceMedia
 }) => string
 
+// The callback that is used to produce video URLs
+export type VideoLoader = ({ src, media }: {
+  src: AssetSrc
+  media?: SourceMedia
+}) => string
+
+// Callback for producing the aspect ratio
+export type AspectCalculator = ({ media, image, video }: {
+  media: SourceMedia
+  image?: AssetSrc
+  video?: AssetSrc
+}) => number
+
 export type ObjectFitOption = 'cover' | 'contain'
 
-export type SourceType = 'image/jpeg' | 'image/png' | 'image/gif' |
-  'image/avif' | 'image/webp' | string
+export type SourceType = 'image/jpeg'
+  | 'image/png'
+  | 'image/gif'
+  | 'image/avif'
+  | 'image/webp'
+  | string
 
-export type SourceMedia = 'orientation:landscape' | 'orientation:portrait' | string
+export type SourceMedia = 'orientation:landscape'
+  | 'orientation:portrait'
+  | string
 
 // Deprecated
 export enum ObjectFit {
