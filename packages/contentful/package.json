@@ -1,0 +1,33 @@
+{
+  "name": "@react-visual/contentful",
+  "version": "0.7.1",
+  "description": "Image and video renderer for Contentful assets.",
+  "author": "Bukwild <info@bukwild.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "rm -rf dist/* && tsc",
+    "test": "cypress run --component"
+  },
+  "dependencies": {
+    "@react-visual/react": "^0.7.1"
+  },
+  "peerDependencies": {
+    "react": "^18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.18",
+    "@types/react-dom": "^18.2.7",
+    "cypress": "^12.17.3",
+    "react": "^18",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.1.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
