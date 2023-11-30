@@ -1,5 +1,5 @@
 import ContentfulVisual from '../../src'
-import { imageAsset, videoAsset } from '../fixtures/assets'
+import { imageAsset, portraitImageAsset, videoAsset } from '../fixtures/assets'
 import { visualEntry } from '../fixtures/entries'
 
 // Dimensions
@@ -27,8 +27,7 @@ describe('contentful asset props', () => {
     cy.get('img')
       .hasDimensions(VW, VW / landscapeAspect)
       .invoke('attr', 'alt').should('eq', imageAsset.title)
-    // Test srcset
-    cy.get('img').its('[0].currentSrc').should('contain', 'w=640')
+    cy.get('img').its('[0].currentSrc').should('contain', 'w=640') // srcset
   })
 
   it('can override inferred props', () => {
@@ -42,10 +41,35 @@ describe('contentful asset props', () => {
   })
 
   it('renders video', () => {
-    cy.mount(<ContentfulVisual video={ videoAsset } aspect={ 16 / 9} />)
+    cy.mount(<ContentfulVisual video={ videoAsset } aspect={ 16/9 } />)
     cy.get('video')
       .hasDimensions(VW, VW / (16/9) )
       .invoke('attr', 'aria-label').should('eq', videoAsset.description)
+  })
+
+})
+
+describe('contentful visual entry props', () => {
+
+  it('renders responsive images', () => {
+    cy.mount(<ContentfulVisual src={{
+      ...visualEntry,
+      video: null,
+      portraitVideo: null,
+    }} />)
+
+    // Portrait asset
+    cy.get('img').hasDimensions(VW, VW)
+    cy.get('img').its('[0].currentSrc')
+      .should('contain', 'w=640')
+      .should('contain', portraitImageAsset.url)
+
+    // Landscape asset
+    cy.viewport(500, 400)
+    cy.get('img').hasDimensions(VW, VW / landscapeAspect)
+    cy.get('img').its('[0].currentSrc')
+      .should('contain', 'w=640')
+      .should('contain', imageAsset.url)
   })
 
 })

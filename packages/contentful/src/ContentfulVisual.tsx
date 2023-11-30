@@ -21,9 +21,6 @@ export default function ContentfulVisual(
     alt,
   } = props
 
-  // Is this a responsive instance
-  const isResponsive = hasResponsiveAssets(src)
-
   // Make a Visual instance
   return (
     <ReactVisual
@@ -38,12 +35,12 @@ export default function ContentfulVisual(
       videoLoader={ videoLoader || defaultVideoLoader }
       sourceTypes={ sourceTypes || contentfulModernFormats }
       sourceMedia={ sourceMedia || (
-        isResponsive ?
+        hasResponsiveAssets(src) ?
           orientationMediaQueries :
           undefined
       )}
       aspect={ aspect || (
-        isResponsive ?
+        hasResponsiveAspects(src) ?
           responsiveAspectCalculator :
           getImageAspect(image || src?.image || src?.portraitImage)
       )}
@@ -52,6 +49,7 @@ export default function ContentfulVisual(
   )
 }
 
+// Produce Contentful image URls
 const defaultImageLoader: ImageLoader = ({ src, width, type, media }) => {
 
   // Use portrait image if it exists, otherwise fallback to landscape
@@ -85,23 +83,36 @@ function getImageAspect(
   return image.width / image.height
 }
 
-// Make the aspect ratio for responsive assets
+// Make the aspect ratio for responsive assets.
 const responsiveAspectCalculator: AspectCalculator = (
-  { media, image, video }
+  { media, image: src }
 ) => {
-  console.log('aspect calculator')
-  return 1
+  if (media?.includes('portrait')) {
+    return src.portraitImage.width / src.portraitImage.height as number
+  } else {
+    return src.image.width / src.image.height as number
+  }
 }
 
 // The types that Contentful's CDN can produce
 const contentfulModernFormats = ['image/avif', 'image/webp']
 
-// Check whether multiple orientations weMediae provided
+// Check whether multiple orientations were provided
 function hasResponsiveAssets(src: ContentfulVisualEntry | undefined): boolean {
   if (!src) return false
   const hasLandscape = !!(src.image || src.video),
     hasPortrait = !!(src.portraitImage || src.portraitVideo)
   return hasLandscape && hasPortrait
+}
+
+// Check whether multiple aspect ratios were provided
+function hasResponsiveAspects(src: ContentfulVisualEntry | undefined): boolean {
+  if (!src) return false
+  const hasLandscapeAspect = !!(src.image?.width &&
+      src.image?.height),
+    hasPortraitAspect = !!(src.portraitImage?.width &&
+      src.portraitImage?.height)
+  return hasLandscapeAspect && hasPortraitAspect
 }
 
 // The media queries that are used for default responsive visuals

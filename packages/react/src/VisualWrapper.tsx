@@ -61,13 +61,17 @@ function makeResponsiveAspects({
   // aspect value.
   const styles = sourceMedia.map(mediaQuery => {
 
-    // Calculate the asepct for this query state
+    // Calculate the aspect for this query state
     const aspect = aspectCalculator({ media: mediaQuery, image, video })
 
     // Make a CSS class name from the media query string
     const mediaClass = mediaQuery
       .replace(/[^\w]/ig, '-') // Replace special chars with "-"
-    const cssClass = `rv-${mediaClass}-${aspect}`
+    const aspectClass = aspect
+      .toFixed(3)
+      .replace(/\./ig, '_') // Replace decimals
+      .replace(/_?0*$/, '') // Remove trailing 0s
+    const cssClass = `rv-${mediaClass}-${aspectClass}`
       .replace(/\-{2,}/g, '-') // Reduce multiples of `-`
 
     // Make the CSS rule
@@ -76,7 +80,7 @@ function makeResponsiveAspects({
         aspect-ratio: ${aspect};
       }
     }`
-    return { cssClass, cssRule}
+    return { cssClass, cssRule }
   })
 
   // Make an array of the classes to add
