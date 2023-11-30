@@ -1,8 +1,11 @@
 import ContentfulVisual from '../../src'
+import { imageAsset, videoAsset } from '../fixtures/assets'
+import { visualEntry } from '../fixtures/entries'
 
-// Viewport sizes
+// Dimensions
 const VW = Cypress.config('viewportWidth'),
-  VH = Cypress.config('viewportHeight')
+  VH = Cypress.config('viewportHeight'),
+  landscapeAspect = imageAsset.width / imageAsset.height
 
 describe('no asset', () => {
 
@@ -17,38 +20,32 @@ describe('no asset', () => {
 
 })
 
-describe('fixed size', () => {
+describe('contentful asset props', () => {
 
-  it.only('renders image', () => {
+  it('renders image', () => {
+    cy.mount(<ContentfulVisual image={ imageAsset } />)
+    cy.get('img')
+      .hasDimensions(VW, VW / landscapeAspect)
+      .invoke('attr', 'alt').should('eq', imageAsset.title)
+    // Test srcset
+    cy.get('img').its('[0].currentSrc').should('contain', 'w=640')
+  })
+
+  it('can override inferred props', () => {
     cy.mount(<ContentfulVisual
-      image='https://placehold.co/300x200'
-      width={300}
-      height={200}
-      alt=''/>)
-    cy.get('img').hasDimensions(300, 200)
+      image={ imageAsset }
+      aspect={ 1 }
+      alt='Override' />)
+    cy.get('img')
+      .hasDimensions(VW, VW)
+      .invoke('attr', 'alt').should('eq', 'Override')
   })
 
   it('renders video', () => {
-    cy.mount(<ContentfulVisual
-      video='https://placehold.co/300x200.mp4'
-      width={300}
-      height={200}
-      alt=''/>)
-    cy.get('video').hasDimensions(300, 200)
-    cy.get('video').isPlaying()
+    cy.mount(<ContentfulVisual video={ videoAsset } aspect={ 16 / 9} />)
+    cy.get('video')
+      .hasDimensions(VW, VW / (16/9) )
+      .invoke('attr', 'aria-label').should('eq', videoAsset.description)
   })
 
-  it('renders image & video', () => {
-    cy.mount(<ContentfulVisual
-      image='https://placehold.co/300x200/black/white'
-      video='https://placehold.co/300x200.mp4'
-      width={300}
-      height={200}
-      alt=''
-      data-cy='next-visual' />)
-    cy.get('[data-cy=next-visual]').hasDimensions(300, 200)
-    cy.get('img').hasDimensions(300, 200)
-    cy.get('video').hasDimensions(300, 200)
-    cy.get('video').isPlaying()
-  })
 })

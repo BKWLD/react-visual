@@ -8,5 +8,8 @@ export { LazyVideo, VisualWrapper, collectDataAttributes }
 export {
   ReactVisualProps,
   ObjectFit,
-  ObjectFitOption
+  ObjectFitOption,
+  AspectCalculator,
+  ImageLoader,
+  VideoLoader,
 } from './types/reactVisualTypes'

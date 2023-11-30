@@ -31,6 +31,42 @@ export default function Example() {
 }
 ```
 
+```gql
+fragment visual on Visual {
+	image { ...image }
+  portraitImage { ...image }
+  video { ...video }
+  portraitVideo { ...video }
+  alt
+}
+
+fragment image on Asset {
+	title
+  description
+  fileName
+  title
+  description
+  width
+  height
+  url
+}
+
+fragment video on Asset {
+  title
+  description
+  fileName
+  url
+}
+```
+
+```gql
+query heroBlockEntryQuery {
+  heroBlock(id: "3T13NtVzGIOKRMISRYRDhO") {
+    background { ...visual }
+  }
+}
+```
+
 For more examples, read [the Cypress component tests](./cypress/component).
 
 ## Props

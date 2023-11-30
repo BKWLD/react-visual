@@ -20,12 +20,11 @@ export default function VisualWrapper({
 
   // If aspect is a function, invoke it to determine the aspect ratio
   let aspectRatio, aspectStyleTag, aspectClasses
-  if (typeof aspect == 'function' && sourceMedia?.length) {
+  if (typeof aspect == 'function' && sourceMedia && sourceMedia.length) {
     ({ aspectStyleTag, aspectClasses } = makeResponsiveAspects({
       aspectCalculator: aspect,
       sourceMedia, image, video
     }))
-    console.log(aspectClasses, aspectStyleTag )
   } else aspectRatio = aspect
 
   // Make the wrapper style.  If expanding, use normal fill rules. Otherwise,

@@ -6,6 +6,7 @@ Cypress.Commands.add('hasDimensions',
   (subject, width, height) => {
   cy.wrap(subject).invoke('width').should('equal', width)
   cy.wrap(subject).invoke('height').should('equal', height)
+  cy.wrap(subject)
 })
 
 // Check that a video is playing
@@ -14,6 +15,7 @@ Cypress.Commands.add('isPlaying',
   { prevSubject: true },
   (subject) => {
   cy.wrap(subject).should('have.prop', 'paused', false)
+  cy.wrap(subject)
 })
 
 // Add Typescript support for custom commaands
