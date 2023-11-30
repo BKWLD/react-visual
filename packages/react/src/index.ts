@@ -1,5 +1,5 @@
 import ReactVisual from './ReactVisual'
-import LazyVideo from './LazyVideo'
+import LazyVideo from './LazyVideo/LazyVideoServer'
 import VisualWrapper from './VisualWrapper'
 import { collectDataAttributes } from './lib/attributes'
 

@@ -4,27 +4,28 @@
 import { useInView } from 'react-intersection-observer'
 import { useMediaQueries } from '@react-hook/media-query'
 import { useEffect, type ReactElement, useRef, useCallback, type MutableRefObject } from 'react'
-import type { LazyVideoProps } from './types/lazyVideoTypes';
-import { fillStyles, transparentGif } from './lib/styles'
+import type { LazyVideoProps } from '../types/lazyVideoTypes';
+import { fillStyles, transparentGif } from '../lib/styles'
 
-type VideoSourceProps = {
-  src: Required<LazyVideoProps>['src']
-  videoLoader: LazyVideoProps['videoLoader']
+type LazyVideoClientProps = Omit<LazyVideoProps,
+  'videoLoader' | 'src' | 'sourceMedia'
+> & {
+  srcUrl?: string
+  mediaSrcs?: Record<string, string>
 }
 
-type ResponsiveVideoSourceProps = Pick<Required<LazyVideoProps>,
-  'src' | 'videoLoader' | 'sourceMedia'
-> & {
+type ResponsiveVideoSourceProps = {
+  mediaSrcs: Required<LazyVideoClientProps>['mediaSrcs']
   videoRef: VideoRef
 }
 
 type VideoRef = MutableRefObject<HTMLVideoElement | undefined>
 
 // An video rendered within a Visual that supports lazy loading
-export default function LazyVideo({
-  src, sourceMedia, videoLoader,
+export default function LazyVideoClient({
+  srcUrl, mediaSrcs,
   alt, fit, position, priority, noPoster, paused,
-}: LazyVideoProps): ReactElement {
+}: LazyVideoClientProps): ReactElement {
 
   // Make a ref to the video so it can be controlled
   const videoRef = useRef<HTMLVideoElement>()
@@ -67,11 +68,6 @@ export default function LazyVideo({
   // Simplify logic for whether to load sources
   const shouldLoad = priority || inView
 
-  // Multiple media queries and a loader func are necessary for responsive
-  const useResponsiveSource = sourceMedia
-    && sourceMedia?.length > 1
-    && !!videoLoader
-
   // Render video tag
   return (
     <video
@@ -100,39 +96,21 @@ export default function LazyVideo({
       }}>
 
       {/* Implement lazy loading by not adding the source until ready */}
-      { shouldLoad && (useResponsiveSource ?
-        <ResponsiveSource { ...{ src, videoLoader, sourceMedia, videoRef }} /> :
-        <Source {...{ src, videoLoader }} />
+      { shouldLoad && (mediaSrcs ?
+        <ResponsiveSource { ...{ mediaSrcs, videoRef }} /> :
+        <source src={ srcUrl } type='video/mp4' />
       )}
     </video>
   )
 }
 
-// Return a simple source element
-function Source({
-  src, videoLoader
-}: VideoSourceProps): ReactElement | undefined {
-  let srcUrl
-  if (videoLoader) srcUrl = videoLoader({ src })
-  else if (typeof src == 'string') srcUrl = src
-  if (!srcUrl) return
-  return (<source src={ srcUrl } type='video/mp4' />)
-}
-
 // Switch the video asset depending on media queries
 function ResponsiveSource({
-  src, videoLoader, sourceMedia, videoRef
+  mediaSrcs, videoRef
 }: ResponsiveVideoSourceProps): ReactElement | undefined {
 
-  // Prepare a hash of source URLs and their media query constraint in the
-  // style expected by useMediaQueries
-  const queries = Object.fromEntries(sourceMedia.map(media => {
-    const url = videoLoader({ src, media })
-    return [url, media]
-  }))
-
   // Find the src url that is currently active
-  const { matches } = useMediaQueries(queries)
+  const { matches } = useMediaQueries(mediaSrcs)
   const srcUrl = getFirstMatch(matches)
 
   // Reload the video since the source changed
