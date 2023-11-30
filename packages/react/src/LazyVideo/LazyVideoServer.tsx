@@ -46,9 +46,18 @@ export default function LazyVideo(
 
   // Render client component
   return (
-    <LazyVideoClient
-      {...props}
-      {...{ srcUrl, mediaSrcs }}
+    <LazyVideoClient {...{
+        ...props,
+
+        // Remove client-unfriendly props
+        videoLoader: undefined,
+        src: undefined,
+        sourceMedia: undefined,
+
+        // Add client-friendly props
+        srcUrl,
+        mediaSrcs,
+      }}
     />
   )
 }
