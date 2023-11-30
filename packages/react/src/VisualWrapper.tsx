@@ -25,7 +25,6 @@ export default function VisualWrapper({
       aspectCalculator: aspect,
       sourceMedia, image, video
     }))
-    console.log(aspectClasses, aspectStyleTag )
   } else aspectRatio = aspect
 
   // Make the wrapper style.  If expanding, use normal fill rules. Otherwise,
