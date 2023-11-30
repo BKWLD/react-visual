@@ -9,8 +9,9 @@ jobs:
     strategy:
       matrix:
         dir:
-          - packages/next
           - packages/react
+          - packages/contentful
+          - packages/next
           - packages/sanity-next
 
     steps:
