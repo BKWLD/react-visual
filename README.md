@@ -51,6 +51,8 @@ export default function Example() {
 }
 ```
 
+[View CodeSandbox demo](https://codesandbox.io/p/devbox/react-visual-contentful-demo-gmxg7d)
+
 ### @react-visual/next
 
 Using framework adapter for Next.js:
