@@ -32,7 +32,7 @@ Where `image` and `video` are asset fields defined by these GQL fragments:
 
 ```gql
 fragment image on Asset {
-	title
+  title
   description
   fileName
   width
@@ -68,7 +68,7 @@ Where `background` is defined by this GQL fragment (this consumes the previous f
 
 ```gql
 fragment visual on Visual {
-	image { ...image }
+  image { ...image }
   portraitImage { ...image }
   video { ...video }
   portraitVideo { ...video }
@@ -105,7 +105,7 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | -- | -- | --
 | `priority` | `boolean` | Sets [`next/image`'s `priority`](https://nextjs.org/docs/pages/api-reference/components/image#priority) and videos to not lazy load.
 | `sizes` | `string` | Sets [`next/image`'s `sizes`](https://nextjs.org/docs/pages/api-reference/components/image#sizes) prop.
-| `imageLoader` | `Function` | This is passed through [to `next/image`'s `loader` prop](https://nextjs.org/docs/app/api-reference/components/image#loader).
+
 
 ### Video
 
