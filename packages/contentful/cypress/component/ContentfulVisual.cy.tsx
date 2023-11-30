@@ -1,5 +1,10 @@
 import ContentfulVisual from '../../src'
-import { imageAsset, portraitImageAsset, videoAsset } from '../fixtures/assets'
+import {
+  imageAsset,
+  portraitImageAsset,
+  videoAsset,
+  portraitVideoAsset
+} from '../fixtures/assets'
 import { visualEntry } from '../fixtures/entries'
 
 // Dimensions
@@ -70,6 +75,42 @@ describe('contentful visual entry props', () => {
     cy.get('img').its('[0].currentSrc')
       .should('contain', 'w=640')
       .should('contain', imageAsset.url)
+  })
+
+  it('renders responsive videos', () => {
+    cy.mount(<ContentfulVisual expand src={{
+      ...visualEntry,
+      image: null,
+      portraitImage: null,
+    }} />)
+
+    // Portrait asset
+    cy.get('video').its('[0].currentSrc')
+      .should('contain', portraitVideoAsset.url)
+
+    // Landscape asset
+    cy.viewport(500, 400)
+    cy.get('video').its('[0].currentSrc')
+      .should('contain', videoAsset.url)
+  })
+
+  it('renders full visual entry', () => {
+    cy.mount(<ContentfulVisual src={visualEntry} />)
+
+    // Portrait asset
+    cy.get('img').hasDimensions(VW, VW)
+    cy.get('img').its('[0].currentSrc')
+      .should('contain', portraitImageAsset.url)
+    cy.get('video').its('[0].currentSrc')
+      .should('contain', portraitVideoAsset.url)
+
+    // Landscape asset
+    cy.viewport(500, 400)
+    cy.get('img').hasDimensions(VW, VW / landscapeAspect)
+    cy.get('img').its('[0].currentSrc')
+      .should('contain', imageAsset.url)
+    cy.get('video').its('[0].currentSrc')
+      .should('contain', videoAsset.url)
   })
 
 })
