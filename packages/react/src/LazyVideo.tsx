@@ -2,17 +2,23 @@
 "use client";
 
 import { useInView } from 'react-intersection-observer'
-import { useEffect, type ReactElement, useRef, useCallback } from 'react'
+import { useMediaQueries } from '@react-hook/media-query'
+import { useEffect, type ReactElement, useRef, useCallback, type MutableRefObject } from 'react'
 import type { LazyVideoProps } from './types/lazyVideoTypes';
-import type { SourceMedia } from './types/reactVisualTypes'
-import { makeSourceVariants } from './lib/sources'
 import { fillStyles, transparentGif } from './lib/styles'
 
 type VideoSourceProps = {
   src: Required<LazyVideoProps>['src']
   videoLoader: LazyVideoProps['videoLoader']
-  media?: SourceMedia
 }
+
+type ResponsiveVideoSourceProps = Pick<Required<LazyVideoProps>,
+  'src' | 'videoLoader' | 'sourceMedia'
+> & {
+  videoRef: VideoRef
+}
+
+type VideoRef = MutableRefObject<HTMLVideoElement | undefined>
 
 // An video rendered within a Visual that supports lazy loading
 export default function LazyVideo({
@@ -61,8 +67,10 @@ export default function LazyVideo({
   // Simplify logic for whether to load sources
   const shouldLoad = priority || inView
 
-  // Make source variants
-  const sourceVariants = makeSourceVariants({ sourceMedia })
+  // Multiple media queries and a loader func are necessary for responsive
+  const useResponsiveSource = sourceMedia
+    && sourceMedia?.length > 1
+    && !!videoLoader
 
   // Render video tag
   return (
@@ -92,23 +100,72 @@ export default function LazyVideo({
       }}>
 
       {/* Implement lazy loading by not adding the source until ready */}
-      { shouldLoad && sourceVariants.map(({ media, key }) => (
-        <Source key={ key } {...{ videoLoader, src, media }} />
-      ))}
+      { shouldLoad && (useResponsiveSource ?
+        <ResponsiveSource { ...{ src, videoLoader, sourceMedia, videoRef }} /> :
+        <Source {...{ src, videoLoader }} />
+      )}
     </video>
   )
 }
 
-// Make a video source tag. Note, media attribute on source isn't supported
-// in Chrome. This will need to be converted to a JS solution at some point.
-// https://github.com/BKWLD/react-visual/issues/35
+// Return a simple source element
 function Source({
-  videoLoader, src, media
-}: VideoSourceProps): ReactElement {
-  const srcUrl = videoLoader ?
-    videoLoader({ src, media }) :
-    src
-  return (
-    <source src={ srcUrl } {...{ media }} type='video/mp4' />
-  )
+  src, videoLoader
+}: VideoSourceProps): ReactElement | undefined {
+  let srcUrl
+  if (videoLoader) srcUrl = videoLoader({ src })
+  else if (typeof src == 'string') srcUrl = src
+  if (!srcUrl) return
+  return (<source src={ srcUrl } type='video/mp4' />)
+}
+
+// Switch the video asset depending on media queries
+function ResponsiveSource({
+  src, videoLoader, sourceMedia, videoRef
+}: ResponsiveVideoSourceProps): ReactElement | undefined {
+
+  // Prepare a hash of source URLs and their media query constraint in the
+  // style expected by useMediaQueries
+  const queries = Object.fromEntries(sourceMedia.map(media => {
+    const url = videoLoader({ src, media })
+    return [url, media]
+  }))
+
+  // Find the src url that is currently active
+  const { matches } = useMediaQueries(queries)
+  const srcUrl = getFirstMatch(matches)
+
+  // Reload the video since the source changed
+  useEffect(() => reloadVideoWhenSafe(videoRef), [ matches ])
+
+  // Return new source
+  return (<source src={ srcUrl } type='video/mp4' />)
+}
+
+// Get the URL with a media query match
+function getFirstMatch(matches: Record<string, boolean>): string | undefined {
+  for (const srcUrl in matches) {
+    if (matches[srcUrl]) {
+      return srcUrl
+    }
+  }
+}
+
+// Safely call load function on a video
+function reloadVideoWhenSafe(videoRef: VideoRef): void {
+  if (!videoRef.current) return
+  const video = videoRef.current
+
+  // If already playing safely, load now
+  if (video.readyState >= 2) {
+    video.load()
+
+  // Else, wait for video to finish loading
+  } else {
+    const handleLoadedData = () => {
+      video.load()
+      video.removeEventListener('loadeddata', handleLoadedData)
+    }
+    video.addEventListener('loadeddata', handleLoadedData)
+  }
 }

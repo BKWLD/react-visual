@@ -40,3 +40,33 @@ describe('playback', () => {
   })
 
 })
+
+describe('responsive video', () => {
+
+  it('supports switching sources based on media', () => {
+    cy.mount(<LazyVideo
+      src={{
+        portrait: 'https://placehold.co/500x500.mp4?text=portrait',
+        landscape: 'https://placehold.co/500x250.mp4?text=landscape',
+      }}
+      sourceMedia={['(orientation:landscape)', '(orientation:portrait)']}
+      videoLoader={({ src, media}) => {
+        if (media?.includes('portrait')) return src.portrait
+        else return src.landscape
+      }}
+      alt='Responsive video test'
+    />)
+
+    // Portrait loaded initially
+    cy.get('video').its('[0].currentSrc').should('contain', 'portrait')
+
+    // Switch to landscape
+    cy.viewport(500, 250)
+    cy.get('video').its('[0].currentSrc').should('contain', 'landscape')
+
+    // Switch back to portrait again
+    cy.viewport(500, 600)
+    cy.get('video').its('[0].currentSrc').should('contain', 'portrait')
+  })
+
+})
