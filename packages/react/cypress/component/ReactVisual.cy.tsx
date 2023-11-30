@@ -200,6 +200,16 @@ describe('sources', () => {
           aspect: 1,
         }
       }}
+      video={{
+        landscape: {
+          url: 'https://placehold.co/500x250.mp4?text=landscape+video',
+          aspect: 2,
+        },
+        portrait: {
+          url: 'https://placehold.co/500x500.mp4?text=portrait+video',
+          aspect: 1,
+        }
+      }}
       sourceTypes={['image/webp']}
       sourceMedia={['(orientation: landscape)', '(orientation: portrait)']}
       imageLoader={({ src, type, media, width }) => {
@@ -222,6 +232,10 @@ describe('sources', () => {
         return `https://placehold.co/${dimensions}${ext}?text=`+
           encodeURIComponent(text)
       }}
+      videoLoader={({ src, media }) => {
+        return media?.includes('landscape') ?
+          src.landscape.url : src.portrait.url
+      }}
       aspect={({ image, media }) => {
         return media?.includes('landscape') ?
           image.landscape.aspect :
@@ -239,6 +253,9 @@ describe('sources', () => {
     .should('contain', 'https://placehold.co/640x320')
     .should('contain', 'landscape')
 
+    // And a landscape video
+    cy.get('video').its('[0].currentSrc').should('contain', 'landscape')
+
     // Check that the aspect is informing the size, not the image size
     cy.get('[data-cy=react-visual]').hasDimensions(500, 250)
 
@@ -247,6 +264,9 @@ describe('sources', () => {
     cy.get('img').its('[0].currentSrc')
     .should('contain', 'https://placehold.co/640x640')
     .should('contain', 'portrait')
+
+    // And video
+    cy.get('video').its('[0].currentSrc').should('contain', 'portrait')
 
     // Check aspect again
     cy.get('[data-cy=react-visual]').hasDimensions(500, 500)
