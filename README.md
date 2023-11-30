@@ -3,6 +3,7 @@
 A monorepo hosting components for rendering image and video in a single container for easy rendering of visual elements.
 
 - [@react-visual/react](./packages/react) - Vanilla implementation.
+- [@react-visual/contentful](./packages/contentful) - Adapter for Contentful assets.
 - [@react-visual/next](./packages/next) - Uses the `next/image` component for rendering images.
 - [@react-visual/sanity-next](./packages/sanity-next) - Takes Sanity asset and passes them to `@react-visual/next` for rendering.
 
@@ -33,6 +34,22 @@ export default function ResponsiveExample() {
 ```
 
 [View CodeSandbox demo](https://codesandbox.io/p/sandbox/react-visual-react-demo-w4sh62)
+
+### @react-visual/contentful
+
+Using with a Visual entryType containing image and video fields:
+
+```jsx
+import Visual from '@react-visual/contentful'
+
+export default function Example() {
+  return (
+    <Visual
+      src={ entry.background }
+      sizes='100vw' />
+  )
+}
+```
 
 ### @react-visual/next
 

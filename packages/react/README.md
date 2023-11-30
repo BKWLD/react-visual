@@ -194,6 +194,7 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | `sourceTypes` | `string[]` | Specify image MIME types that will be passed to the `imageLoader` and used to create additional `<source>` tags.  Use this to create `webp` or `avif` sources with a CDN like Contentful.
 | `sourceMedia` | `string[]` | Specify media queries that will be passed to the `imageLoader` and used to create additional `<source>` tags.
 | `imageLoader` | `Function` | Uses syntax that is similar [to `next/image`'s `loader` prop](https://nextjs.org/docs/app/api-reference/components/image#loader).  A srcset is built with a hardcoded list of widths.
+| `videoLoader` | `Function` | Like `imageLoader` but is only passed the `src` and `media` properties.
 
 ### Video
 
