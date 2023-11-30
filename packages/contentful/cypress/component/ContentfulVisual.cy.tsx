@@ -1,0 +1,116 @@
+import ContentfulVisual from '../../src'
+import {
+  imageAsset,
+  portraitImageAsset,
+  videoAsset,
+  portraitVideoAsset
+} from '../fixtures/assets'
+import { visualEntry } from '../fixtures/entries'
+
+// Dimensions
+const VW = Cypress.config('viewportWidth'),
+  VH = Cypress.config('viewportHeight'),
+  landscapeAspect = imageAsset.width / imageAsset.height
+
+describe('no asset', () => {
+
+  it('renders nothing', () => {
+    cy.mount(<ContentfulVisual
+      width={300}
+      height={200}
+      alt=''
+      data-cy='next-visual' />)
+    cy.get('[data-cy=next-visual]').should('not.exist')
+  })
+
+})
+
+describe('contentful asset props', () => {
+
+  it('renders image', () => {
+    cy.mount(<ContentfulVisual image={ imageAsset } />)
+    cy.get('img')
+      .hasDimensions(VW, VW / landscapeAspect)
+      .invoke('attr', 'alt').should('eq', imageAsset.title)
+    cy.get('img').its('[0].currentSrc').should('contain', 'w=640') // srcset
+  })
+
+  it('can override inferred props', () => {
+    cy.mount(<ContentfulVisual
+      image={ imageAsset }
+      aspect={ 1 }
+      alt='Override' />)
+    cy.get('img')
+      .hasDimensions(VW, VW)
+      .invoke('attr', 'alt').should('eq', 'Override')
+  })
+
+  it('renders video', () => {
+    cy.mount(<ContentfulVisual video={ videoAsset } aspect={ 16/9 } />)
+    cy.get('video')
+      .hasDimensions(VW, VW / (16/9) )
+      .invoke('attr', 'aria-label').should('eq', videoAsset.description)
+  })
+
+})
+
+describe('contentful visual entry props', () => {
+
+  it('renders responsive images', () => {
+    cy.mount(<ContentfulVisual src={{
+      ...visualEntry,
+      video: null,
+      portraitVideo: null,
+    }} />)
+
+    // Portrait asset
+    cy.get('img').hasDimensions(VW, VW)
+    cy.get('img').its('[0].currentSrc')
+      .should('contain', 'w=640')
+      .should('contain', portraitImageAsset.url)
+
+    // Landscape asset
+    cy.viewport(500, 400)
+    cy.get('img').hasDimensions(VW, VW / landscapeAspect)
+    cy.get('img').its('[0].currentSrc')
+      .should('contain', 'w=640')
+      .should('contain', imageAsset.url)
+  })
+
+  it('renders responsive videos', () => {
+    cy.mount(<ContentfulVisual expand src={{
+      ...visualEntry,
+      image: null,
+      portraitImage: null,
+    }} />)
+
+    // Portrait asset
+    cy.get('video').its('[0].currentSrc')
+      .should('contain', portraitVideoAsset.url)
+
+    // Landscape asset
+    cy.viewport(500, 400)
+    cy.get('video').its('[0].currentSrc')
+      .should('contain', videoAsset.url)
+  })
+
+  it('renders full visual entry', () => {
+    cy.mount(<ContentfulVisual src={visualEntry} />)
+
+    // Portrait asset
+    cy.get('img').hasDimensions(VW, VW)
+    cy.get('img').its('[0].currentSrc')
+      .should('contain', portraitImageAsset.url)
+    cy.get('video').its('[0].currentSrc')
+      .should('contain', portraitVideoAsset.url)
+
+    // Landscape asset
+    cy.viewport(500, 400)
+    cy.get('img').hasDimensions(VW, VW / landscapeAspect)
+    cy.get('img').its('[0].currentSrc')
+      .should('contain', imageAsset.url)
+    cy.get('video').its('[0].currentSrc')
+      .should('contain', videoAsset.url)
+  })
+
+})

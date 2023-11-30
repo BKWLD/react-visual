@@ -63,9 +63,9 @@ export default function ReactVisual(
         sourceTypes,
         sourceMedia,
         style: { // Expand to wrapper when wrapper has layout
-          ...(aspect || expand ? fillStyles : undefined),
           width: width ? '100%': undefined,
           height: height ? '100%' : undefined,
+          ...(aspect || expand ? fillStyles : undefined),
         }
       }} /> }
 

@@ -20,7 +20,7 @@ export default function VisualWrapper({
 
   // If aspect is a function, invoke it to determine the aspect ratio
   let aspectRatio, aspectStyleTag, aspectClasses
-  if (typeof aspect == 'function' && sourceMedia?.length) {
+  if (typeof aspect == 'function' && sourceMedia && sourceMedia.length) {
     ({ aspectStyleTag, aspectClasses } = makeResponsiveAspects({
       aspectCalculator: aspect,
       sourceMedia, image, video
@@ -61,13 +61,17 @@ function makeResponsiveAspects({
   // aspect value.
   const styles = sourceMedia.map(mediaQuery => {
 
-    // Calculate the asepct for this query state
+    // Calculate the aspect for this query state
     const aspect = aspectCalculator({ media: mediaQuery, image, video })
 
     // Make a CSS class name from the media query string
     const mediaClass = mediaQuery
       .replace(/[^\w]/ig, '-') // Replace special chars with "-"
-    const cssClass = `rv-${mediaClass}-${aspect}`
+    const aspectClass = aspect
+      .toFixed(3)
+      .replace(/\./ig, '_') // Replace decimals
+      .replace(/_?0*$/, '') // Remove trailing 0s
+    const cssClass = `rv-${mediaClass}-${aspectClass}`
       .replace(/\-{2,}/g, '-') // Reduce multiples of `-`
 
     // Make the CSS rule
@@ -76,7 +80,7 @@ function makeResponsiveAspects({
         aspect-ratio: ${aspect};
       }
     }`
-    return { cssClass, cssRule}
+    return { cssClass, cssRule }
   })
 
   // Make an array of the classes to add
