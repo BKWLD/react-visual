@@ -1,6 +1,6 @@
 {
   "name": "@react-visual/sanity-next",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Image and video renderer for Sanity + Next.js projects",
   "author": "Bukwild <info@bukwild.com>",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "test": "cypress run --component"
   },
   "dependencies": {
-    "@react-visual/next": "^0.7.1",
+    "@react-visual/next": "^0.8.0",
     "@sanity/asset-utils": "^1",
     "@sanity/image-url": "^1"
   },

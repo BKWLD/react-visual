@@ -1,6 +1,6 @@
 {
   "name": "@react-visual/contentful",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Image and video renderer for Contentful assets.",
   "author": "Bukwild <info@bukwild.com>",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "test": "cypress run --component"
   },
   "dependencies": {
-    "@react-visual/react": "^0.7.1"
+    "@react-visual/react": "^0.8.0"
   },
   "peerDependencies": {
     "react": "^18"
