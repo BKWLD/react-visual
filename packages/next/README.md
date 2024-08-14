@@ -5,6 +5,7 @@ Renders images and videos into a container.  Features:
 - Uses `next/image` to render images
 - Easily render assets using aspect ratios
 - Videos are lazyloaded (unless `priority` flag is set)
+- Adds play/pause toggle for videos for [ADA compliance](https://www.w3.org/WAI/WCAG21/Understanding/pause-stop-hide.html)
 
 ## Install
 
@@ -60,20 +61,25 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | -- | -- | --
 | `priority` | `boolean` | Sets [`next/image`'s `priority`](https://nextjs.org/docs/pages/api-reference/components/image#priority) and videos to not lazy load.
 | `sizes` | `string` | Sets [`next/image`'s `sizes`](https://nextjs.org/docs/pages/api-reference/components/image#sizes) prop.
-| `imageLoader` | `Function` | This is passed through [to `next/image`'s `loader` prop](https://nextjs.org/docs/app/api-reference/components/image#loader).
+| `imageLoader` | [`ImageLoader`](https://github.com/BKWLD/react-visual/blob/eaf2d150efa1187033ba732a350a4db20f260435/packages/react/src/types/reactVisualTypes.ts#L38-L44) | This is passed through [to `next/image`'s `loader` prop](https://nextjs.org/docs/app/api-reference/components/image#loader).
 
 ### Video
 
 | Prop | Type | Description
 | -- | -- | --
 | `paused` | `boolean` | Disables autoplay of videos. This prop is reactive, unlike the `paused` property of the html `<video>` tag.  You can set it to `true` to pause a playing video or set it to `false` to play a paused video.
-
+| `onPause` | `Function` | Invoked whenever the video fires a [pause event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause_event).
+| `onPlay` | `Function` | Invoked whenever the video fires a [play event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play_event).
+| `playIcon` | `ComponentType` | Replace the play icon used with accessibility controls.
+| `pauseIcon` | `ComponentType` | Replace the pause icon used with accessibility controls.
 
 ### Accessibility
 
 | Prop | Type | Description
 | -- | -- | --
-| `alt` | `string` | Sets the  alt attribute or aria-label value, depending on asset type.
+| `alt` | `string` | Sets the alt attribute or aria-label value, depending on asset type.
+| `hideAccessibilityControls` | `boolean` | Removes the play/pause toggle on videos.
+| `accessibilityControlsPosition` | [`PositionOption`](https://github.com/BKWLD/react-visual/blob/eaf2d150efa1187033ba732a350a4db20f260435/packages/react/src/types/reactVisualTypes.ts#L61-L70) | Controls the position of the accessibility controls.  Defaults to `bottom left`.
 
 ### Theming
 

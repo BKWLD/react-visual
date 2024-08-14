@@ -29,6 +29,12 @@ export default function ReactVisual(
     sourceTypes,
     sourceMedia,
     paused,
+    onPause,
+    onPlay,
+    playIcon,
+    pauseIcon,
+    hideAccessibilityControls,
+    accessibilityControlsPosition,
     alt,
     className = '',
     style = {},
@@ -38,50 +44,66 @@ export default function ReactVisual(
   if (!image && !video) return null
 
   return (
-    <VisualWrapper {...{
-      expand,
-      width,
-      height,
-      aspect,
-      sourceMedia,
-      image,
-      video,
-      className,
-      style,
-      dataAttributes: collectDataAttributes(props),
-    }}>
+    <VisualWrapper
+      {...{
+        expand,
+        width,
+        height,
+        aspect,
+        sourceMedia,
+        image,
+        video,
+        className,
+        style,
+        dataAttributes: collectDataAttributes(props),
+      }}
+    >
 
       {/* Render image */}
-      { image && <PictureImage {...{
-        src: image,
-        sizes,
-        alt,
-        fit,
-        position,
-        priority,
-        imageLoader,
-        sourceTypes,
-        sourceMedia,
-        style: { // Expand to wrapper when wrapper has layout
-          width: width ? '100%': undefined,
-          height: height ? '100%' : undefined,
-          ...(aspect || expand ? fillStyles : undefined),
-        }
-      }} /> }
+      {image && (
+        <PictureImage
+          {...{
+            src: image,
+            sizes,
+            alt,
+            fit,
+            position,
+            priority,
+            imageLoader,
+            sourceTypes,
+            sourceMedia,
+            style: {
+              // Expand to wrapper when wrapper has layout
+              width: width ? "100%" : undefined,
+              height: height ? "100%" : undefined,
+              ...(aspect || expand ? fillStyles : undefined),
+            },
+          }}
+        />
+      )}
 
       {/* Render video element */}
-      { video && <LazyVideo {...{
-        src: video,
-        alt,
-        fit,
-        position,
-        priority,
-        noPoster: !!image, // Use `image` as poster frame
-        paused,
-        sourceMedia,
-        videoLoader,
-      }} /> }
-
+      {video && (
+        <LazyVideo
+          {...{
+            src: video,
+            alt,
+            fit,
+            position,
+            priority,
+            noPoster: !!image, // Use `image` as poster frame
+            paused,
+            onPause,
+            onPlay,
+            playIcon,
+            pauseIcon,
+            hideAccessibilityControls,
+            accessibilityControlsPosition,
+            sourceMedia,
+            videoLoader,
+          }}
+        />
+      )}
     </VisualWrapper>
-  )
+  );
 }
