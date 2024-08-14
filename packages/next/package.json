@@ -17,14 +17,14 @@
     "@react-visual/react": "^0.8.1"
   },
   "peerDependencies": {
-    "next": "^13",
+    "next": "^14",
     "react": "^18"
   },
   "devDependencies": {
     "@types/react": "^18.2.18",
     "@types/react-dom": "^18.2.7",
     "cypress": "^12.17.3",
-    "next": "^13",
+    "next": "^14",
     "react": "^18",
     "react-dom": "^18.2.0",
     "typescript": "^5.1.6"
