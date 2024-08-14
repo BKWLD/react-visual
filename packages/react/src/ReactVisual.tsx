@@ -58,6 +58,7 @@ export default function ReactVisual(
         dataAttributes: collectDataAttributes(props),
       }}
     >
+
       {/* Render image */}
       {image && (
         <PictureImage

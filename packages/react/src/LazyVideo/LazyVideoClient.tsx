@@ -40,7 +40,8 @@ export default function LazyVideoClient({
   accessibilityControlsPosition,
 }: LazyVideoClientProps): ReactElement {
 
-  // Track the actual video playback state
+  // Track the actual video playback state. Start in a paused state because
+  // even with an autoplay video, it won't actually have started playing yet.
   const [isVideoPaused, setVideoPaused] = useState(true)
 
   // Make a ref to the video so it can be controlled
@@ -82,12 +83,14 @@ export default function LazyVideoClient({
     videoRef.current?.pause();
   };
 
-  // Respond to paused prop and call methods that control the video playback
+  // Trigger pause and play in response to the `paused` prop changing. This is
+  // used to control the video from outside the component.
   useEffect(() => {
     paused ? pause() : play();
   }, [paused]);
 
-  // Update internal play/pause state
+  // Watch for the video element's state changes and sync with the component's
+  // internal paused state.
   useEffect(() => {
     const videoElement = videoRef.current;
 
@@ -130,8 +133,8 @@ export default function LazyVideoClient({
         // Whether to autoplay
         autoPlay={!paused}
         // Load a transparent gif as a poster if an `image` was specified so
-        // the image is used as poster rather than the first frame of video. This
-        // lets us all use responsive poster images (via `next/image`).
+        // the image is used as poster rather than the first frame of video.
+        // This lets us all use responsive poster images (via `next/image`).
         poster={noPoster ? transparentGif : undefined}
         // Straightforward props
         ref={setRefs}
