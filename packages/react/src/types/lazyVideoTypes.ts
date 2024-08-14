@@ -7,13 +7,16 @@ export type LazyVideoProps = Pick<ReactVisualProps,
   'priority' |
   'videoLoader' |
   'sourceMedia' |
-  'style'
+  'style' |
+  'paused' |
+  'playIcon' |
+  'pauseIcon' |
+  'hideAccessibilityControls' |
+  'accessibilityControlsPosition'
 > & {
   src: Required<ReactVisualProps>['video']
 
   // Use a transparent gif poster image
   noPoster?: boolean
 
-  // Controls autoplaying and play state
-  paused?: boolean
 }

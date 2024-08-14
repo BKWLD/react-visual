@@ -70,3 +70,41 @@ describe('responsive video', () => {
   })
 
 })
+
+describe('Accessibility controls', () => {
+
+  it('renders ada controls by default', () => {
+    cy.mount(
+      <LazyVideo
+        src="https://placehold.co/300x200.mp4"
+        alt="Accessibility controls test"
+      />
+    );
+    cy.get("button").should("have.css", "bottom");
+    cy.get("button").and("have.css", "left");
+  })
+
+  it("allows a different position to be set", () => {
+    cy.mount(
+      <LazyVideo
+        src="https://placehold.co/300x200.mp4"
+        alt="Accessibility controls test"
+        accessibilityControlsPosition='top right'
+      />
+    );
+    cy.get("button").should("have.css", "top")
+    cy.get("button").and("have.css", "right");
+  });
+
+  it('allows the controls to be hidden', () => {
+    cy.mount(
+      <LazyVideo
+        src="https://placehold.co/300x200.mp4"
+        alt="Accessibility controls test"
+        hideAccessibilityControls
+      />
+    );
+    cy.get("button").should('not.exist')
+  })
+
+})

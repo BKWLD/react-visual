@@ -1,0 +1,147 @@
+import { LazyVideoProps } from '../types/lazyVideoTypes'
+import {
+  CSSProperties,
+  type ReactElement,
+} from 'react';
+import { PositionOption } from '../types/reactVisualTypes'
+
+// How big to make the button.  Can't be too small and still be ADA friendly
+// https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html
+const minAccessibleBtnSize = 24
+
+// How far from the edge to position the button
+const positionGutter = '1em'
+
+// How transparent to make the button background
+// https://chatgpt.com/share/1050ddc4-5d2f-4a50-a5f6-623b7b679184
+const backgroundOpacity = 0.25
+
+type AccessibilityControlsProps = Pick<LazyVideoProps,
+  'paused' |
+  'playIcon' |
+  'pauseIcon' |
+  'hideAccessibilityControls' |
+  'accessibilityControlsPosition'> & {
+    play: () => void
+    pause: () => void
+}
+
+// Adds a simple pause/play UI for accessibility use cases
+export default function AccessibilityControls({ play,
+  pause,
+  paused,
+  playIcon,
+  pauseIcon,
+  hideAccessibilityControls,
+  accessibilityControlsPosition
+}: AccessibilityControlsProps): ReactElement | null {
+
+  // If hidden, return nothing
+  if (hideAccessibilityControls) return null
+
+  // Determine the icon to display
+  const Icon = paused
+    ? playIcon || PlayIcon
+    : pauseIcon || PauseIcon;
+
+  return (
+    <button
+      onClick={paused ? play : pause}
+      aria-pressed={!paused}
+      aria-label={paused ? "Play" : "Pause"}
+      style={{
+        // Clear default sizes
+        appearance: "none",
+        border: "none",
+        lineHeight: 0,
+        padding: 0,
+
+        // Give it a background
+        background: `rgba(0, 0, 0, ${backgroundOpacity})`,
+        color: "white",
+
+        // Position the button
+        position: "absolute",
+        ...makePosition(accessibilityControlsPosition),
+      }}
+    >
+      <Icon />
+    </button>
+  );
+
+}
+
+// Make the styles for positioning the button
+function makePosition(position: PositionOption = 'bottom left'): CSSProperties {
+  switch (position) {
+    case 'center':
+      return {
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+      };
+    case 'left':
+      return {
+        top: "50%",
+        left: positionGutter,
+        transform: "translate(0, -50%)",
+      };
+    case 'top left':
+      return { top: positionGutter, left: positionGutter };
+    case 'top':
+      return {
+        top: positionGutter,
+        left: "50%",
+        transform: "translate(-50%, 0)",
+      };
+    case 'top right':
+      return { top: positionGutter, right: positionGutter };
+    case 'right':
+      return {
+        top: "50%",
+        right: positionGutter,
+        transform: "translate(0, -50%)",
+      };
+    case 'bottom right':
+      return { bottom: positionGutter, right: positionGutter };
+    case 'bottom':
+      return {
+        bottom: positionGutter,
+        left: "50%",
+        transform: "translate(-50%, 0)",
+      };
+    case 'bottom left':
+    default:
+      return { bottom: positionGutter, left: positionGutter };
+  }
+}
+
+
+function PauseIcon() {
+  return (
+    <svg
+      width={minAccessibleBtnSize}
+      height={minAccessibleBtnSize}
+      viewBox='0 0 24 24'
+      xmlns='http://www.w3.org/2000/svg'
+      aria-hidden='true'
+    >
+      <rect x='6' y='4' width='4' height='16' fill='currentColor' />
+      <rect x='14' y='4' width='4' height='16' fill='currentColor' />
+    </svg>
+  );
+}
+
+function PlayIcon() {
+  return (
+    <svg
+      width={minAccessibleBtnSize}
+      height={minAccessibleBtnSize}
+      viewBox='0 0 24 24'
+      xmlns='http://www.w3.org/2000/svg'
+      aria-hidden='true'
+    >
+      <polygon points='8,4 20,12 8,20' fill='currentColor' />
+    </svg>
+  );
+}
