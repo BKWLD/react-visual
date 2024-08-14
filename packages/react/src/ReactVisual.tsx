@@ -29,6 +29,8 @@ export default function ReactVisual(
     sourceTypes,
     sourceMedia,
     paused,
+    onPause,
+    onPlay,
     playIcon,
     pauseIcon,
     hideAccessibilityControls,
@@ -90,6 +92,8 @@ export default function ReactVisual(
             priority,
             noPoster: !!image, // Use `image` as poster frame
             paused,
+            onPause,
+            onPlay,
             playIcon,
             pauseIcon,
             hideAccessibilityControls,

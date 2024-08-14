@@ -22,6 +22,8 @@ export type ReactVisualProps = {
   sourceMedia?: SourceMedia[];
 
   paused?: boolean;
+  onPause?: () => void;
+  onPlay?: () => void;
   playIcon?: ComponentType;
   pauseIcon?: ComponentType;
 

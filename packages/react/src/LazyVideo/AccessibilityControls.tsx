@@ -12,45 +12,48 @@ const minAccessibleBtnSize = 24
 // How far from the edge to position the button
 const positionGutter = '1em'
 
-type AccessibilityControlsProps = Pick<LazyVideoProps,
-  'paused' |
-  'playIcon' |
-  'pauseIcon' |
-  'hideAccessibilityControls' |
-  'accessibilityControlsPosition'> & {
-    play: () => void
-    pause: () => void
-}
+type AccessibilityControlsProps = Pick<
+  LazyVideoProps,
+  | "playIcon"
+  | "pauseIcon"
+  | "hideAccessibilityControls"
+  | "accessibilityControlsPosition"
+> & {
+  isVideoPaused: boolean;
+  play: () => void;
+  pause: () => void;
+};
 
 // Adds a simple pause/play UI for accessibility use cases
-export default function AccessibilityControls({ play,
+export default function AccessibilityControls({
+  play,
   pause,
-  paused,
+  isVideoPaused,
   playIcon,
   pauseIcon,
   hideAccessibilityControls,
-  accessibilityControlsPosition
+  accessibilityControlsPosition,
 }: AccessibilityControlsProps): ReactElement | null {
-
   // If hidden, return nothing
-  if (hideAccessibilityControls) return null
+  if (hideAccessibilityControls) return null;
 
   // Determine the icon to display
-  const Icon = paused
-    ? playIcon || PlayIcon
-    : pauseIcon || PauseIcon;
+  const Icon = isVideoPaused ? playIcon || PlayIcon : pauseIcon || PauseIcon;
 
   return (
     <button
-      onClick={paused ? play : pause}
-      aria-pressed={!paused}
-      aria-label={paused ? "Play" : "Pause"}
+      onClick={isVideoPaused ? play : pause}
+      aria-pressed={!isVideoPaused}
+      aria-label={isVideoPaused ? "Play" : "Pause"}
       style={{
         // Clear default sizes
         appearance: "none",
         border: "none",
         lineHeight: 0,
         padding: 0,
+
+        // Make it look clickable
+        cursor: "pointer",
 
         // Position the button
         position: "absolute",
@@ -60,7 +63,6 @@ export default function AccessibilityControls({ play,
       <Icon />
     </button>
   );
-
 }
 
 // Make the styles for positioning the button

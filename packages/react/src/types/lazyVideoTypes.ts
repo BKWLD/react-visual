@@ -9,6 +9,8 @@ export type LazyVideoProps = Pick<ReactVisualProps,
   'sourceMedia' |
   'style' |
   'paused' |
+  'onPause' |
+  'onPlay' |
   'playIcon' |
   'pauseIcon' |
   'hideAccessibilityControls' |

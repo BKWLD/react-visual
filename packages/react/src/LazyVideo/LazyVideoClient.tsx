@@ -3,7 +3,7 @@
 
 import { useInView } from 'react-intersection-observer'
 import { useMediaQueries } from '@react-hook/media-query'
-import { useEffect, type ReactElement, useRef, useCallback, type MutableRefObject } from 'react'
+import { useEffect, type ReactElement, useRef, useCallback, type MutableRefObject, useState } from 'react'
 import type { LazyVideoProps } from '../types/lazyVideoTypes';
 import { fillStyles, transparentGif } from '../lib/styles'
 import AccessibilityControls from './AccessibilityControls'
@@ -31,12 +31,18 @@ export default function LazyVideoClient({
   position,
   priority,
   noPoster,
-  paused,
+  paused, // Used to control externally
+  onPause,
+  onPlay,
   playIcon,
   pauseIcon,
   hideAccessibilityControls,
   accessibilityControlsPosition,
 }: LazyVideoClientProps): ReactElement {
+
+  // Track the actual video playback state
+  const [isVideoPaused, setVideoPaused] = useState(true)
+
   // Make a ref to the video so it can be controlled
   const videoRef = useRef<HTMLVideoElement>();
 
@@ -81,6 +87,35 @@ export default function LazyVideoClient({
     paused ? pause() : play();
   }, [paused]);
 
+  // Update internal play/pause state
+  useEffect(() => {
+    const videoElement = videoRef.current;
+
+    const handlePlay = () => {
+      setVideoPaused(false);
+      onPlay && onPlay();
+    };
+
+    const handlePause = () => {
+      setVideoPaused(true);
+      onPause && onPause();
+    };
+
+    // Add listeners
+    if (videoElement) {
+      videoElement.addEventListener("play", handlePlay);
+      videoElement.addEventListener("pause", handlePause);
+    }
+
+    // Cleanup
+    return () => {
+      if (videoElement) {
+        videoElement.removeEventListener("play", handlePlay);
+        videoElement.removeEventListener("pause", handlePause);
+      }
+    };
+  }, []);
+
   // Simplify logic for whether to load sources
   const shouldLoad = priority || inView;
 
@@ -122,7 +157,7 @@ export default function LazyVideoClient({
         {...{
           play,
           pause,
-          paused,
+          isVideoPaused,
           playIcon,
           pauseIcon,
           hideAccessibilityControls,
