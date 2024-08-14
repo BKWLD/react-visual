@@ -17,7 +17,7 @@ jobs:
     steps:
 
       - name: Install
-        uses: bkwld/cloak-actions/install@v1
+        uses: bkwld/cloak-actions/install@v2
 
       - name: Cypress run
         uses: cypress-io/github-action@v5

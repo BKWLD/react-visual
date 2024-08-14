@@ -70,3 +70,78 @@ describe('responsive video', () => {
   })
 
 })
+
+describe('Accessibility controls', () => {
+
+  it('renders ada controls by default', () => {
+    cy.mount(
+      <LazyVideo
+        src="https://placehold.co/300x200.mp4"
+        alt="Accessibility controls test"
+      />
+    );
+    cy.get("button").should("have.css", "bottom");
+    cy.get("button").and("have.css", "left");
+  })
+
+  it('controls affect playback', () => {
+
+    const onPauseSpy = cy.spy().as("onPauseSpy")
+    const onPlaySpy = cy.spy().as("onPlaySpy");
+
+    cy.mount(
+      <LazyVideo
+        src="https://placehold.co/300x200.mp4"
+        alt="Accessibility controls test"
+        onPause={onPauseSpy}
+        onPlay={onPlaySpy}
+      />
+    );
+
+    cy.get("video").isPlaying();
+    cy.get("[aria-label=Pause]").click();
+    cy.get("video").isPaused();
+    cy.get("[aria-label=Play]").click();
+    cy.get("video").isPlaying(); // The second time
+
+    cy.get("@onPauseSpy").should("have.been.calledOnce");
+    cy.get("@onPlaySpy").should("have.been.calledTwice");
+
+  })
+
+  it("allows a different position to be set", () => {
+    cy.mount(
+      <LazyVideo
+        src="https://placehold.co/300x200.mp4"
+        alt="Accessibility controls test"
+        accessibilityControlsPosition='top right'
+      />
+    );
+    cy.get("[aria-label=Pause]").should("have.css", "top")
+    cy.get("[aria-label=Pause]").and("have.css", "right");
+  });
+
+  it('allows the controls to be hidden', () => {
+    cy.mount(
+      <LazyVideo
+        src="https://placehold.co/300x200.mp4"
+        alt="Accessibility controls test"
+        hideAccessibilityControls
+      />
+    );
+    cy.get("[aria-label=Pause]").should("not.exist");
+  })
+
+  it('can have custom icons', () => {
+    cy.mount(
+      <LazyVideo
+        src="https://placehold.co/300x200.mp4"
+        alt="Accessibility controls test"
+        playIcon={() => <span>Play</span>}
+        pauseIcon={() => <span>Pause</span>}
+      />
+    );
+    cy.get("[aria-label=Pause]").contains("Pause");
+  })
+
+})

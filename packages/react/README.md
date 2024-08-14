@@ -7,6 +7,7 @@ Renders images and videos into a container.  Features:
 - Creates `<source>` tags for different MIME types and media queries
 - Easily render assets using aspect ratios
 - Videos are lazyloaded (unless `priority` flag is set)
+- Adds play/pause toggle for videos for [ADA compliance](https://www.w3.org/WAI/WCAG21/Understanding/pause-stop-hide.html)
 
 ## Install
 
@@ -179,7 +180,7 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | Prop | Type | Description
 | -- | -- | --
 | `expand` | `boolean` | Make the Visual fill it's container via CSS using absolute positioning.
-| `aspect` | `number`, `function` | Force the Visual to a specific aspect ratio.
+| `aspect` | `number`, [`AspectCalculator`](https://github.com/BKWLD/react-visual/blob/eaf2d150efa1187033ba732a350a4db20f260435/packages/react/src/types/reactVisualTypes.ts#L52-L57) | Force the Visual to a specific aspect ratio.
 | `width` | `number`, `string` | A CSS dimension value or a px number.
 | `height` | `number`, `string` | A CSS dimension value or a px number.
 | `fit` | `string` | An [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) value that is applied to the assets.  Defaults to `cover`.
@@ -191,23 +192,28 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | -- | -- | --
 | `priority` | `boolean` | Disables [`<img loading="lazy>"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#loading) and prevents videos from lazy loading based on IntersectionObserver.
 | `sizes` | `string` | Sets the `<img sizes>` attribute.
-| `sourceTypes` | `string[]` | Specify image MIME types that will be passed to the `imageLoader` and used to create additional `<source>` tags.  Use this to create `webp` or `avif` sources with a CDN like Contentful.
-| `sourceMedia` | `string[]` | Specify media queries that will be passed to the `imageLoader` and used to create additional `<source>` tags.
-| `imageLoader` | `Function` | Uses syntax that is similar [to `next/image`'s `loader` prop](https://nextjs.org/docs/app/api-reference/components/image#loader).  A srcset is built with a hardcoded list of widths.
-| `videoLoader` | `Function` | Like `imageLoader` but is only passed the `src` and `media` properties.
+| `sourceTypes` | [`SourceType[]`](https://github.com/BKWLD/react-visual/blob/eaf2d150efa1187033ba732a350a4db20f260435/packages/react/src/types/reactVisualTypes.ts#L72-L78) | Specify image MIME types that will be passed to the `imageLoader` and used to create additional `<source>` tags.  Use this to create `webp` or `avif` sources with a CDN like Contentful.
+| `sourceMedia` | [`SourceType[]`](https://github.com/BKWLD/react-visual/blob/eaf2d150efa1187033ba732a350a4db20f260435/packages/react/src/types/reactVisualTypes.ts#L80-L83) | Specify media queries that will be passed to the `imageLoader` and used to create additional `<source>` tags.
+| `imageLoader` | [`ImageLoader`](https://github.com/BKWLD/react-visual/blob/eaf2d150efa1187033ba732a350a4db20f260435/packages/react/src/types/reactVisualTypes.ts#L38-L44) | Uses syntax that is similar [to `next/image`'s `loader` prop](https://nextjs.org/docs/app/api-reference/components/image#loader).  A srcset is built with a hardcoded list of widths.
+| `videoLoader` | [`VideoLoader`](https://github.com/BKWLD/react-visual/blob/eaf2d150efa1187033ba732a350a4db20f260435/packages/react/src/types/reactVisualTypes.ts#L46-L50) | Like `imageLoader` but is only passed the `src` and `media` properties.
 
 ### Video
 
 | Prop | Type | Description
 | -- | -- | --
 | `paused` | `boolean` | Disables autoplay of videos. This prop is reactive, unlike the `paused` property of the html `<video>` tag.  You can set it to `true` to pause a playing video or set it to `false` to play a paused video.
-
+| `onPause` | `Function` | Invoked whenever the video fires a [pause event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause_event).
+| `onPlay` | `Function` | Invoked whenever the video fires a [play event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play_event).
+| `playIcon` | `ComponentType` | Replace the play icon used with accessibility controls.
+| `pauseIcon` | `ComponentType` | Replace the pause icon used with accessibility controls.
 
 ### Accessibility
 
 | Prop | Type | Description
 | -- | -- | --
-| `alt` | `string` | Sets the  alt attribute or aria-label value, depending on asset type.
+| `alt` | `string` | Sets the alt attribute or aria-label value, depending on asset type.
+| `hideAccessibilityControls` | `boolean` | Removes the play/pause toggle on videos.
+| `accessibilityControlsPosition` | [`PositionOption`](https://github.com/BKWLD/react-visual/blob/eaf2d150efa1187033ba732a350a4db20f260435/packages/react/src/types/reactVisualTypes.ts#L61-L70) | Controls the position of the accessibility controls.  Defaults to `bottom left`.
 
 ### Theming
 

@@ -4,6 +4,7 @@ Renders Contentful images and videos into a container.  Features:
 
 - Automatically defines a loader functions for generating srcsets
 - Supports responsive image and video assets
+- Adds play/pause toggle for videos for [ADA compliance](https://www.w3.org/WAI/WCAG21/Understanding/pause-stop-hide.html)
 
 ## Install
 
@@ -112,13 +113,18 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | Prop | Type | Description
 | -- | -- | --
 | `paused` | `boolean` | Disables autoplay of videos. This prop is reactive, unlike the `paused` property of the html `<video>` tag.  You can set it to `true` to pause a playing video or set it to `false` to play a paused video.
-
+| `onPause` | `Function` | Invoked whenever the video fires a [pause event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause_event).
+| `onPlay` | `Function` | Invoked whenever the video fires a [play event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play_event).
+| `playIcon` | `ComponentType` | Replace the play icon used with accessibility controls.
+| `pauseIcon` | `ComponentType` | Replace the pause icon used with accessibility controls.
 
 ### Accessibility
 
 | Prop | Type | Description
 | -- | -- | --
-| `alt` | `string` | Sets the  alt attribute or aria-label value, depending on asset type.
+| `alt` | `string` | Sets the alt attribute or aria-label value, depending on asset type.
+| `hideAccessibilityControls` | `boolean` | Removes the play/pause toggle on videos.
+| `accessibilityControlsPosition` | [`PositionOption`](https://github.com/BKWLD/react-visual/blob/eaf2d150efa1187033ba732a350a4db20f260435/packages/react/src/types/reactVisualTypes.ts#L61-L70) | Controls the position of the accessibility controls.  Defaults to `bottom left`.
 
 ### Theming
 
