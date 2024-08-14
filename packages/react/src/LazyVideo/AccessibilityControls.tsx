@@ -12,10 +12,6 @@ const minAccessibleBtnSize = 24
 // How far from the edge to position the button
 const positionGutter = '1em'
 
-// How transparent to make the button background
-// https://chatgpt.com/share/1050ddc4-5d2f-4a50-a5f6-623b7b679184
-const backgroundOpacity = 0.25
-
 type AccessibilityControlsProps = Pick<LazyVideoProps,
   'paused' |
   'playIcon' |
@@ -55,10 +51,6 @@ export default function AccessibilityControls({ play,
         border: "none",
         lineHeight: 0,
         padding: 0,
-
-        // Give it a background
-        background: `rgba(0, 0, 0, ${backgroundOpacity})`,
-        color: "white",
 
         // Position the button
         position: "absolute",
@@ -122,12 +114,13 @@ function PauseIcon() {
     <svg
       width={minAccessibleBtnSize}
       height={minAccessibleBtnSize}
-      viewBox='0 0 24 24'
-      xmlns='http://www.w3.org/2000/svg'
-      aria-hidden='true'
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      style={iconStyle}
     >
-      <rect x='6' y='4' width='4' height='16' fill='currentColor' />
-      <rect x='14' y='4' width='4' height='16' fill='currentColor' />
+      <rect x="6" y="4" width="4" height="16" fill="currentColor" />
+      <rect x="14" y="4" width="4" height="16" fill="currentColor" />
     </svg>
   );
 }
@@ -137,11 +130,20 @@ function PlayIcon() {
     <svg
       width={minAccessibleBtnSize}
       height={minAccessibleBtnSize}
-      viewBox='0 0 24 24'
-      xmlns='http://www.w3.org/2000/svg'
-      aria-hidden='true'
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      style={iconStyle}
     >
-      <polygon points='8,4 20,12 8,20' fill='currentColor' />
+      <polygon points="9,4 19,12 9,20" fill="currentColor" />
     </svg>
   );
 }
+
+// Make the default icons white on a semi-transparent black background
+// https://chatgpt.com/share/1050ddc4-5d2f-4a50-a5f6-623b7b679184
+const iconStyle = {
+  background: `rgba(0, 0, 0, 0.25)`,
+  color: "white",
+  borderRadius: "2px",
+};

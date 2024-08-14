@@ -107,4 +107,16 @@ describe('Accessibility controls', () => {
     cy.get("button").should('not.exist')
   })
 
+  it('can have custom icons', () => {
+    cy.mount(
+      <LazyVideo
+        src="https://placehold.co/300x200.mp4"
+        alt="Accessibility controls test"
+        playIcon={() => <span>Play</span>}
+        pauseIcon={() => <span>Pause</span>}
+      />
+    );
+    cy.get('button').contains('Pause')
+  })
+
 })
