@@ -4,6 +4,7 @@
   "description": "Image and video renderer for Contentful assets.",
   "author": "Bukwild <info@bukwild.com>",
   "license": "MIT",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

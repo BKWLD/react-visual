@@ -1,5 +1,5 @@
 // Configuration of next/image for Cypress tess
-module.exports = {
+export default {
   images: {
 
     // Support tests fetching imaages from placehold.co
