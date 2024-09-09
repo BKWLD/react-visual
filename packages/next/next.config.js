@@ -1,5 +1,5 @@
 // Configuration of next/image for Cypress tess
-module.exports = {
+export default {
   images: {
 
     // Disable Next.js producing it's own crops within dev server which don't
