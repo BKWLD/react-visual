@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "ESNext",
     "declaration": true,
     "outDir": "./dist",
     "strict": true,
@@ -9,6 +9,10 @@
 
     // Required for importing packages, like React, that have `export =`
     "esModuleInterop": true,
+
+    // Recommendations for greater interoperability
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
 
     // Fixes build failures when dependent types have errors, like:
     // node_modules/next/dist/shared/lib/get-img-props.d.ts:70
