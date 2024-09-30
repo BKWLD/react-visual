@@ -1,7 +1,4 @@
-// `next/image` as importing as { default: Image, __esmodule: true } when
-// this file was loaded by @react-visual/sanity-next. This is my hack to fix
-import _Image from "next/image";
-const Image = ("default" in _Image ? _Image.default : _Image) as typeof _Image;
+import Image from "next/image";
 
 import type { ReactElement } from 'react'
 
