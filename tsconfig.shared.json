@@ -5,6 +5,9 @@
     "strict": true,
     "jsx": "react-jsx",
 
+    // Using vite to emit the final build
+    "noEmit": true,
+
     // Required for importing packages, like React, that have `export =`
     "esModuleInterop": true,
 
