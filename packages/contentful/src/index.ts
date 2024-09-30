@@ -1,7 +1,7 @@
 import ContentfulVisual from './ContentfulVisual'
 
 export default ContentfulVisual
-export {
+export type {
   ContentfulVisualProps,
   ContentfulImageAsset,
   ContentfulAsset,
