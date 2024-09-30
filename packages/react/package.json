@@ -11,8 +11,9 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "rm -rf dist/* && tsc",
-    "test": "cypress run --component"
+    "build": "vite build",
+    "test": "cypress run --component",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@react-hook/media-query": "^1.1.1",
@@ -24,10 +25,13 @@
   "devDependencies": {
     "@types/react": "^18.2.18",
     "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.3.2",
     "cypress": "^13.13.3",
     "react": "^18",
     "react-dom": "^18.2.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vite": "^5.4.8",
+    "vite-plugin-dts": "^4.2.3"
   },
   "publishConfig": {
     "access": "public"
