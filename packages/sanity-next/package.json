@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "build": "vite build",
-    "test": "cypress run --component"
+    "test": "cypress run --component",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@react-visual/next": "^1.1.0",

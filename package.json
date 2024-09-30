@@ -11,6 +11,7 @@
   "scripts": {
     "build": "lerna run build",
     "test": "lerna run test --concurrency 1",
+    "typecheck": "lerna run typecheck",
     "prepare": "yarn build"
   },
   "dependencies": {},
