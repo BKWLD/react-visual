@@ -113,4 +113,32 @@ describe('contentful visual entry props', () => {
       .should('contain', videoAsset.url)
   })
 
+  it('finds alt on src image', () => {
+    cy.mount(
+      <ContentfulVisual
+        src={{
+          ...visualEntry,
+          alt: null,
+        }}
+      />
+    );
+    cy.get("img").invoke("attr", "alt").should("eq", "Landscape gradient");
+  })
+
+  it("finds alt on src video", () => {
+    cy.mount(
+      <ContentfulVisual
+        src={{
+          ...visualEntry,
+          image: null,
+          portraitImage: null,
+          alt: null,
+        }}
+      />
+    );
+    cy.get("video")
+      .invoke("attr", "aria-label")
+      .should("eq", "Background loop description");
+  });
+
 })

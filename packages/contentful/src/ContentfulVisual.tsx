@@ -55,7 +55,14 @@ export default function ContentfulVisual(
           responsiveAspectCalculator :
           getImageAspect(image || src?.image || src?.portraitImage)
       )}
-      alt={ alt || src?.alt || makeAssetAlt(image) || makeAssetAlt(video)}
+      alt={
+        alt
+        || src?.alt
+        || makeAssetAlt(src?.image)
+        || makeAssetAlt(image)
+        || makeAssetAlt(src?.video)
+        || makeAssetAlt(video)
+      }
     />
   )
 }
