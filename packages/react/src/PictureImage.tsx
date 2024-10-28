@@ -1,4 +1,3 @@
-import type { ReactElement } from 'react'
 import type { PictureImageProps } from './types/pictureImageTypes'
 import type { ImageLoader, SourceMedia, SourceType } from './types/reactVisualTypes'
 import { deviceSizes, imageSizes } from './lib/sizes'
@@ -14,10 +13,7 @@ type ImageSourceProps = {
   media?: SourceMedia
 }
 
-export default function PictureImage(
-  props: PictureImageProps
-): ReactElement {
-
+export default function PictureImage(props: PictureImageProps): JSX.Element {
   // Destructure props
   const {
     src,
@@ -94,12 +90,15 @@ function makeSrcUrl(
 
 // Make a source tag with srcset for the provided type and/or media attribute
 function Source({
-   widths, imageLoader, sizes, src, type, media
-}: ImageSourceProps): ReactElement {
-  const srcSet = makeSrcSet(widths, imageLoader, { src, type, media })
-  return (
-    <source {...{ type, media, srcSet, sizes }} />
-  )
+  widths,
+  imageLoader,
+  sizes,
+  src,
+  type,
+  media,
+}: ImageSourceProps): JSX.Element {
+  const srcSet = makeSrcSet(widths, imageLoader, { src, type, media });
+  return <source {...{ type, media, srcSet, sizes }} />;
 }
 
 // Make a srcset string from an array of width integers using the imageLoader

@@ -3,8 +3,6 @@
 import _Image from "next/image";
 const Image = ("default" in _Image ? _Image.default : _Image) as typeof _Image;
 
-import type { ReactElement } from 'react'
-
 import { makeImagePlaceholder } from './lib/placeholder'
 import {
   VisualWrapper,
@@ -17,7 +15,7 @@ import { NextVisualProps } from './types/nextVisualTypes'
 // Render a Sanity image via Next/Image
 export default function NextVisual(
   props: NextVisualProps
-): ReactElement | null {
+): JSX.Element | null {
 
   // Destructure props
   const {
@@ -82,8 +80,15 @@ export default function NextVisual(
 
 // An image rendered within the Visual
 function NextImage({
-  src, sizes, alt, fit, position, priority, loader, placeholderData
-}: any): ReactElement {
+  src,
+  sizes,
+  alt,
+  fit,
+  position,
+  priority,
+  loader,
+  placeholderData,
+}: any): JSX.Element {
   return (
     <Image
       { ...{ src, sizes, priority, loader, alt } }

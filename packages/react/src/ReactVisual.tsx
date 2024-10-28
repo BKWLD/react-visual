@@ -1,5 +1,3 @@
-import type { ReactElement } from 'react'
-
 import VisualWrapper from './VisualWrapper'
 import LazyVideo from './LazyVideo'
 import PictureImage from './PictureImage'
@@ -10,7 +8,7 @@ import { fillStyles } from './lib/styles'
 
 export default function ReactVisual(
   props: ReactVisualProps
-): ReactElement | null {
+): JSX.Element | null {
 
   // Destructure props
   const {
