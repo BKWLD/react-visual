@@ -61,7 +61,7 @@ export default function ContentfulVisual(
 }
 
 // Use various asset fields to make the alt from automatically
-function makeAssetAlt(asset: ContentfulAsset | undefined): string {
+function makeAssetAlt(asset: ContentfulAsset | undefined | null): string {
   if (!asset) return ''
   return asset.description || asset.title || asset.fileName || ''
 }

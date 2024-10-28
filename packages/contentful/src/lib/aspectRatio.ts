@@ -9,7 +9,7 @@ export const orientationMediaQueries = [
 
 // Get the aspect ratio from an image asset if it exists
 export function getImageAspect(
-  image: ContentfulImageAsset | undefined
+  image: ContentfulImageAsset | undefined | null
 ): number | undefined {
   if (!image) return undefined
   return image.width / image.height
@@ -28,17 +28,17 @@ export const responsiveAspectCalculator: AspectCalculator = (
 
 // Check whether multiple orientations were provided
 export function hasResponsiveAssets(
-  src: ContentfulVisualEntry | undefined
+  src: ContentfulVisualEntry | undefined | null
 ): boolean {
-  if (!src) return false
+  if (!src) return false;
   const hasLandscape = !!(src.image || src.video),
-    hasPortrait = !!(src.portraitImage || src.portraitVideo)
-  return hasLandscape && hasPortrait
+    hasPortrait = !!(src.portraitImage || src.portraitVideo);
+  return hasLandscape && hasPortrait;
 }
 
 // Check whether multiple aspect ratios were provided
 export function hasResponsiveAspects(
-  src: ContentfulVisualEntry | undefined
+  src: ContentfulVisualEntry | undefined | null
 ): boolean {
   if (!src) return false
   const hasLandscapeAspect = !!(src.image?.width &&
