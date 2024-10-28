@@ -90,10 +90,6 @@ function makeSrcUrl(
 
 // Make a source tag with srcset for the provided type and/or media attribute
 function Source({
-  const srcSet = makeSrcSet(widths, imageLoader, { src, type, media })
-  return (
-    <source {...{ type, media, srcSet, sizes }} />
-  )
   widths,
   imageLoader,
   sizes,
@@ -101,6 +97,8 @@ function Source({
   type,
   media,
 }: ImageSourceProps): JSX.Element {
+  const srcSet = makeSrcSet(widths, imageLoader, { src, type, media });
+  return <source {...{ type, media, srcSet, sizes }} />;
 }
 
 // Make a srcset string from an array of width integers using the imageLoader
