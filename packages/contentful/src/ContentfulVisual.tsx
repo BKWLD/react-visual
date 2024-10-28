@@ -55,13 +55,20 @@ export default function ContentfulVisual(
           responsiveAspectCalculator :
           getImageAspect(image || src?.image || src?.portraitImage)
       )}
-      alt={ alt || src?.alt || makeAssetAlt(image) || makeAssetAlt(video)}
+      alt={
+        alt
+        || src?.alt
+        || makeAssetAlt(src?.image)
+        || makeAssetAlt(image)
+        || makeAssetAlt(src?.video)
+        || makeAssetAlt(video)
+      }
     />
   )
 }
 
 // Use various asset fields to make the alt from automatically
-function makeAssetAlt(asset: ContentfulAsset | undefined): string {
+function makeAssetAlt(asset: ContentfulAsset | undefined | null): string {
   if (!asset) return ''
   return asset.description || asset.title || asset.fileName || ''
 }

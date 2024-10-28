@@ -1,11 +1,11 @@
 import type { ReactVisualProps } from '@react-visual/react'
 
 export type ContentfulVisualProps = {
-  image?: ContentfulImageAsset
-  video?: ContentfulAsset
-  src?: ContentfulVisualEntry
-  alt?: string // Can be inferrerd
-} & Omit< ReactVisualProps, 'alt' | 'image' | 'video' >
+  image?: ContentfulImageAsset | null;
+  video?: ContentfulAsset | null;
+  src?: ContentfulVisualEntry | null;
+  alt?: string; // Can be inferrerd
+} & Omit<ReactVisualProps, "alt" | "image" | "video">;
 
 export type ContentfulImageAsset = ContentfulAsset & {
   width: number
@@ -13,16 +13,16 @@ export type ContentfulImageAsset = ContentfulAsset & {
 }
 
 export type ContentfulAsset = {
-  title?: string
-  description?: string
+  title?: string | null
+  description?: string // Was not nullable in my tests
   fileName?: string
   url: string
 }
 
 export type ContentfulVisualEntry = {
-  image?: ContentfulImageAsset
-  portraitImage?: ContentfulImageAsset
-  video?: ContentfulAsset
-  portraitVideo?: ContentfulAsset
-  alt: string
-}
+  image?: ContentfulImageAsset | null
+  portraitImage?: ContentfulImageAsset | null
+  video?: ContentfulAsset | null
+  portraitVideo?: ContentfulAsset | null
+  alt: string | null
+};
