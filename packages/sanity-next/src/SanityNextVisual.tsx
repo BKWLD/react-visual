@@ -1,4 +1,3 @@
-import type { ReactElement } from 'react'
 import NextVisual from '@react-visual/next'
 import { makeImageUrl, makeFileUrl, makeImageLoader } from './lib/urlBuilding'
 import {
@@ -11,7 +10,7 @@ import { SanityNextVisualProps } from './types/sanityNextVisualTypes'
 
 export default function SanityNextVisual(
   props: SanityNextVisualProps
-): ReactElement | null {
+): JSX.Element | null {
 
   // Destructure some props
   let {

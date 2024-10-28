@@ -1,4 +1,3 @@
-import type { ReactElement } from 'react'
 import ReactVisual from '@react-visual/react'
 import { ContentfulAsset, ContentfulVisualProps } from './types/contentfulVisualTypes'
 import {
@@ -17,7 +16,7 @@ import {
 // Render a Visual using Contentful data
 export default function ContentfulVisual(
   props: ContentfulVisualProps
-): ReactElement | null {
+): JSX.Element | null {
 
   // Destructure some props
   const {

@@ -1,14 +1,10 @@
-import type { ReactElement } from 'react'
 import type { LazyVideoProps } from '../types/lazyVideoTypes'
 import LazyVideoClient from './LazyVideoClient'
 
 // This wrapper function exists to take Function props and make them
 // serializable for the LazyVideoClient component, which is a Next.js style
 // client component.
-export default function LazyVideo(
-  props: LazyVideoProps
-): ReactElement | undefined {
-
+export default function LazyVideo(props: LazyVideoProps): JSX.Element | null {
   // Destructure some props
   const {
     src,
@@ -32,7 +28,7 @@ export default function LazyVideo(
       return [url, media]
     })
     // If the array ended up empty, abort
-    if (mediaSrcEntries.filter(([url]) => !!url).length == 0) return
+    if (mediaSrcEntries.filter(([url]) => !!url).length == 0) return null;
 
     // Make the hash
     mediaSrcs = Object.fromEntries(mediaSrcEntries)
@@ -41,7 +37,7 @@ export default function LazyVideo(
   } else {
     if (videoLoader) srcUrl = videoLoader({ src })
     else if (typeof src == 'string') srcUrl = src
-    if (!srcUrl) return // If no url could be built, abort
+    if (!srcUrl) return null; // If no url could be built, abort
   }
 
   // Render client component

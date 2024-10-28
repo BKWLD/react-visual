@@ -1,8 +1,5 @@
 import { LazyVideoProps } from '../types/lazyVideoTypes'
-import {
-  CSSProperties,
-  type ReactElement,
-} from 'react';
+import type { CSSProperties } from 'react';
 import { PositionOption } from '../types/reactVisualTypes'
 
 // How big to make the button.  Can't be too small and still be ADA friendly
@@ -33,7 +30,7 @@ export default function AccessibilityControls({
   pauseIcon,
   hideAccessibilityControls,
   accessibilityControlsPosition,
-}: AccessibilityControlsProps): ReactElement | null {
+}: AccessibilityControlsProps): JSX.Element | null {
   // If hidden, return nothing
   if (hideAccessibilityControls) return null;
 
