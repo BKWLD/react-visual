@@ -84,6 +84,9 @@ describe('contentful visual entry props', () => {
       portraitImage: null,
     }} />)
 
+    // There should be no imgs rendered
+    cy.get('img').should('not.exist')
+
     // Portrait asset
     cy.get('video').its('[0].currentSrc')
       .should('contain', portraitVideoAsset.url)
