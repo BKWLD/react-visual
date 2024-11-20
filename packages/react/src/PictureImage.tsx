@@ -47,6 +47,7 @@ export default function PictureImage(props: PictureImageProps): ReactNode {
 
   // Make the img src url
   const srcUrl = makeSrcUrl(src, imageLoader)
+  if (!srcUrl) return null
 
   // Make array or props that will be used to make <source>s.  A `null` type is
   // always added to create fallback sources for native mime-type of the

@@ -13,6 +13,9 @@ export const defaultImageLoader: ImageLoader = ({
     src.portraitImage.url :
     src.image?.url || src.url
 
+  // If no URL found, return nothing
+  if (!url) return ''
+
   // Make Contentful resizing instructions
   const query = new URLSearchParams({ w: String(width) })
 
