@@ -1,10 +1,11 @@
+import type { ReactNode } from 'react'
 import type { LazyVideoProps } from '../types/lazyVideoTypes'
 import LazyVideoClient from './LazyVideoClient'
 
 // This wrapper function exists to take Function props and make them
 // serializable for the LazyVideoClient component, which is a Next.js style
 // client component.
-export default function LazyVideo(props: LazyVideoProps): JSX.Element | null {
+export default function LazyVideo(props: LazyVideoProps): ReactNode {
   // Destructure some props
   const {
     src,

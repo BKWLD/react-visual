@@ -3,7 +3,7 @@
 
 import { useInView } from 'react-intersection-observer'
 import { useMediaQueries } from '@react-hook/media-query'
-import { useEffect, useRef, useCallback, type MutableRefObject, useState } from 'react'
+import { useEffect, useRef, useCallback, type MutableRefObject, useState, type ReactNode } from 'react'
 import type { LazyVideoProps } from '../types/lazyVideoTypes';
 import { fillStyles, transparentGif } from '../lib/styles'
 import AccessibilityControls from './AccessibilityControls'
@@ -38,7 +38,7 @@ export default function LazyVideoClient({
   pauseIcon,
   hideAccessibilityControls,
   accessibilityControlsPosition,
-}: LazyVideoClientProps): JSX.Element {
+}: LazyVideoClientProps): ReactNode {
   // Track the actual video playback state. Start in a paused state because
   // even with an autoplay video, it won't actually have started playing yet.
   const [isVideoPaused, setVideoPaused] = useState(true)
@@ -174,7 +174,7 @@ export default function LazyVideoClient({
 function ResponsiveSource({
   mediaSrcs,
   videoRef,
-}: ResponsiveVideoSourceProps): JSX.Element {
+}: ResponsiveVideoSourceProps): ReactNode {
   // Find the src url that is currently active
   const { matches } = useMediaQueries(mediaSrcs)
   const srcUrl = getFirstMatch(matches)

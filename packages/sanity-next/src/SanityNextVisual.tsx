@@ -7,11 +7,9 @@ import {
   placeholderFromSource,
 } from './lib/sourceMapping'
 import { SanityNextVisualProps } from './types/sanityNextVisualTypes'
+import type { ReactNode } from 'react'
 
-export default function SanityNextVisual(
-  props: SanityNextVisualProps
-): JSX.Element | null {
-
+export default function SanityNextVisual(props: SanityNextVisualProps): ReactNode {
   // Destructure some props
   let {
 

@@ -2,6 +2,7 @@ import type { PictureImageProps } from './types/pictureImageTypes'
 import type { ImageLoader, SourceMedia, SourceType } from './types/reactVisualTypes'
 import { deviceSizes, imageSizes } from './lib/sizes'
 import { makeSourceVariants } from './lib/sources'
+import type { ReactNode } from 'react'
 
 type ImageSrc = PictureImageProps['src']
 type ImageSourceProps = {
@@ -13,7 +14,7 @@ type ImageSourceProps = {
   media?: SourceMedia
 }
 
-export default function PictureImage(props: PictureImageProps): JSX.Element {
+export default function PictureImage(props: PictureImageProps): ReactNode {
   // Destructure props
   const {
     src,
@@ -96,7 +97,7 @@ function Source({
   src,
   type,
   media,
-}: ImageSourceProps): JSX.Element {
+}: ImageSourceProps): ReactNode {
   const srcSet = makeSrcSet(widths, imageLoader, { src, type, media });
   return <source {...{ type, media, srcSet, sizes }} />;
 }

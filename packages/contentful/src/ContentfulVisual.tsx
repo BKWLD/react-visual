@@ -12,11 +12,12 @@ import {
   hasResponsiveAssets,
   hasResponsiveAspects
 } from './lib/aspectRatio'
+import type { ReactNode } from 'react'
 
 // Render a Visual using Contentful data
 export default function ContentfulVisual(
   props: ContentfulVisualProps
-): JSX.Element | null {
+): ReactNode {
 
   // Destructure some props
   const {
