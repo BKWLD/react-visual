@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { fillStyles, cx } from './lib/styles'
 import { isNumeric } from './lib/values'
 import type { VisualWrapperProps } from './types/visualWrapperTypes'
@@ -24,7 +24,7 @@ export default function VisualWrapper({
   className,
   style,
   dataAttributes,
-}: VisualWrapperProps): JSX.Element {
+}: VisualWrapperProps): ReactNode {
   // If aspect is a function, invoke it to determine the aspect ratio
   let aspectRatio, aspectStyleTag, aspectClasses
   if (typeof aspect == 'function' && sourceMedia && sourceMedia.length) {
@@ -64,7 +64,7 @@ function makeResponsiveAspects({
   video,
 }: MakeResponsiveAspectsProps): {
   aspectClasses: string;
-  aspectStyleTag: JSX.Element;
+  aspectStyleTag: ReactNode;
 } {
 
   // Make CSS classes and related rules that are specific to the query and

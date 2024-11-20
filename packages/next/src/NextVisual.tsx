@@ -11,12 +11,10 @@ import {
 } from '@react-visual/react'
 
 import { NextVisualProps } from './types/nextVisualTypes'
+import type { ReactNode } from 'react'
 
 // Render a Sanity image via Next/Image
-export default function NextVisual(
-  props: NextVisualProps
-): JSX.Element | null {
-
+export default function NextVisual(props: NextVisualProps): ReactNode {
   // Destructure props
   const {
     image,
@@ -88,7 +86,7 @@ function NextImage({
   priority,
   loader,
   placeholderData,
-}: any): JSX.Element {
+}: any): ReactNode {
   return (
     <Image
       { ...{ src, sizes, priority, loader, alt } }

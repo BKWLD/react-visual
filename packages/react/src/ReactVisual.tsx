@@ -5,11 +5,9 @@ import PictureImage from './PictureImage'
 import { collectDataAttributes } from './lib/attributes'
 import { ReactVisualProps } from './types/reactVisualTypes'
 import { fillStyles } from './lib/styles'
+import type { ReactNode } from 'react'
 
-export default function ReactVisual(
-  props: ReactVisualProps
-): JSX.Element | null {
-
+export default function ReactVisual(props: ReactVisualProps): ReactNode {
   // Destructure props
   const {
     image,
