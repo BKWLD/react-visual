@@ -92,5 +92,5 @@ This project uses Lerna to release versions, using [the default versioning strat
 
 - `yarn lerna run test` - Run all tests
 - `yarn lerna version` - Tag a new version
-- `yarn lerna publish [major|minor|path]` - Tag and publish a version
+- `yarn lerna publish [major|minor|patch]` - Tag and publish a version
 - `yarn lerna publish from-package` - Publish the current version
