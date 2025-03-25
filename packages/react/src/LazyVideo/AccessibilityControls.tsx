@@ -1,13 +1,13 @@
-import { LazyVideoProps } from '../types/lazyVideoTypes'
-import type { CSSProperties, ReactNode } from 'react';
-import { PositionOption } from '../types/reactVisualTypes'
+import { LazyVideoProps } from "../types/lazyVideoTypes";
+import type { CSSProperties, ReactNode } from "react";
+import { PositionOption } from "../types/reactVisualTypes";
 
 // How big to make the button.  Can't be too small and still be ADA friendly
 // https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html
-const minAccessibleBtnSize = 24
+const minAccessibleBtnSize = 24;
 
 // How far from the edge to position the button
-const positionGutter = '1em'
+const positionGutter = "1em";
 
 type AccessibilityControlsProps = Pick<
   LazyVideoProps,
@@ -63,50 +63,49 @@ export default function AccessibilityControls({
 }
 
 // Make the styles for positioning the button
-function makePosition(position: PositionOption = 'bottom left'): CSSProperties {
+function makePosition(position: PositionOption = "bottom left"): CSSProperties {
   switch (position) {
-    case 'center':
+    case "center":
       return {
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
       };
-    case 'left':
+    case "left":
       return {
         top: "50%",
         left: positionGutter,
         transform: "translate(0, -50%)",
       };
-    case 'top left':
+    case "top left":
       return { top: positionGutter, left: positionGutter };
-    case 'top':
+    case "top":
       return {
         top: positionGutter,
         left: "50%",
         transform: "translate(-50%, 0)",
       };
-    case 'top right':
+    case "top right":
       return { top: positionGutter, right: positionGutter };
-    case 'right':
+    case "right":
       return {
         top: "50%",
         right: positionGutter,
         transform: "translate(0, -50%)",
       };
-    case 'bottom right':
+    case "bottom right":
       return { bottom: positionGutter, right: positionGutter };
-    case 'bottom':
+    case "bottom":
       return {
         bottom: positionGutter,
         left: "50%",
         transform: "translate(-50%, 0)",
       };
-    case 'bottom left':
+    case "bottom left":
     default:
       return { bottom: positionGutter, left: positionGutter };
   }
 }
-
 
 function PauseIcon() {
   return (

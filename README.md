@@ -94,3 +94,13 @@ This project uses Lerna to release versions, using [the default versioning strat
 - `yarn lerna version` - Tag a new version
 - `yarn lerna publish [major|minor|patch]` - Tag and publish a version
 - `yarn lerna publish from-package` - Publish the current version
+
+### Test Videos
+
+placeholder.co dropped it's APIs for generating test videos so I've been using this command to create videos for tests:
+
+```sh
+ffmpeg -f lavfi -i color=c=black:s=300x150:d=5 \
+  -vf "drawtext=text='Hello World':fontcolor=white:fontsize=32:x=(w-text_w)/2:y=(h-text_h)/2" \
+  -c:v libx264 -t 5 -pix_fmt yuv420p 300x150.mp4
+```

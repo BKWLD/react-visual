@@ -12,10 +12,12 @@
     "build": "lerna run build",
     "test": "lerna run test --concurrency 1",
     "typecheck": "lerna run typecheck",
-    "prepare": "yarn build"
+    "prepare": "yarn build",
+    "format": "prettier --write --ignore-unknown ."
   },
   "dependencies": {},
   "devDependencies": {
-    "lerna": "^8.1.8"
+    "lerna": "^8.1.8",
+    "prettier": "^3.5.3"
   }
 }

@@ -1,11 +1,11 @@
-import VisualWrapper from './VisualWrapper'
-import LazyVideo from './LazyVideo'
-import PictureImage from './PictureImage'
+import VisualWrapper from "./VisualWrapper";
+import LazyVideo from "./LazyVideo";
+import PictureImage from "./PictureImage";
 
-import { collectDataAttributes } from './lib/attributes'
-import { ReactVisualProps } from './types/reactVisualTypes'
-import { fillStyles } from './lib/styles'
-import type { ReactNode } from 'react'
+import { collectDataAttributes } from "./lib/attributes";
+import { ReactVisualProps } from "./types/reactVisualTypes";
+import { fillStyles } from "./lib/styles";
+import type { ReactNode } from "react";
 
 export default function ReactVisual(props: ReactVisualProps): ReactNode {
   // Destructure props
@@ -16,7 +16,7 @@ export default function ReactVisual(props: ReactVisualProps): ReactNode {
     aspect,
     width,
     height,
-    fit = 'cover',
+    fit = "cover",
     position,
     priority,
     sizes,
@@ -32,12 +32,12 @@ export default function ReactVisual(props: ReactVisualProps): ReactNode {
     hideAccessibilityControls,
     accessibilityControlsPosition,
     alt,
-    className = '',
+    className = "",
     style = {},
-  } = props
+  } = props;
 
   // If no asset, return nothing
-  if (!image && !video) return null
+  if (!image && !video) return null;
 
   return (
     <VisualWrapper
@@ -54,7 +54,6 @@ export default function ReactVisual(props: ReactVisualProps): ReactNode {
         dataAttributes: collectDataAttributes(props),
       }}
     >
-
       {/* Render image */}
       {image && (
         <PictureImage
