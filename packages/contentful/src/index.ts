@@ -8,6 +8,13 @@ export type {
   ContentfulVisualEntry,
 } from "./types/contentfulVisualTypes";
 export {
+  hasResponsiveAssets,
+  hasResponsiveAspects,
+  orientationBasedAspectCalculator,
+  widthBasedAspectCalculator,
+  getImageAspect,
+} from "./lib/aspectRatio";
+export {
   orientationBasedImageLoader,
   orientationBasedVideoLoader,
   widthBasedImageLoader,

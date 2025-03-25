@@ -1,4 +1,5 @@
 import ContentfulVisual, {
+  widthBasedAspectCalculator,
   widthBasedImageLoader,
   widthBasedVideoLoader,
 } from "../../src";
@@ -162,7 +163,6 @@ describe("contentful visual entry props", () => {
   it("renders width based responsive images", () => {
     cy.mount(
       <ContentfulVisual
-        expand
         src={{
           ...visualEntry,
           video: null,
@@ -170,17 +170,20 @@ describe("contentful visual entry props", () => {
         }}
         sourceMedia={["(min-width:400px)", "(max-width:399px)"]}
         imageLoader={widthBasedImageLoader}
+        aspect={widthBasedAspectCalculator}
       />,
     );
 
     // Portrait asset
     cy.viewport(399, 500);
+    cy.get("img").hasDimensions(399, 399);
     cy.get("img")
       .its("[0].currentSrc")
       .should("contain", portraitImageAsset.url);
 
     // Landscape asset
     cy.viewport(400, 500);
+    cy.get("img").hasDimensions(400, 400 / landscapeAspect);
     cy.get("img").its("[0].currentSrc").should("contain", imageAsset.url);
   });
 
