@@ -1,10 +1,10 @@
-import ReactVisual from './ReactVisual'
-import LazyVideo from './LazyVideo/LazyVideoServer'
-import VisualWrapper from './VisualWrapper'
-import { collectDataAttributes } from './lib/attributes'
+import ReactVisual from "./ReactVisual";
+import LazyVideo from "./LazyVideo/LazyVideoServer";
+import VisualWrapper from "./VisualWrapper";
+import { collectDataAttributes } from "./lib/attributes";
 
-export default ReactVisual
-export { LazyVideo, VisualWrapper, collectDataAttributes }
+export default ReactVisual;
+export { LazyVideo, VisualWrapper, collectDataAttributes };
 export type {
   ReactVisualProps,
   ObjectFit,
@@ -12,4 +12,4 @@ export type {
   AspectCalculator,
   ImageLoader,
   VideoLoader,
-} from './types/reactVisualTypes'
+} from "./types/reactVisualTypes";

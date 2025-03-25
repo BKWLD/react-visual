@@ -1,26 +1,34 @@
 // Support Next.js 13 app router hydration where useInView will cause errors
 "use client";
 
-import { useInView } from 'react-intersection-observer'
-import { useMediaQueries } from '@react-hook/media-query'
-import { useEffect, useRef, useCallback, type MutableRefObject, useState, type ReactNode } from 'react'
-import type { LazyVideoProps } from '../types/lazyVideoTypes';
-import { fillStyles, transparentGif } from '../lib/styles'
-import AccessibilityControls from './AccessibilityControls'
+import { useInView } from "react-intersection-observer";
+import { useMediaQueries } from "@react-hook/media-query";
+import {
+  useEffect,
+  useRef,
+  useCallback,
+  type MutableRefObject,
+  useState,
+  type ReactNode,
+} from "react";
+import type { LazyVideoProps } from "../types/lazyVideoTypes";
+import { fillStyles, transparentGif } from "../lib/styles";
+import AccessibilityControls from "./AccessibilityControls";
 
-type LazyVideoClientProps = Omit<LazyVideoProps,
-  'videoLoader' | 'src' | 'sourceMedia'
+type LazyVideoClientProps = Omit<
+  LazyVideoProps,
+  "videoLoader" | "src" | "sourceMedia"
 > & {
-  srcUrl?: string
-  mediaSrcs?: Record<string, string>
-}
+  srcUrl?: string;
+  mediaSrcs?: Record<string, string>;
+};
 
 type ResponsiveVideoSourceProps = {
-  mediaSrcs: Required<LazyVideoClientProps>['mediaSrcs']
-  videoRef: VideoRef
-}
+  mediaSrcs: Required<LazyVideoClientProps>["mediaSrcs"];
+  videoRef: VideoRef;
+};
 
-type VideoRef = MutableRefObject<HTMLVideoElement | undefined>
+type VideoRef = MutableRefObject<HTMLVideoElement | undefined>;
 
 // An video rendered within a Visual that supports lazy loading
 export default function LazyVideoClient({
@@ -41,7 +49,7 @@ export default function LazyVideoClient({
 }: LazyVideoClientProps): ReactNode {
   // Track the actual video playback state. Start in a paused state because
   // even with an autoplay video, it won't actually have started playing yet.
-  const [isVideoPaused, setVideoPaused] = useState(true)
+  const [isVideoPaused, setVideoPaused] = useState(true);
 
   // Make a ref to the video so it can be controlled
   const videoRef = useRef<HTMLVideoElement>();
@@ -58,7 +66,7 @@ export default function LazyVideoClient({
       videoRef.current = node;
       inViewRef(node);
     },
-    [inViewRef]
+    [inViewRef],
   );
 
   // Store the promise that is returned from play to prevent errors when
@@ -176,40 +184,40 @@ function ResponsiveSource({
   videoRef,
 }: ResponsiveVideoSourceProps): ReactNode {
   // Find the src url that is currently active
-  const { matches } = useMediaQueries(mediaSrcs)
-  const srcUrl = getFirstMatch(matches)
+  const { matches } = useMediaQueries(mediaSrcs);
+  const srcUrl = getFirstMatch(matches);
 
   // Reload the video since the source changed
-  useEffect(() => reloadVideoWhenSafe(videoRef), [ matches ])
+  useEffect(() => reloadVideoWhenSafe(videoRef), [matches]);
 
   // Return new source
-  return (<source src={ srcUrl } type='video/mp4' />)
+  return <source src={srcUrl} type="video/mp4" />;
 }
 
 // Get the URL with a media query match
 function getFirstMatch(matches: Record<string, boolean>): string | undefined {
   for (const srcUrl in matches) {
     if (matches[srcUrl]) {
-      return srcUrl
+      return srcUrl;
     }
   }
 }
 
 // Safely call load function on a video
 function reloadVideoWhenSafe(videoRef: VideoRef): void {
-  if (!videoRef.current) return
-  const video = videoRef.current
+  if (!videoRef.current) return;
+  const video = videoRef.current;
 
   // If already playing safely, load now
   if (video.readyState >= 2) {
-    video.load()
+    video.load();
 
-  // Else, wait for video to finish loading
+    // Else, wait for video to finish loading
   } else {
     const handleLoadedData = () => {
-      video.load()
-      video.removeEventListener('loadeddata', handleLoadedData)
-    }
-    video.addEventListener('loadeddata', handleLoadedData)
+      video.load();
+      video.removeEventListener("loadeddata", handleLoadedData);
+    };
+    video.addEventListener("loadeddata", handleLoadedData);
   }
 }

@@ -18,7 +18,12 @@ const VW = Cypress.config("viewportWidth"),
 describe("no asset", () => {
   it("renders nothing", () => {
     cy.mount(
-      <ContentfulVisual width={300} height={200} alt="" data-cy="next-visual" />
+      <ContentfulVisual
+        width={300}
+        height={200}
+        alt=""
+        data-cy="next-visual"
+      />,
     );
     cy.get("[data-cy=next-visual]").should("not.exist");
   });
@@ -60,7 +65,7 @@ describe("contentful visual entry props", () => {
           video: null,
           portraitVideo: null,
         }}
-      />
+      />,
     );
 
     // There should be no vidoes rendered
@@ -91,7 +96,7 @@ describe("contentful visual entry props", () => {
           image: null,
           portraitImage: null,
         }}
-      />
+      />,
     );
 
     // There should be no imgs rendered
@@ -133,7 +138,7 @@ describe("contentful visual entry props", () => {
           ...visualEntry,
           alt: null,
         }}
-      />
+      />,
     );
     cy.get("img").invoke("attr", "alt").should("eq", "Landscape gradient");
   });
@@ -147,7 +152,7 @@ describe("contentful visual entry props", () => {
           portraitImage: null,
           alt: null,
         }}
-      />
+      />,
     );
     cy.get("video")
       .invoke("attr", "aria-label")
@@ -165,7 +170,7 @@ describe("contentful visual entry props", () => {
         }}
         sourceMedia={["(min-width:400px)", "(max-width:399px)"]}
         imageLoader={widthBasedImageLoader}
-      />
+      />,
     );
 
     // Portrait asset
@@ -190,7 +195,7 @@ describe("contentful visual entry props", () => {
         }}
         sourceMedia={["(min-width:400px)", "(max-width:399px)"]}
         videoLoader={widthBasedVideoLoader}
-      />
+      />,
     );
 
     // Portrait asset
