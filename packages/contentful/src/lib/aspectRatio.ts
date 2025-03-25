@@ -2,7 +2,7 @@ import type {
   ContentfulImageAsset,
   ContentfulVisualEntry,
 } from "../types/contentfulVisualTypes";
-import type { AspectCalculator, SourceMedia } from "@react-visual/react";
+import type { AspectCalculator } from "@react-visual/react";
 
 // The media queries that are used for default responsive visuals
 export const orientationMediaQueries = [
