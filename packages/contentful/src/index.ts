@@ -1,9 +1,15 @@
-import ContentfulVisual from './ContentfulVisual'
+import ContentfulVisual from "./ContentfulVisual";
 
-export default ContentfulVisual
+export default ContentfulVisual;
 export type {
   ContentfulVisualProps,
   ContentfulImageAsset,
   ContentfulAsset,
   ContentfulVisualEntry,
-} from './types/contentfulVisualTypes'
+} from "./types/contentfulVisualTypes";
+export {
+  orientationBasedImageLoader,
+  orientationBasedVideoLoader,
+  widthBasedImageLoader,
+  widthBasedVideoLoader,
+} from "./lib/urlBuilding";
