@@ -2,21 +2,12 @@
   "compilerOptions": {
     "target": "es5",
     "jsx": "preserve",
-    "lib": [
-      "es5",
-      "dom"
-    ],
-    "types": [
-      "cypress",
-      "node"
-    ],
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "node"],
 
     // Load JSON
     "resolveJsonModule": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "include": ["**/*.ts", "**/*.tsx"]
 }

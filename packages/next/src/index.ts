@@ -1,4 +1,4 @@
-import NextVisual from './NextVisual'
+import NextVisual from "./NextVisual";
 
-export default NextVisual
-export type { NextVisualProps } from './types/nextVisualTypes'
+export default NextVisual;
+export type { NextVisualProps } from "./types/nextVisualTypes";

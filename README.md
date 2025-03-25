@@ -14,22 +14,23 @@ A monorepo hosting components for rendering image and video in a single containe
 Using `sourceTypes` and `sourceMedia` with `imageLoader` to produce multiple `<source>` tags with `srcset` attributes.
 
 ```jsx
-import Visual from '@react-visual/react'
+import Visual from "@react-visual/react";
 
 export default function ResponsiveExample() {
   return (
     <Visual
-      image='https://placehold.co/200x200'
-      sourceTypes={['image/webp']}
-      sourceMedia={['(orientation:landscape)', '(orientation:portrait)']}
+      image="https://placehold.co/200x200"
+      sourceTypes={["image/webp"]}
+      sourceMedia={["(orientation:landscape)", "(orientation:portrait)"]}
       imageLoader={({ src, type, media, width }) => {
-        const height = media?.includes('landscape') ? width * 0.5 : width
-        const ext = type?.includes('webp') ? '.webp' : ''
-        return `https://placehold.co/${width}x${height}${ext}`
+        const height = media?.includes("landscape") ? width * 0.5 : width;
+        const ext = type?.includes("webp") ? ".webp" : "";
+        return `https://placehold.co/${width}x${height}${ext}`;
       }}
-      width='100%'
-      alt='Example of responsive images'/>
-  )
+      width="100%"
+      alt="Example of responsive images"
+    />
+  );
 }
 ```
 
@@ -40,14 +41,10 @@ export default function ResponsiveExample() {
 Using with a Visual entryType containing image and video fields:
 
 ```jsx
-import Visual from '@react-visual/contentful'
+import Visual from "@react-visual/contentful";
 
 export default function Example() {
-  return (
-    <Visual
-      src={ entry.background }
-      sizes='100vw' />
-  )
+  return <Visual src={entry.background} sizes="100vw" />;
 }
 ```
 
@@ -58,7 +55,7 @@ export default function Example() {
 Using framework adapter for Next.js:
 
 ```jsx
-import Visual from '@react-visual/next'
+import Visual from "@react-visual/next";
 
 export default function Example() {
   return (
@@ -66,9 +63,10 @@ export default function Example() {
       image="https://placehold.co/1600x900.png"
       video="https://placehold.co/1600x900.mp4"
       aspect={16 / 9}
-      sizes='100vw'
-      alt='Example using placeholder assets' />
-  )
+      sizes="100vw"
+      alt="Example using placeholder assets"
+    />
+  );
 }
 ```
 
@@ -79,10 +77,10 @@ export default function Example() {
 Using Sanity + Next.js Adapter to automatically populate aspect ratio, alt, blurred placeholder, and support both image and video in one object:
 
 ```jsx
-import Visual from '@react-visual/sanity-next'
+import Visual from "@react-visual/sanity-next";
 
 export default function Example({ background }) {
-  return <Visual src={ background } sizes='100vw' />
+  return <Visual src={background} sizes="100vw" />;
 }
 ```
 
