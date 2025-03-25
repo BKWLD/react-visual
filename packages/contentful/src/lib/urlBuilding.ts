@@ -1,35 +1,39 @@
-import type { ImageLoader, VideoLoader } from '@react-visual/react'
+import type { ImageLoader, VideoLoader } from "@react-visual/react";
 
 // The types that Contentful's CDN can produce
-export const contentfulModernFormats = ['image/avif', 'image/webp']
+export const contentfulModernFormats = ["image/avif", "image/webp"];
 
-// Produce Contentful image URls
+// Produce Contentful image URls based on screen orientation
 export const defaultImageLoader: ImageLoader = ({
-  src, width, type, media
+  src,
+  width,
+  type,
+  media,
 }) => {
-
   // Use portrait image if it exists, otherwise fallback to landscape
-  const url = media?.includes('portrait') && src.portraitImage ?
-    src.portraitImage.url :
-    src.image?.url || src.url
+  const url =
+    media?.includes("portrait") && src.portraitImage
+      ? src.portraitImage.url
+      : src.image?.url || src.url;
 
   // If no URL found, return nothing
-  if (!url) return ''
+  if (!url) return "";
 
   // Make Contentful resizing instructions
-  const query = new URLSearchParams({ w: String(width) })
+  const query = new URLSearchParams({ w: String(width) });
 
   // Optionally set the format
-  if (type?.includes('avif')) query.set('fm', 'avif')
-  else if (type?.includes('webp')) query.set('fm', 'webp')
+  if (type?.includes("avif")) query.set("fm", "avif");
+  else if (type?.includes("webp")) query.set("fm", "webp");
 
   // Make the query with formatting instructions
-  return `${url}?${query}`
-}
+  return `${url}?${query}`;
+};
 
-// Use portrait video from `src` prop or fallback to url
+// Use portrait video from `src` prop or fallback to url based on screen
+// orientation
 export const defaultVideoLoader: VideoLoader = ({ src, media }) => {
-  return media?.includes('portrait') && src.portraitVideo ?
-    src.portraitVideo.url :
-    src.video?.url || src.url
-}
+  return media?.includes("portrait") && src.portraitVideo
+    ? src.portraitVideo.url
+    : src.video?.url || src.url;
+};
