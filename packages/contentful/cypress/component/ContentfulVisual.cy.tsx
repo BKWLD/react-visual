@@ -1,4 +1,7 @@
-import ContentfulVisual from "../../src";
+import ContentfulVisual, {
+  widthBasedImageLoader,
+  widthBasedVideoLoader,
+} from "../../src";
 import {
   imageAsset,
   portraitImageAsset,
@@ -49,7 +52,7 @@ describe("contentful asset props", () => {
 });
 
 describe("contentful visual entry props", () => {
-  it("renders responsive images", () => {
+  it("renders orientation based responsive images", () => {
     cy.mount(
       <ContentfulVisual
         src={{
@@ -79,7 +82,7 @@ describe("contentful visual entry props", () => {
       .should("contain", imageAsset.url);
   });
 
-  it("renders responsive videos", () => {
+  it("renders orientation based responsive videos", () => {
     cy.mount(
       <ContentfulVisual
         expand
@@ -149,5 +152,55 @@ describe("contentful visual entry props", () => {
     cy.get("video")
       .invoke("attr", "aria-label")
       .should("eq", "Background loop description");
+  });
+
+  it("renders width based responsive images", () => {
+    cy.mount(
+      <ContentfulVisual
+        expand
+        src={{
+          ...visualEntry,
+          video: null,
+          portraitVideo: null,
+        }}
+        sourceMedia={["(min-width:400px)", "(max-width:399px)"]}
+        imageLoader={widthBasedImageLoader}
+      />
+    );
+
+    // Portrait asset
+    cy.viewport(399, 500);
+    cy.get("img")
+      .its("[0].currentSrc")
+      .should("contain", portraitImageAsset.url);
+
+    // Landscape asset
+    cy.viewport(400, 500);
+    cy.get("img").its("[0].currentSrc").should("contain", imageAsset.url);
+  });
+
+  it("renders width based responsive videos", () => {
+    cy.mount(
+      <ContentfulVisual
+        expand
+        src={{
+          ...visualEntry,
+          image: null,
+          portraitImage: null,
+        }}
+        sourceMedia={["(min-width:400px)", "(max-width:399px)"]}
+        videoLoader={widthBasedVideoLoader}
+      />
+    );
+
+    // Portrait asset
+    cy.viewport(399, 500);
+    cy.get("video")
+      .its("[0].currentSrc")
+      .should("contain", portraitVideoAsset.url);
+
+    // Landscape asset
+    cy.viewport(400, 500);
+    cy.get("video").its("[0].currentSrc").should("contain", videoAsset.url);
   });
 });
