@@ -8,7 +8,7 @@ const Player = function ({ autoplay }: any) {
   return (
     <>
       <LazyVideo
-        src="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/300x200.mp4"
+        src="https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/300x200.mp4"
         alt=""
         paused={paused}
       />
@@ -46,9 +46,9 @@ describe("responsive video", () => {
       <LazyVideo
         src={{
           portrait:
-            "https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/500x500.mp4#portrait",
+            "https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/500x500.mp4#portrait",
           landscape:
-            "https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/500x250.mp4#landscape",
+            "https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/500x250.mp4#landscape",
         }}
         sourceMedia={["(orientation:landscape)", "(orientation:portrait)"]}
         videoLoader={({ src, media }) => {
@@ -76,7 +76,7 @@ describe("Accessibility controls", () => {
   it("renders ada controls by default", () => {
     cy.mount(
       <LazyVideo
-        src="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/300x200.mp4"
+        src="https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/300x200.mp4"
         alt="Accessibility controls test"
       />,
     );
@@ -90,7 +90,7 @@ describe("Accessibility controls", () => {
 
     cy.mount(
       <LazyVideo
-        src="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/300x200.mp4"
+        src="https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/300x200.mp4"
         alt="Accessibility controls test"
         onPause={onPauseSpy}
         onPlay={onPlaySpy}
@@ -110,7 +110,7 @@ describe("Accessibility controls", () => {
   it("allows a different position to be set", () => {
     cy.mount(
       <LazyVideo
-        src="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/300x200.mp4"
+        src="https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/300x200.mp4"
         alt="Accessibility controls test"
         accessibilityControlsPosition="top right"
       />,
@@ -122,7 +122,7 @@ describe("Accessibility controls", () => {
   it("allows the controls to be hidden", () => {
     cy.mount(
       <LazyVideo
-        src="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/300x200.mp4"
+        src="https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/300x200.mp4"
         alt="Accessibility controls test"
         hideAccessibilityControls
       />,
@@ -133,7 +133,7 @@ describe("Accessibility controls", () => {
   it("can have custom icons", () => {
     cy.mount(
       <LazyVideo
-        src="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/300x200.mp4"
+        src="https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/300x200.mp4"
         alt="Accessibility controls test"
         playIcon={() => <span>Play</span>}
         pauseIcon={() => <span>Pause</span>}

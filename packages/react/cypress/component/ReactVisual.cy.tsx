@@ -29,7 +29,7 @@ describe("fixed size", () => {
   it("renders video", () => {
     cy.mount(
       <ReactVisual
-        video="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/600x400.mp4"
+        video="https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/600x400.mp4"
         width={300}
         height={200}
         alt=""
@@ -44,7 +44,7 @@ describe("fixed size", () => {
     cy.mount(
       <ReactVisual
         image="https://placehold.co/600x400/black/white"
-        video="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/600x400.mp4"
+        video="https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/600x400.mp4"
         width={300}
         height={200}
         alt=""
@@ -209,11 +209,11 @@ describe("sources", () => {
         }}
         video={{
           landscape: {
-            url: "https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/500x250.mp4#landscape",
+            url: "https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/500x250.mp4#landscape",
             aspect: 2,
           },
           portrait: {
-            url: "https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/react/cypress/fixtures/500x500.mp4#portrait",
+            url: "https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/500x500.mp4#portrait",
             aspect: 1,
           },
         }}
