@@ -2,12 +2,18 @@ import type {
   ContentfulImageAsset,
   ContentfulVisualEntry,
 } from "../types/contentfulVisualTypes";
-import type { AspectCalculator } from "@react-visual/react";
+import type { AspectCalculator, SourceMedia } from "@react-visual/react";
 
 // The media queries that are used for default responsive visuals
 export const orientationMediaQueries = [
   "(orientation:landscape)",
   "(orientation:portrait)",
+];
+
+// The media queries that are used for default responsive visuals
+export const mobileWidthMediaQueries = [
+  "(max-width:767px)",
+  "(min-width:768px)",
 ];
 
 // Get the aspect ratio from an image asset if it exists
@@ -18,15 +24,27 @@ export function getImageAspect(
   return image.width / image.height;
 }
 
-// Make the aspect ratio for responsive assets.
-export const responsiveAspectCalculator: AspectCalculator = ({
+// Return aspect ratio for responsive assets using orientation media queries
+export const orientationBasedAspectCalculator: AspectCalculator = ({
   media,
   image: src,
 }) => {
   if (media?.includes("portrait")) {
-    return (src.portraitImage.width / src.portraitImage.height) as number;
+    return src.portraitImage.width / src.portraitImage.height;
   } else {
-    return (src.image.width / src.image.height) as number;
+    return src.image.width / src.image.height;
+  }
+};
+
+// Return aspect ratio for responsive assets using viewport width media queries
+export const widthBasedAspectCalculator: AspectCalculator = ({
+  media,
+  image: src,
+}) => {
+  if (media?.includes("max-width")) {
+    return src.portraitImage.width / src.portraitImage.height;
+  } else {
+    return src.image.width / src.image.height;
   }
 };
 
@@ -35,8 +53,8 @@ export function hasResponsiveAssets(
   src: ContentfulVisualEntry | undefined | null,
 ): boolean {
   if (!src) return false;
-  const hasLandscape = !!(src.image || src.video),
-    hasPortrait = !!(src.portraitImage || src.portraitVideo);
+  const hasLandscape = Boolean(src.image || src.video),
+    hasPortrait = Boolean(src.portraitImage || src.portraitVideo);
   return hasLandscape && hasPortrait;
 }
 
@@ -45,9 +63,12 @@ export function hasResponsiveAspects(
   src: ContentfulVisualEntry | undefined | null,
 ): boolean {
   if (!src) return false;
-  const hasLandscapeAspect = !!(src.image?.width && src.image?.height),
-    hasPortraitAspect = !!(
-      src.portraitImage?.width && src.portraitImage?.height
+  const hasLandscapeAspect = Boolean(src.image?.width && src.image?.height),
+    hasPortraitAspect = Boolean(
+      src.portraitImage?.width && src.portraitImage?.height,
     );
   return hasLandscapeAspect && hasPortraitAspect;
 }
+
+// Backwards compatibility exports
+export { orientationBasedAspectCalculator as responsiveAspectCalculator };
