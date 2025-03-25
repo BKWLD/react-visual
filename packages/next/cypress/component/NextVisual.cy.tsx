@@ -29,7 +29,7 @@ describe("fixed size", () => {
   it("renders video", () => {
     cy.mount(
       <NextVisual
-        video="https://placehold.co/300x200.mp4"
+        video="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/next/cypress/fixtures/300x200.mp4"
         width={300}
         height={200}
         alt=""
@@ -43,7 +43,7 @@ describe("fixed size", () => {
     cy.mount(
       <NextVisual
         image="https://placehold.co/300x200/black/white"
-        video="https://placehold.co/300x200.mp4"
+        video="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/next/cypress/fixtures/300x200.mp4"
         width={300}
         height={200}
         alt=""
@@ -65,7 +65,11 @@ describe("expanding", () => {
 
   it("renders video", () => {
     cy.mount(
-      <NextVisual video="https://placehold.co/300x200.mp4" expand alt="" />,
+      <NextVisual
+        video="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/next/cypress/fixtures/300x200.mp4"
+        expand
+        alt=""
+      />,
     );
     cy.get("video").hasDimensions(VW, VH);
     cy.get("video").isPlaying();
@@ -75,7 +79,7 @@ describe("expanding", () => {
     cy.mount(
       <NextVisual
         image="https://placehold.co/300x200/black/white"
-        video="https://placehold.co/300x200.mp4"
+        video="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/next/cypress/fixtures/300x200.mp4"
         expand
         alt=""
         data-cy="next-visual"
@@ -103,7 +107,7 @@ describe("aspect ratio", () => {
   it("renders video", () => {
     cy.mount(
       <NextVisual
-        video="https://placehold.co/300x150.mp4"
+        video="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/next/cypress/fixtures/300x150.mp4"
         aspect={300 / 150}
         alt=""
       />,
@@ -116,7 +120,7 @@ describe("aspect ratio", () => {
     cy.mount(
       <NextVisual
         image="https://placehold.co/300x150/black/white"
-        video="https://placehold.co/300x150.mp4"
+        video="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/next/cypress/fixtures/300x150.mp4"
         aspect={300 / 150}
         alt=""
         data-cy="next-visual"
@@ -195,15 +199,18 @@ describe("loading", () => {
   });
 
   it("videos lazy load", () => {
-    cy.intercept("https://placehold.co/200x200.mp4", (req) => {
-      req.on("before:response", (res) => {
-        res.headers["cache-control"] = "no-store";
-      });
-    }).as("load");
+    cy.intercept(
+      "https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/next/cypress/fixtures/200x200.mp4",
+      (req) => {
+        req.on("before:response", (res) => {
+          res.headers["cache-control"] = "no-store";
+        });
+      },
+    ).as("load");
 
     cy.mount(
       <NextVisual
-        video="https://placehold.co/200x200.mp4"
+        video="https://github.com/BKWLD/react-visual/raw/refs/heads/prettier/packages/next/cypress/fixtures/200x200.mp4"
         width={200}
         height={200}
         alt=""
