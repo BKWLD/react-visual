@@ -79,6 +79,37 @@ fragment visual on Visual {
 
 For more examples, read [the Cypress component tests](./cypress/component).
 
+### Width Based Responsive support
+
+This package also exports `WidthBasedVisual` which can be used to switch between responsive assets based on width based media queries. Usage is the same and will default to rendering "portrait" assets at 767px wide and below.
+
+```jsx
+import { WidthBasedVisual } from '@react-visual/contentful'
+
+export default function Example() {
+  return (
+    <WidthBasedVisual
+      src={ entry.background }
+      sizes='100vw'/>
+  )
+}
+```
+
+You can customize the breakpoint with the `breakpoint` prop.  In this example, "portrait" assets will be rendered at a viewport of 375px and below:
+
+```jsx
+import { WidthBasedVisual } from '@react-visual/contentful'
+
+export default function Example() {
+  return (
+    <WidthBasedVisual
+      src={ entry.background }
+      sizes='100vw'
+      breakpoint='375px'/>
+  )
+}
+```
+
 ## Props
 
 ### Sources
@@ -106,6 +137,7 @@ For more examples, read [the Cypress component tests](./cypress/component).
 | -- | -- | --
 | `priority` | `boolean` | Sets [`next/image`'s `priority`](https://nextjs.org/docs/pages/api-reference/components/image#priority) and videos to not lazy load.
 | `sizes` | `string` | Sets [`next/image`'s `sizes`](https://nextjs.org/docs/pages/api-reference/components/image#sizes) prop.
+| `breakpoint` | `number`, `string` | Only supported by `WidthBasedVisual`. The max-width media query value to switch to the portrait/mobile image. Defaults to `767px`.
 
 
 ### Video

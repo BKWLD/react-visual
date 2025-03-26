@@ -1,6 +1,7 @@
 import ContentfulVisual from "./ContentfulVisual";
 
 export default ContentfulVisual;
+export { default as WidthBasedVisual } from "./WidthBasedContentfulVisual";
 export type {
   ContentfulVisualProps,
   ContentfulImageAsset,
@@ -13,8 +14,6 @@ export {
   orientationBasedAspectCalculator,
   widthBasedAspectCalculator,
   getImageAspect,
-  orientationMediaQueries,
-  mobileWidthMediaQueries,
 } from "./lib/aspectRatio";
 export {
   orientationBasedImageLoader,
