@@ -10,12 +10,6 @@ export const orientationMediaQueries = [
   "(orientation:portrait)",
 ];
 
-// The media queries that are used for default responsive visuals
-export const mobileWidthMediaQueries = [
-  "(max-width:767px)",
-  "(min-width:768px)",
-];
-
 // Get the aspect ratio from an image asset if it exists
 export function getImageAspect(
   image: ContentfulImageAsset | undefined | null,

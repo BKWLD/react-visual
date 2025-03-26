@@ -14,8 +14,6 @@ export {
   orientationBasedAspectCalculator,
   widthBasedAspectCalculator,
   getImageAspect,
-  orientationMediaQueries,
-  mobileWidthMediaQueries,
 } from "./lib/aspectRatio";
 export {
   orientationBasedImageLoader,

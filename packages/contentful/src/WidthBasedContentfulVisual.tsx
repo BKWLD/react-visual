@@ -4,7 +4,6 @@ import {
   getImageAspect,
   hasResponsiveAspects,
   hasResponsiveAssets,
-  mobileWidthMediaQueries,
   widthBasedAspectCalculator,
 } from "./lib/aspectRatio";
 import {
@@ -12,12 +11,29 @@ import {
   widthBasedVideoLoader,
 } from "./lib/urlBuilding";
 
+type WidthBasedContentfulVisualProps = ContentfulVisualProps & {
+  /**
+   * The max-width media query value to switch to the portrait/mobile image
+   * @default "767px"
+   */
+  breakpoint?: string | number;
+};
+
 // Wrapper component that defaults to width based responsive handling rather
 // than oreintation based
 export default function WidthBasedContentfulVisual(
-  props: ContentfulVisualProps,
+  props: WidthBasedContentfulVisualProps,
 ) {
-  const { image, src, imageLoader, videoLoader, sourceMedia, aspect } = props;
+  const {
+    breakpoint = "767px",
+    image,
+    src,
+    imageLoader,
+    videoLoader,
+    sourceMedia,
+    aspect,
+  } = props;
+
   return (
     <ContentfulVisual
       {...props}
@@ -26,7 +42,9 @@ export default function WidthBasedContentfulVisual(
       videoLoader={videoLoader || widthBasedVideoLoader}
       sourceMedia={
         sourceMedia ||
-        (hasResponsiveAssets(src) ? mobileWidthMediaQueries : undefined)
+        (hasResponsiveAssets(src)
+          ? makeWidthBasedMediaQueries(breakpoint)
+          : undefined)
       }
       aspect={
         aspect ||
@@ -36,4 +54,15 @@ export default function WidthBasedContentfulVisual(
       }
     />
   );
+}
+
+// Make the sourceMedia value for width based media queries, switching on a
+// single breakpoint
+function makeWidthBasedMediaQueries(
+  breakpoint: WidthBasedContentfulVisualProps["breakpoint"],
+) {
+  const mobileMaxWidth =
+    typeof breakpoint == "number" ? `${breakpoint}px` : breakpoint;
+  const desktopMinWidth = `calc(${mobileMaxWidth} + 1px)`;
+  return [`(max-width: ${mobileMaxWidth})`, `(min-width: ${desktopMinWidth})`];
 }
