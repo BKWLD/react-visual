@@ -28,14 +28,12 @@ export default function LazyVideo(props: LazyVideoProps): ReactNode {
 
     // Deduplicate entries to prevent conflicts when the same URL is returned
     // for different media queries (e.g., same Contentful asset for portrait/landscape)
-    const seenUrls = new Set<string>();
-    const deduplicatedEntries = mediaSrcEntries.filter(([url, media]) => {
-      if (!url || seenUrls.has(url)) {
-        return false;
+    const deduplicatedEntries = mediaSrcEntries.reduce<[string, string][]>((acc, [url, media]) => {
+      if (!url || acc.some(([seenUrl]) => seenUrl === url)) {
+        return acc;
       }
-      seenUrls.add(url);
-      return true;
-    });
+      return [...acc, [url, media]];
+    }, []);
 
     // Make the hash
     mediaSrcs = Object.fromEntries(deduplicatedEntries);
