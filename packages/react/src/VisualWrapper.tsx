@@ -11,7 +11,7 @@ type MakeResponsiveAspectsProps = Pick<
 > & {
   sourceMedia: Required<VisualWrapperProps>["sourceMedia"];
   aspectCalculator: AspectCalculator;
-  baseId: string;
+  cssId: string;
 };
 
 // Wraps media elements and applys layout and other functionality
@@ -29,7 +29,7 @@ export default function VisualWrapper({
   dataAttributes,
 }: VisualWrapperProps): ReactNode {
   // Generate unique ID for CSS classes when needed
-  const baseId = useId();
+  const cssId = useId();
   
   // If aspect is a function, invoke it to determine the aspect ratio
   let aspectRatio, aspectStyleTag, aspectClasses;
@@ -39,7 +39,7 @@ export default function VisualWrapper({
       sourceMedia,
       image,
       video,
-      baseId,
+      cssId,
     }));
   } else aspectRatio = aspect;
 
@@ -74,7 +74,7 @@ function makeResponsiveAspects({
   sourceMedia,
   image,
   video,
-  baseId,
+  cssId,
 }: MakeResponsiveAspectsProps): {
   aspectClasses: string;
   aspectStyleTag: ReactNode;
@@ -85,8 +85,8 @@ function makeResponsiveAspects({
     // Calculate the aspect for this query state
     const aspect = aspectCalculator({ media: mediaQuery, image, video });
 
-    // Make a CSS class name using the base ID and index
-    const cssClass = `${baseId.replace(/:/g, "")}-${index}`;
+    // Make a CSS class name using the CSS ID and index
+    const cssClass = `${cssId.replace(/:/g, "")}-${index}`;
 
     // Make the CSS rule
     const cssRule = `@media ${mediaQuery} {
