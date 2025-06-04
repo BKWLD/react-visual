@@ -63,6 +63,51 @@ it("supports respponsive aspect function", () => {
   cy.get(".wrapper").hasDimensions(400, 400);
 });
 
+it("generates CSS classes using useId() for responsive aspects", () => {
+  cy.mount(
+    <VisualWrapper
+      {...sharedProps}
+      image={{
+        landscape: {
+          aspect: 2,
+        },
+        portrait: {
+          aspect: 1,
+        },
+      }}
+      sourceMedia={["(orientation: landscape)", "(orientation: portrait)"]}
+      aspect={({ image, media }) => {
+        return media?.includes("landscape")
+          ? image.landscape.aspect
+          : image.portrait.aspect;
+      }}
+    />,
+  );
+  
+  // Check that CSS classes are generated using useId format (not the old rv-* format)
+  cy.get(".wrapper").should(($wrapper) => {
+    const className = $wrapper.attr("class") || "";
+    const classes = className.split(" ");
+    
+    // Find classes that look like useId generated classes (should contain React's ID format)
+    const useIdClasses = classes.filter(cls => 
+      cls.includes(":") || (cls.startsWith("r") && cls.includes("-") && !cls.startsWith("rv-"))
+    );
+    
+    // Should have generated classes for responsive aspects
+    expect(useIdClasses.length).to.be.greaterThan(0);
+    
+    // Should NOT have the old bespoke format classes starting with rv-
+    const oldFormatClasses = classes.filter(cls => 
+      cls.startsWith("rv-") && (cls.includes("landscape") || cls.includes("portrait"))
+    );
+    expect(oldFormatClasses.length).to.equal(0);
+  });
+  
+  // Verify that a style tag was created with the responsive CSS
+  cy.get("style").should("exist").and("contain", "aspect-ratio");
+});
+
 it("supports children", () => {
   cy.mount(
     <VisualWrapper {...sharedProps}>

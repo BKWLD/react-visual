@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { useId } from "react";
 import { fillStyles, cx } from "./lib/styles";
 import { isNumeric } from "./lib/values";
 import type { VisualWrapperProps } from "./types/visualWrapperTypes";
@@ -10,6 +11,7 @@ type MakeResponsiveAspectsProps = Pick<
 > & {
   sourceMedia: Required<VisualWrapperProps>["sourceMedia"];
   aspectCalculator: AspectCalculator;
+  baseId: string;
 };
 
 // Wraps media elements and applys layout and other functionality
@@ -26,6 +28,9 @@ export default function VisualWrapper({
   style,
   dataAttributes,
 }: VisualWrapperProps): ReactNode {
+  // Generate unique ID for CSS classes when needed
+  const baseId = useId();
+  
   // If aspect is a function, invoke it to determine the aspect ratio
   let aspectRatio, aspectStyleTag, aspectClasses;
   if (typeof aspect == "function" && sourceMedia && sourceMedia.length) {
@@ -34,6 +39,7 @@ export default function VisualWrapper({
       sourceMedia,
       image,
       video,
+      baseId,
     }));
   } else aspectRatio = aspect;
 
@@ -68,23 +74,19 @@ function makeResponsiveAspects({
   sourceMedia,
   image,
   video,
+  baseId,
 }: MakeResponsiveAspectsProps): {
   aspectClasses: string;
   aspectStyleTag: ReactNode;
 } {
   // Make CSS classes and related rules that are specific to the query and
   // aspect value.
-  const styles = sourceMedia.map((mediaQuery) => {
+  const styles = sourceMedia.map((mediaQuery, index) => {
     // Calculate the aspect for this query state
     const aspect = aspectCalculator({ media: mediaQuery, image, video });
 
-    // Make a CSS class name from the media query string
-    const mediaClass = mediaQuery.replace(/[^\w]/gi, "-"); // Replace special chars with "-"
-    const aspectClass = aspect
-      .toFixed(3)
-      .replace(/\./gi, "_") // Replace decimals
-      .replace(/_?0*$/, ""); // Remove trailing 0s
-    const cssClass = `rv-${mediaClass}-${aspectClass}`.replace(/\-{2,}/g, "-"); // Reduce multiples of `-`
+    // Make a CSS class name using the base ID and index
+    const cssClass = `${baseId.replace(/:/g, "")}-${index}`;
 
     // Make the CSS rule
     const cssRule = `@media ${mediaQuery} {
