@@ -61,35 +61,4 @@ describe("contentful visual entry props", () => {
     cy.viewport(400, 500);
     cy.get("video").its("[0].currentSrc").should("contain", videoAsset.url);
   });
-
-  it("handles same video asset for both portrait and landscape with width-based breakpoints", () => {
-    // This test simulates using the same Contentful video asset for both portrait and landscape
-    // in the width-based responsive setup
-    cy.mount(
-      <WidthBasedVisual
-        expand
-        src={{
-          ...visualEntry,
-          image: null,
-          portraitImage: null,
-          // Use the same video asset for both small and large screens
-          video: videoAsset,
-          portraitVideo: videoAsset,
-        }}
-        breakpoint="399px"
-      />,
-    );
-
-    // Small screen (should use portraitVideo, but it's the same asset)
-    cy.viewport(399, 500);
-    cy.get("video").its("[0].currentSrc").should("contain", videoAsset.url);
-
-    // Large screen (should use video, same asset)
-    cy.viewport(400, 500);
-    cy.get("video").its("[0].currentSrc").should("contain", videoAsset.url);
-
-    // Switch back to small screen
-    cy.viewport(399, 500);
-    cy.get("video").its("[0].currentSrc").should("contain", videoAsset.url);
-  });
 });

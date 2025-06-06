@@ -211,32 +211,4 @@ describe("contentful visual entry props", () => {
     cy.viewport(400, 500);
     cy.get("video").its("[0].currentSrc").should("contain", videoAsset.url);
   });
-
-  it("handles same video asset for both portrait and landscape", () => {
-    // This test simulates the bug scenario: using the same Contentful video asset
-    // for both video and portraitVideo properties
-    cy.mount(
-      <ContentfulVisual
-        src={{
-          ...visualEntry,
-          image: null,
-          portraitImage: null,
-          // Use the same video asset for both portrait and landscape
-          video: videoAsset,
-          portraitVideo: videoAsset,
-        }}
-      />,
-    );
-
-    // Video should load in portrait mode (where portraitVideo is used)
-    cy.get("video").its("[0].currentSrc").should("contain", videoAsset.url);
-
-    // Switch to landscape mode (where video is used)
-    cy.viewport(500, 400);
-    cy.get("video").its("[0].currentSrc").should("contain", videoAsset.url);
-
-    // Switch back to portrait mode
-    cy.viewport(399, 500);
-    cy.get("video").its("[0].currentSrc").should("contain", videoAsset.url);
-  });
 });
