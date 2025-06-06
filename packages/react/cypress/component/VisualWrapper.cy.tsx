@@ -84,18 +84,18 @@ it("generates CSS classes using useId() for responsive aspects", () => {
     />,
   );
   
-  // Check that CSS classes are generated using useId format (not the old rv-* format)
+  // Check that a single CSS class is generated using useId format
   cy.get(".wrapper").should(($wrapper) => {
     const className = $wrapper.attr("class") || "";
-    const classes = className.split(" ");
+    const classes = className.split(/\s+/).filter(cls => cls !== "wrapper");
     
-    // Find classes that look like useId generated classes (should contain React's ID format)
-    const useIdClasses = classes.filter(cls => 
-      cls.includes(":") || (cls.startsWith("r") && cls.includes("-") && !cls.startsWith("rv-"))
-    );
+    // Should have exactly one generated class for responsive aspects
+    expect(classes.length).to.equal(1);
     
-    // Should have generated classes for responsive aspects
-    expect(useIdClasses.length).to.be.greaterThan(0);
+    // The class should be a useId generated class (not the old rv-* format)
+    const responsiveClass = classes[0];
+    expect(responsiveClass).to.not.be.empty;
+    expect(responsiveClass).to.not.start.with("rv-");
     
     // Should NOT have the old bespoke format classes starting with rv-
     const oldFormatClasses = classes.filter(cls => 

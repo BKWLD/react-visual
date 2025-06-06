@@ -11,7 +11,7 @@ type MakeResponsiveAspectsProps = Pick<
 > & {
   sourceMedia: Required<VisualWrapperProps>["sourceMedia"];
   aspectCalculator: AspectCalculator;
-  cssId: string;
+  responsiveClassname: string;
 };
 
 // Wraps media elements and applys layout and other functionality
@@ -28,19 +28,19 @@ export default function VisualWrapper({
   style,
   dataAttributes,
 }: VisualWrapperProps): ReactNode {
-  // Generate unique ID for CSS classes when needed
-  const cssId = useId();
+  // Generate unique CSS class name for responsive aspects
+  const responsiveClassname = useId().replace(/:/g, "");
   
   // If aspect is a function, invoke it to determine the aspect ratio
-  let aspectRatio, aspectStyleTag, aspectClasses;
+  let aspectRatio, aspectStyleTag;
   if (typeof aspect == "function" && sourceMedia && sourceMedia.length) {
-    ({ aspectStyleTag, aspectClasses } = makeResponsiveAspects({
+    aspectStyleTag = makeResponsiveAspects({
       aspectCalculator: aspect,
       sourceMedia,
       image,
       video,
-      cssId,
-    }));
+      responsiveClassname,
+    });
   } else aspectRatio = aspect;
 
   // Make the wrapper style.  If expanding, use normal fill rules. Otherwise,
@@ -58,7 +58,7 @@ export default function VisualWrapper({
   // Render wrapping component
   return (
     <div
-      className={cx(className, aspectClasses)}
+      className={cx(className, aspectStyleTag ? responsiveClassname : undefined)}
       style={{ ...layoutStyles, ...style }}
       {...dataAttributes}
     >
@@ -74,37 +74,21 @@ function makeResponsiveAspects({
   sourceMedia,
   image,
   video,
-  cssId,
-}: MakeResponsiveAspectsProps): {
-  aspectClasses: string;
-  aspectStyleTag: ReactNode;
-} {
-  // Make CSS classes and related rules that are specific to the query and
-  // aspect value.
-  const styles = sourceMedia.map((mediaQuery, index) => {
+  responsiveClassname,
+}: MakeResponsiveAspectsProps): ReactNode {
+  // Make CSS rules that use the same class name for all media queries
+  const cssRules = sourceMedia.map((mediaQuery) => {
     // Calculate the aspect for this query state
     const aspect = aspectCalculator({ media: mediaQuery, image, video });
 
-    // Make a CSS class name using the CSS ID and index
-    const cssClass = `${cssId.replace(/:/g, "")}-${index}`;
-
-    // Make the CSS rule
-    const cssRule = `@media ${mediaQuery} {
-      .${cssClass} {
+    // Make the CSS rule using the shared class name
+    return `@media ${mediaQuery} {
+      .${responsiveClassname} {
         aspect-ratio: ${aspect};
       }
     }`;
-    return { cssClass, cssRule };
   });
 
-  // Make an array of the classes to add
-  const aspectClasses = styles.map(({ cssClass }) => cssClass).join(" ");
-
-  // Make the style tag
-  const aspectStyleTag = (
-    <style>{styles.map(({ cssRule }) => cssRule).join(" ")}</style>
-  );
-
-  // Return completed objects
-  return { aspectClasses, aspectStyleTag };
+  // Make the style tag with all rules
+  return <style>{cssRules.join(" ")}</style>;
 }
