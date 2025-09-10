@@ -14,7 +14,7 @@ export const orientationMediaQueries = [
 export function getImageAspect(
   image: ContentfulImageAsset | undefined | null,
 ): number | undefined {
-  if (!image) return undefined;
+  if (!image || !image.width || !image.height) return undefined;
   return image.width / image.height;
 }
 
