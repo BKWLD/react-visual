@@ -15,7 +15,7 @@ export type ContentfulImageAsset = ContentfulAsset & {
 export type ContentfulAsset = {
   title?: string | null;
   description?: string | null;
-  fileName?: string;
+  fileName?: string | null;
   url?: string | null;
 };
 
