@@ -6,6 +6,7 @@ type AssetSrc = string | any;
 export type ReactVisualProps = {
   image?: AssetSrc;
   video?: AssetSrc;
+  noPoster?: boolean;
 
   expand?: boolean;
   aspect?: number | AspectCalculator; // An explict aspect ratio
