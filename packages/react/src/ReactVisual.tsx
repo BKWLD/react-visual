@@ -34,6 +34,7 @@ export default function ReactVisual(props: ReactVisualProps): ReactNode {
     alt,
     className = "",
     style = {},
+    noPoster,
   } = props;
 
   // If no asset, return nothing
@@ -86,7 +87,7 @@ export default function ReactVisual(props: ReactVisualProps): ReactNode {
             fit,
             position,
             priority,
-            noPoster: !!image, // Use `image` as poster frame
+            noPoster: noPoster || !!image, // Use `image` as poster frame
             paused,
             onPause,
             onPlay,
