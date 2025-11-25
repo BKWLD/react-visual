@@ -1,6 +1,6 @@
 {
   "name": "@react-visual/contentful",
-  "version": "1.4.2",
+  "version": "1.4.4",
   "description": "Image and video renderer for Contentful assets.",
   "author": "Bukwild <info@bukwild.com>",
   "license": "MIT",

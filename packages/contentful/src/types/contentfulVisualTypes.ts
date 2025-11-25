@@ -4,19 +4,19 @@ export type ContentfulVisualProps = {
   image?: ContentfulImageAsset | null;
   video?: ContentfulAsset | null;
   src?: ContentfulVisualEntry | null;
-  alt?: string; // Can be inferrerd
+  alt?: string | null; // Can be inferrerd
 } & Omit<ReactVisualProps, "alt" | "image" | "video">;
 
 export type ContentfulImageAsset = ContentfulAsset & {
-  width: number;
-  height: number;
+  width?: number | null;
+  height?: number | null;
 };
 
 export type ContentfulAsset = {
   title?: string | null;
-  description?: string; // Was not nullable in my tests
-  fileName?: string;
-  url: string;
+  description?: string | null;
+  fileName?: string | null;
+  url?: string | null;
 };
 
 export type ContentfulVisualEntry = {
@@ -24,5 +24,5 @@ export type ContentfulVisualEntry = {
   portraitImage?: ContentfulImageAsset | null;
   video?: ContentfulAsset | null;
   portraitVideo?: ContentfulAsset | null;
-  alt: string | null;
+  alt?: string | null;
 };
