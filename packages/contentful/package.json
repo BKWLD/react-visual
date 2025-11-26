@@ -1,6 +1,6 @@
 {
   "name": "@react-visual/contentful",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Image and video renderer for Contentful assets.",
   "author": "Bukwild <info@bukwild.com>",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@react-visual/react": "^1.5.0"
+    "@react-visual/react": "^1.5.1"
   },
   "peerDependencies": {
     "react": "^18"
