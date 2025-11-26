@@ -87,7 +87,7 @@ export default function ReactVisual(props: ReactVisualProps): ReactNode {
             fit,
             position,
             priority,
-            noPoster: noPoster || !!image, // Use `image` as poster frame
+            noPoster: noPoster ?? !!image, // Use `image` as poster frame
             paused,
             onPause,
             onPlay,
