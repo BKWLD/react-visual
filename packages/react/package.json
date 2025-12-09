@@ -1,6 +1,6 @@
 {
   "name": "@react-visual/react",
-  "version": "1.4.0",
+  "version": "1.5.1",
   "description": "Image and video renderer for React projects",
   "author": "Bukwild <info@bukwild.com>",
   "license": "MIT",
