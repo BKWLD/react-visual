@@ -103,12 +103,12 @@ export default function LazyVideoClient({
 
     const handlePlay = () => {
       setVideoPaused(false);
-      onPlay && onPlay();
+      onPlay?.();
     };
 
     const handlePause = () => {
       setVideoPaused(true);
-      onPause && onPause();
+      onPause?.();
     };
 
     // Add listeners
