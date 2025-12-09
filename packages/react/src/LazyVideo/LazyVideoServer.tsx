@@ -26,8 +26,17 @@ export default function LazyVideo(props: LazyVideoProps): ReactNode {
     // If the array ended up empty, abort
     if (mediaSrcEntries.filter(([url]) => !!url).length == 0) return null;
 
+    // Deduplicate entries to prevent conflicts when the same URL is returned
+    // for different media queries (e.g., same Contentful asset for portrait/landscape)
+    const deduplicatedEntries = mediaSrcEntries.reduce<[string, string][]>((acc, [url, media]) => {
+      if (!url || acc.some(([seenUrl]) => seenUrl === url)) {
+        return acc;
+      }
+      return [...acc, [url, media]];
+    }, []);
+
     // Make the hash
-    mediaSrcs = Object.fromEntries(mediaSrcEntries);
+    mediaSrcs = Object.fromEntries(deduplicatedEntries);
 
     // Make a simple string src url
   } else {

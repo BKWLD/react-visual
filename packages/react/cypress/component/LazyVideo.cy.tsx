@@ -70,6 +70,38 @@ describe("responsive video", () => {
     cy.viewport(500, 600);
     cy.get("video").its("[0].currentSrc").should("contain", "portrait");
   });
+
+  it("handles duplicate video URLs for different media queries", () => {
+    // This test simulates the Contentful scenario where the same video asset
+    // is used for both portrait and landscape, which should result in deduplication
+    const sameVideoUrl = "https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/300x200.mp4";
+    
+    cy.mount(
+      <LazyVideo
+        src={{
+          portrait: sameVideoUrl,
+          landscape: sameVideoUrl,
+        }}
+        sourceMedia={["(orientation:landscape)", "(orientation:portrait)"]}
+        videoLoader={({ src, media }) => {
+          // Both media queries return the same URL, simulating Contentful behavior
+          return sameVideoUrl;
+        }}
+        alt="Duplicate video URL test"
+      />,
+    );
+
+    // Video should load in portrait mode
+    cy.get("video").its("[0].currentSrc").should("contain", "300x200.mp4");
+
+    // Switch to landscape - video should still load
+    cy.viewport(500, 250);
+    cy.get("video").its("[0].currentSrc").should("contain", "300x200.mp4");
+
+    // Switch back to portrait - video should still load
+    cy.viewport(500, 600);
+    cy.get("video").its("[0].currentSrc").should("contain", "300x200.mp4");
+  });
 });
 
 describe("Accessibility controls", () => {
