@@ -77,11 +77,7 @@ export default function LazyVideoClient({
   // errors while trying to play.
   const play = async () => {
     if (playPromise.current) await playPromise.current;
-    try {
-      playPromise.current = videoRef.current?.play();
-    } catch (e) {
-      console.error(e);
-    }
+    playPromise.current = videoRef.current?.play().catch((e) => {});
   };
 
   // Pause the video, waiting until it's safe to play it
@@ -103,12 +99,12 @@ export default function LazyVideoClient({
 
     const handlePlay = () => {
       setVideoPaused(false);
-      onPlay && onPlay();
+      onPlay?.();
     };
 
     const handlePause = () => {
       setVideoPaused(true);
-      onPause && onPause();
+      onPause?.();
     };
 
     // Add listeners
