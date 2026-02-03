@@ -113,6 +113,21 @@ describe("contentful visual entry props", () => {
     cy.get("video").its("[0].currentSrc").should("contain", videoAsset.url);
   });
 
+  it("uses landscape video when portrait video is not explicitly set", () => {
+    cy.mount(
+      <ContentfulVisual
+        expand
+        src={{
+          ...visualEntry,
+          portraitVideo: null,
+        }}
+      />,
+    );
+
+    // Portrait asset should use landscape video
+    cy.get("video").its("[0].currentSrc").should("contain", videoAsset.url);
+  });
+
   it("renders full visual entry", () => {
     cy.mount(<ContentfulVisual src={visualEntry} />);
 
