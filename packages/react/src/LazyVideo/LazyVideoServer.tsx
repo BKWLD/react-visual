@@ -19,15 +19,11 @@ export default function LazyVideo(props: LazyVideoProps): ReactNode {
   // Prepare a hash of source URLs and their media query constraint in the
   // style expected by useMediaQueries.
   if (useResponsiveSource) {
-    const mediaSrcEntries = sourceMedia.map((media) => {
+    mediaSrcs = sourceMedia.reduce<Record<string, string>>((srcs, media) => {
       const url = videoLoader({ src, media });
-      return [url, media];
-    });
-    // If the array ended up empty, abort
-    if (mediaSrcEntries.filter(([url]) => !!url).length == 0) return null;
-
-    // Make the hash
-    mediaSrcs = Object.fromEntries(mediaSrcEntries);
+      if (url) srcs[media] = url;
+      return srcs;
+    }, {});
 
     // Make a simple string src url
   } else {

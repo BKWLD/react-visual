@@ -70,6 +70,39 @@ describe("responsive video", () => {
     cy.viewport(500, 600);
     cy.get("video").its("[0].currentSrc").should("contain", "portrait");
   });
+
+  it("supports the same asset with different media queries", () => {
+    cy.mount(
+      <LazyVideo
+        src={{
+          portrait:
+            "https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/500x250.mp4#landscape",
+          landscape:
+            "https://github.com/BKWLD/react-visual/raw/refs/heads/main/packages/react/cypress/fixtures/500x250.mp4#landscape",
+        }}
+        sourceMedia={["(orientation:landscape)", "(orientation:portrait)"]}
+        videoLoader={({ src, media }) => {
+          if (media?.includes("portrait")) return src.portrait;
+          else return src.landscape;
+        }}
+        alt="Same srcs"
+      />,
+    );
+
+    // Portrait should use landscape asset
+    cy.get("video source")
+      .should("have.attr", "src")
+      .and("contain", "landscape");
+
+    // Landscape should also use landscape asset. Using a test on the source
+    // element because currentSrc on video element wasn't changing even though
+    // video was empty.
+    cy.viewport(500, 250);
+    cy.wait(100); // Wait for resize to propagate
+    cy.get("video source")
+      .should("have.attr", "src")
+      .and("contain", "landscape");
+  });
 });
 
 describe("Accessibility controls", () => {

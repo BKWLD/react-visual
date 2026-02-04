@@ -2,7 +2,7 @@
 "use client";
 
 import { useInView } from "react-intersection-observer";
-import { useMediaQueries } from "@react-hook/media-query";
+import { MediaQueryMatches, useMediaQueries } from "@react-hook/media-query";
 import {
   useEffect,
   useRef,
@@ -20,6 +20,10 @@ type LazyVideoClientProps = Omit<
   "videoLoader" | "src" | "sourceMedia"
 > & {
   srcUrl?: string;
+  /**
+   * The key is the media query, the value is the URL to use when that media
+   * query matches.
+   */
   mediaSrcs?: Record<string, string>;
 };
 
@@ -179,9 +183,20 @@ function ResponsiveSource({
   mediaSrcs,
   videoRef,
 }: ResponsiveVideoSourceProps): ReactNode {
+  // Make an object suitable for useMediaQueries that uses indexes from the
+  // mediaSrcs obj as it's keys so there won't be any issues with multiple
+  // media queries using the same asset.
+  const indexedQueries = Object.keys(mediaSrcs).reduce<Record<number, string>>(
+    (queries, mediaQuery, index) => {
+      queries[index] = mediaQuery;
+      return queries;
+    },
+    {},
+  );
+
   // Find the src url that is currently active
-  const { matches } = useMediaQueries(mediaSrcs);
-  const srcUrl = getFirstMatch(matches);
+  const { matches } = useMediaQueries<typeof indexedQueries>(indexedQueries);
+  const srcUrl = getFirstMatch(mediaSrcs, matches);
 
   // Reload the video since the source changed
   useEffect(() => reloadVideoWhenSafe(videoRef), [matches]);
@@ -191,10 +206,13 @@ function ResponsiveSource({
 }
 
 // Get the URL with a media query match
-function getFirstMatch(matches: Record<string, boolean>): string | undefined {
-  for (const srcUrl in matches) {
-    if (matches[srcUrl]) {
-      return srcUrl;
+function getFirstMatch(
+  mediaSrcs: Record<string, string>,
+  matches: MediaQueryMatches<Record<number, string>>["matches"],
+): string | undefined {
+  for (const index in matches) {
+    if (matches[index]) {
+      return Object.values(mediaSrcs)[index];
     }
   }
 }
