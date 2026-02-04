@@ -24,6 +24,7 @@ export default function LazyVideo(props: LazyVideoProps): ReactNode {
       if (url) srcs[media] = url;
       return srcs;
     }, {});
+    if (!Object.values(mediaSrcs).length) return null; // Abort if no urls
 
     // Make a simple string src url
   } else {
