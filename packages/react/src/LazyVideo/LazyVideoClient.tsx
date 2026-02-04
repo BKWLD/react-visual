@@ -10,6 +10,7 @@ import {
   type MutableRefObject,
   useState,
   type ReactNode,
+  useMemo,
 } from "react";
 import type { LazyVideoProps } from "../types/lazyVideoTypes";
 import { fillStyles, transparentGif } from "../lib/styles";
@@ -186,13 +187,15 @@ function ResponsiveSource({
   // Make an object suitable for useMediaQueries that uses indexes from the
   // mediaSrcs obj as it's keys so there won't be any issues with multiple
   // media queries using the same asset.
-  const indexedQueries = Object.keys(mediaSrcs).reduce<Record<number, string>>(
-    (queries, mediaQuery, index) => {
-      queries[index] = mediaQuery;
-      return queries;
-    },
-    {},
-  );
+  const indexedQueries = useMemo(() => {
+    return Object.keys(mediaSrcs).reduce<Record<number, string>>(
+      (queries, mediaQuery, index) => {
+        queries[index] = mediaQuery;
+        return queries;
+      },
+      {},
+    );
+  }, [mediaSrcs]);
 
   // Find the src url that is currently active
   const { matches } = useMediaQueries<typeof indexedQueries>(indexedQueries);
