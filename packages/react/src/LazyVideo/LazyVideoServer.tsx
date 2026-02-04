@@ -16,8 +16,7 @@ export default function LazyVideo(props: LazyVideoProps): ReactNode {
   // Vars that will be conditionally populated
   let srcUrl, mediaSrcs;
 
-  // Prepare a hash of source URLs and their media query constraint in the
-  // style expected by useMediaQueries.
+  // Prepare a hash mapping media query strings to source URLs
   if (useResponsiveSource) {
     mediaSrcs = sourceMedia.reduce<Record<string, string>>((srcs, media) => {
       const url = videoLoader({ src, media });
