@@ -185,7 +185,7 @@ function ResponsiveSource({
   videoRef,
 }: ResponsiveVideoSourceProps): ReactNode {
   // Make an object suitable for useMediaQueries that uses indexes from the
-  // mediaSrcs obj as it's keys so there won't be any issues with multiple
+  // mediaSrcs obj as its keys so there won't be any issues with multiple
   // media queries using the same asset.
   const indexedQueries = useMemo(() => {
     return Object.keys(mediaSrcs).reduce<Record<number, string>>(
