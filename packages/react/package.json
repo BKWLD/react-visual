@@ -13,7 +13,8 @@
   "scripts": {
     "build": "vite build",
     "test": "cypress run --component",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "demo": "vite --config vite.demo.config.ts"
   },
   "dependencies": {
     "@react-hook/media-query": "^1.1.1",

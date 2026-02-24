@@ -40,7 +40,6 @@ export default function AccessibilityControls({
   return (
     <button
       onClick={isVideoPaused ? play : pause}
-      aria-pressed={!isVideoPaused}
       aria-label={isVideoPaused ? "Play" : "Pause"}
       style={{
         // Clear default sizes
