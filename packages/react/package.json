@@ -14,7 +14,8 @@
     "build": "vite build",
     "test": "cypress run --component",
     "typecheck": "tsc --noEmit",
-    "demo": "vite --config vite.demo.config.ts"
+    "demo": "vite --config vite.demo.config.ts",
+    "demo:build": "vite build --config vite.demo.config.ts"
   },
   "dependencies": {
     "@react-hook/media-query": "^1.1.1",
