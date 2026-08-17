@@ -121,6 +121,17 @@ export default function LazyVideoClient({
     };
   }, []);
 
+  // Browsers won't swap <source media> on a video after initial load, so
+  // reload manually
+  useEffect(() => {
+    if (!mediaSrcs) return;
+    const queries = Object.keys(mediaSrcs).map((q) => window.matchMedia(q));
+    const reload = () => videoRef.current?.load();
+    queries.forEach((q) => q.addEventListener("change", reload));
+    return () =>
+      queries.forEach((q) => q.removeEventListener("change", reload));
+  }, [mediaSrcs]);
+
   // Simplify logic for whether to load sources
   const shouldLoad = priority || inView;
 
