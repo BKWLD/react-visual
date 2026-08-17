@@ -106,10 +106,12 @@ export default function LazyVideoClient({
       onPause?.();
     };
 
-    // Add listeners
     if (videoElement) {
       videoElement.addEventListener("play", handlePlay);
       videoElement.addEventListener("pause", handlePause);
+
+      // Sync state in case the video started playing before hydration
+      setVideoPaused(videoElement.paused);
     }
 
     // Cleanup
