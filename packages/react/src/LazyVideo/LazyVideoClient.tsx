@@ -2,15 +2,12 @@
 "use client";
 
 import { useInView } from "react-intersection-observer";
-import { MediaQueryMatches, useMediaQueries } from "@react-hook/media-query";
 import {
   useEffect,
   useRef,
   useCallback,
-  type MutableRefObject,
   useState,
   type ReactNode,
-  useMemo,
 } from "react";
 import type { LazyVideoProps } from "../types/lazyVideoTypes";
 import { fillStyles, transparentGif } from "../lib/styles";
@@ -30,10 +27,7 @@ type LazyVideoClientProps = Omit<
 
 type ResponsiveVideoSourceProps = {
   mediaSrcs: Required<LazyVideoClientProps>["mediaSrcs"];
-  videoRef: VideoRef;
 };
-
-type VideoRef = MutableRefObject<HTMLVideoElement | undefined>;
 
 // An video rendered within a Visual that supports lazy loading
 export default function LazyVideoClient({
@@ -127,6 +121,17 @@ export default function LazyVideoClient({
     };
   }, []);
 
+  // Browsers won't swap <source media> on a video after initial load, so
+  // reload manually
+  useEffect(() => {
+    if (!mediaSrcs) return;
+    const queries = Object.keys(mediaSrcs).map((q) => window.matchMedia(q));
+    const reload = () => videoRef.current?.load();
+    queries.forEach((q) => q.addEventListener("change", reload));
+    return () =>
+      queries.forEach((q) => q.removeEventListener("change", reload));
+  }, [mediaSrcs]);
+
   // Simplify logic for whether to load sources
   const shouldLoad = priority || inView;
 
@@ -157,7 +162,14 @@ export default function LazyVideoClient({
         {/* Implement lazy loading by not adding the source until ready */}
         {shouldLoad &&
           (mediaSrcs ? (
-            <ResponsiveSource {...{ mediaSrcs, videoRef }} />
+            Object.entries(mediaSrcs).map(([mediaQuery, src]) => (
+              <source
+                key={mediaQuery}
+                src={src}
+                type="video/mp4"
+                media={mediaQuery}
+              />
+            ))
           ) : (
             <source src={srcUrl} type="video/mp4" />
           ))}
@@ -177,64 +189,4 @@ export default function LazyVideoClient({
       />
     </>
   );
-}
-
-// Switch the video asset depending on media queries
-function ResponsiveSource({
-  mediaSrcs,
-  videoRef,
-}: ResponsiveVideoSourceProps): ReactNode {
-  // Make an object suitable for useMediaQueries that uses indexes from the
-  // mediaSrcs obj as its keys so there won't be any issues with multiple
-  // media queries using the same asset.
-  const indexedQueries = useMemo(() => {
-    return Object.keys(mediaSrcs).reduce<Record<number, string>>(
-      (queries, mediaQuery, index) => {
-        queries[index] = mediaQuery;
-        return queries;
-      },
-      {},
-    );
-  }, [mediaSrcs]);
-
-  // Find the src url that is currently active
-  const { matches } = useMediaQueries<typeof indexedQueries>(indexedQueries);
-  const srcUrl = getFirstMatch(mediaSrcs, matches);
-
-  // Reload the video since the source changed
-  useEffect(() => reloadVideoWhenSafe(videoRef), [matches]);
-
-  // Return new source
-  return <source src={srcUrl} type="video/mp4" />;
-}
-
-// Get the URL with a media query match
-function getFirstMatch(
-  mediaSrcs: Record<string, string>,
-  matches: MediaQueryMatches<Record<number, string>>["matches"],
-): string | undefined {
-  for (const index in matches) {
-    if (matches[index]) {
-      return Object.values(mediaSrcs)[index];
-    }
-  }
-}
-
-// Safely call load function on a video
-function reloadVideoWhenSafe(videoRef: VideoRef): void {
-  if (!videoRef.current) return;
-  const video = videoRef.current;
-
-  // If already playing safely, load now
-  if (video.readyState >= 2) {
-    video.load();
-
-    // Else, wait for video to finish loading
-  } else {
-    const handleLoadedData = () => {
-      video.load();
-      video.removeEventListener("loadeddata", handleLoadedData);
-    };
-    video.addEventListener("loadeddata", handleLoadedData);
-  }
 }
