@@ -1,7 +1,6 @@
 import { defineConfig } from "cypress";
 
 export default defineConfig({
-  browser: "chrome",
   viewportWidth: 500,
   viewportHeight: 500,
 
