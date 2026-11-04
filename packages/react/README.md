@@ -190,7 +190,7 @@ For more examples, read [the Cypress component tests](./cypress/component).
 
 | Prop | Type | Description
 | -- | -- | --
-| `priority` | `boolean` | Disables [`<img loading="lazy>"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#loading) and prevents videos from lazy loading based on IntersectionObserver.
+| `priority` | `boolean` | Disables [`<img loading="lazy>"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#loading), sets [`fetchpriority="high"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#fetchpriority) on images, and prevents videos from lazy loading based on IntersectionObserver.
 | `sizes` | `string` | Sets the `<img sizes>` attribute.
 | `sourceTypes` | [`SourceType[]`](https://github.com/BKWLD/react-visual/blob/eaf2d150efa1187033ba732a350a4db20f260435/packages/react/src/types/reactVisualTypes.ts#L72-L78) | Specify image MIME types that will be passed to the `imageLoader` and used to create additional `<source>` tags.  Use this to create `webp` or `avif` sources with a CDN like Contentful.
 | `sourceMedia` | [`SourceType[]`](https://github.com/BKWLD/react-visual/blob/eaf2d150efa1187033ba732a350a4db20f260435/packages/react/src/types/reactVisualTypes.ts#L80-L83) | Specify media queries that will be passed to the `imageLoader` and used to create additional `<source>` tags.

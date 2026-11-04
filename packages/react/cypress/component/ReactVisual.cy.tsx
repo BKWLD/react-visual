@@ -67,6 +67,22 @@ describe("natural size", () => {
   });
 });
 
+describe("priority", () => {
+  it("lazy loads images by default", () => {
+    cy.mount(<ReactVisual image="https://placehold.co/200x200.png" alt="" />);
+    cy.get("img").should("have.attr", "loading", "lazy");
+    cy.get("img").should("not.have.attr", "fetchpriority");
+  });
+
+  it("loads priority images eagerly and first", () => {
+    cy.mount(
+      <ReactVisual image="https://placehold.co/200x200.png" alt="" priority />,
+    );
+    cy.get("img").should("not.have.attr", "loading");
+    cy.get("img").should("have.attr", "fetchpriority", "high");
+  });
+});
+
 describe("srcset", () => {
   it("renders srset with no sizes prop", () => {
     cy.mount(

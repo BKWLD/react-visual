@@ -39,8 +39,10 @@ export default function PictureImage(props: PictureImageProps): ReactNode {
     objectPosition: position,
   };
 
-  // Unless priority flag was set, lazy load the image
+  // Unless priority flag was set, lazy load the image. Priority images are
+  // also fetched ahead of other requests, which helps when they are the LCP.
   const loading = priority ? undefined : "lazy";
+  const fetchPriority = priority ? "high" : undefined;
 
   // Determine the widths to use for srcset. Include small widths only when
   // sizes is specified, like Next.js does
@@ -82,7 +84,7 @@ export default function PictureImage(props: PictureImageProps): ReactNode {
       <img
         style={{ ...layoutStyles, ...style }}
         src={srcUrl}
-        {...{ loading, alt, sizes }}
+        {...{ loading, fetchPriority, alt, sizes }}
       />
     </picture>
   );
