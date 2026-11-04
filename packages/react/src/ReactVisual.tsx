@@ -40,6 +40,13 @@ export default function ReactVisual(props: ReactVisualProps): ReactNode {
   // If no asset, return nothing
   if (!image && !video) return null;
 
+  // Without sizes, let the browser size lazy images from their layout. Only
+  // when the layout sets the width, since "auto" makes unsized images 300px.
+  // Browsers that don't support "auto" use the 100vw fallback.
+  const imageSizes =
+    sizes ??
+    (!priority && (width || aspect || expand) ? "auto, 100vw" : undefined);
+
   return (
     <VisualWrapper
       {...{
@@ -60,7 +67,7 @@ export default function ReactVisual(props: ReactVisualProps): ReactNode {
         <PictureImage
           {...{
             src: image,
-            sizes,
+            sizes: imageSizes,
             alt,
             fit,
             position,
