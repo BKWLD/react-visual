@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { ContentfulVisualProps } from "./types/contentfulVisualTypes";
 import ContentfulVisual from "./ContentfulVisual";
 import {
@@ -23,7 +24,7 @@ type WidthBasedContentfulVisualProps = ContentfulVisualProps & {
 // than oreintation based
 export default function WidthBasedContentfulVisual(
   props: WidthBasedContentfulVisualProps,
-) {
+): ReactNode {
   const {
     breakpoint = "767px",
     image,

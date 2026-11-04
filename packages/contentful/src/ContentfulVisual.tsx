@@ -1,4 +1,5 @@
 import ReactVisual from "@react-visual/react";
+import type { ReactNode } from "react";
 import {
   ContentfulAsset,
   ContentfulVisualProps,
@@ -17,7 +18,9 @@ import {
 } from "./lib/aspectRatio";
 
 // Render a Visual using Contentful data
-export default function ContentfulVisual(props: ContentfulVisualProps) {
+export default function ContentfulVisual(
+  props: ContentfulVisualProps,
+): ReactNode {
   // Destructure some props
   const {
     image,
