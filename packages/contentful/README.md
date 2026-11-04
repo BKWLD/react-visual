@@ -135,7 +135,7 @@ export default function Example() {
 
 | Prop | Type | Description
 | -- | -- | --
-| `priority` | `boolean` | Sets [`next/image`'s `priority`](https://nextjs.org/docs/pages/api-reference/components/image#priority) and videos to not lazy load.
+| `priority` | `boolean` | Disables [`<img loading="lazy>"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#loading), sets [`fetchpriority="high"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#fetchpriority) on images, and prevents videos from lazy loading.
 | `sizes` | `string` | Sets [`next/image`'s `sizes`](https://nextjs.org/docs/pages/api-reference/components/image#sizes) prop.
 | `breakpoint` | `number`, `string` | Only supported by `WidthBasedVisual`. The max-width media query value to switch to the portrait/mobile image. Defaults to `767px`.
 
