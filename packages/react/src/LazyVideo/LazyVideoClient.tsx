@@ -51,7 +51,7 @@ export default function LazyVideoClient({
   const [isVideoPaused, setVideoPaused] = useState(true);
 
   // Make a ref to the video so it can be controlled
-  const videoRef = useRef<HTMLVideoElement>();
+  const videoRef = useRef<HTMLVideoElement | undefined>(undefined);
 
   // Watch for in viewport to load video unless using priority
   const { ref: inViewRef, inView } = useInView({
@@ -70,7 +70,7 @@ export default function LazyVideoClient({
 
   // Store the promise that is returned from play to prevent errors when
   // pause() is called while video is benginning to play.
-  const playPromise = useRef<Promise<void>>();
+  const playPromise = useRef<Promise<void> | undefined>(undefined);
 
   // Play the video, waiting until it's safe to play it.  And capture any
   // errors while trying to play.
