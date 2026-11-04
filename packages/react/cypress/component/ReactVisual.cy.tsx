@@ -84,7 +84,31 @@ describe("priority", () => {
 });
 
 describe("srcset", () => {
-  it("renders srset with no sizes prop", () => {
+  it("renders srset with no sizes prop on a priority image", () => {
+    cy.mount(
+      <ReactVisual
+        image="https://placehold.co/300x200"
+        imageLoader={({ src, width }) => {
+          const height = Math.round((width * 200) / 300);
+          return `https://placehold.co/${width}x${height}`;
+        }}
+        aspect={300 / 200}
+        alt=""
+        priority
+      />,
+    );
+
+    // Get one of the sizes that should be been rendered
+    cy.get("[srcset]")
+      .invoke("attr", "srcset")
+      .should("contain", "640x427 640w")
+
+      // Only be included when `sizes` specified
+      .should("not.contain", " 16w");
+    cy.get("img").should("not.have.attr", "sizes");
+  });
+
+  it("defaults lazy images to sizes=auto", () => {
     cy.mount(
       <ReactVisual
         image="https://placehold.co/300x200"
@@ -97,13 +121,40 @@ describe("srcset", () => {
       />,
     );
 
-    // Get one of the sizes that should be been rendered
-    cy.get("[srcset]")
-      .invoke("attr", "srcset")
-      .should("contain", "640x427 640w")
+    // Browsers without sizes=auto fall back to 100vw
+    cy.get("img").should("have.attr", "sizes", "auto, 100vw");
+    cy.get("source").should("have.attr", "sizes", "auto, 100vw");
 
-      // Only be included when `sizes` specified
-      .should("not.contain", " 16w");
+    // Narrow widths are available for the browser to pick from
+    cy.get("[srcset]").invoke("attr", "srcset").should("contain", " 16w");
+  });
+
+  it("picks a width from the layout with sizes=auto", () => {
+    cy.mount(
+      <ReactVisual
+        image="https://placehold.co/200x200"
+        imageLoader={({ src, width }) => {
+          return `https://placehold.co/${width}x${width}`;
+        }}
+        aspect={1}
+        width="50%"
+        alt=""
+      />,
+    );
+
+    // The smallest width covering the rendered slot at this pixel ratio
+    cy.get("img").imgLoaded();
+    cy.window().then((win) => {
+      cy.get("img").then(($img) => {
+        const needed =
+          $img[0].getBoundingClientRect().width * win.devicePixelRatio;
+        const widths = [16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080];
+        const expected = widths.find((width) => width >= needed);
+        expect($img[0].currentSrc).to.eq(
+          `https://placehold.co/${expected}x${expected}`,
+        );
+      });
+    });
   });
 
   it("doesn't use imageSizes when sizes == 100vw", () => {
